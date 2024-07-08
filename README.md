@@ -5,3 +5,7 @@ https://docs.google.com/document/d/105ngoZdbEFhzgLRANBmF_wOYYI10rTNhu8BN13yp2WE/
 
 ## Lien du document de conception
 https://docs.google.com/document/d/1G-csdkF76GxP0e39_VwjViXtZTqFFQWC/edit?usp=sharing&ouid=106965500956527089278&rtpof=true&sd=true
+
+## Site web administrateur 
+Node : 18.18.2
+Dossier : admin-troc
