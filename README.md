@@ -9,3 +9,8 @@ https://docs.google.com/document/d/1G-csdkF76GxP0e39_VwjViXtZTqFFQWC/edit?usp=sh
 ## Site web administrateur 
 Node : 18.18.2
 Dossier : admin-troc
+
+## API Java (Spring boot)
+- maven : 3.9.8
+- Java 17
+- Start the project : mvn spring-boot:run
