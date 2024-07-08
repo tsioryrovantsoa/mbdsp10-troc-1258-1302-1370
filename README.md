@@ -9,3 +9,6 @@ https://docs.google.com/document/d/1G-csdkF76GxP0e39_VwjViXtZTqFFQWC/edit?usp=sh
 ## Site web administrateur 
 Node : 18.18.2
 Dossier : admin-troc
+
+## Liste des tâches
+[Tâches pour l'application de TROC](https://docs.google.com/spreadsheets/d/1ouMD0ehFyAmWiOiIJOvK-ZnQkMlIXlhH5XCA-xVH-Hs/edit?gid=0#gid=0)
