@@ -14,3 +14,6 @@ Dossier : admin-troc
 - maven : 3.9.8
 - Java 17
 - Start the project : mvn spring-boot:run
+
+## Liste des tâches
+[Tâches pour l'application de TROC](https://docs.google.com/spreadsheets/d/1ouMD0ehFyAmWiOiIJOvK-ZnQkMlIXlhH5XCA-xVH-Hs/edit?gid=0#gid=0)
