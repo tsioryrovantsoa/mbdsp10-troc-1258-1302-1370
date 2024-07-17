@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +14,9 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false)
     private String password;
@@ -39,10 +42,11 @@ public class User {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    public User() {}
+    public Users() {}
 
-    public User(String username, String password, String email, String phone, String address, String role, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public Users(String username, String name, String password, String email, String phone, String address, String role, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.username = username;
+        this.name = name;
         this.password = password;
         this.email = email;
         this.phone = phone;
@@ -67,6 +71,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getPassword() {
