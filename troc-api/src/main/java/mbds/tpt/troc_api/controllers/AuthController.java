@@ -39,7 +39,7 @@ public class AuthController {
             User user = (User) authentication.getPrincipal();
             return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, user));
         } catch (BadCredentialsException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Identifiants incorrects");
         } catch (LockedException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
