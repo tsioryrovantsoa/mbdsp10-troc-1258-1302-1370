@@ -3,6 +3,8 @@ package mbds.tpt.troc_api.services;
 import mbds.tpt.troc_api.entities.Users;
 import mbds.tpt.troc_api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,4 +37,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
 
+    public Page<Users> findUsers(String name, String role, Pageable pageable) {
+        return userRepository.findUsers(name, role, pageable);
+    }
 }
