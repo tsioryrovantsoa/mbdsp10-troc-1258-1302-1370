@@ -69,7 +69,10 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
-        return claims.getSubject();
+        // return claims.getSubject();
+
+        System.out.println("Claims: " + claims);
+        return claims.get("username", String.class);
     }
 
     public boolean validateToken(String authToken) {

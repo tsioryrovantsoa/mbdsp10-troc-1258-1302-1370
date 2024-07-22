@@ -22,7 +22,7 @@ public class UsersController {
     public ResponseEntity<Page<Users>> getUsers(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String role,
-            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
         Page<Users> users = userService.findUsers(name, role, PageRequest.of(page, size));

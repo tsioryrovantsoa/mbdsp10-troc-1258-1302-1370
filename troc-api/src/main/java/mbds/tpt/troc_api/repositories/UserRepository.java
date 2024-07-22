@@ -15,14 +15,14 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     Optional<Users> findByUsername(String username);
 
     @Query(
-        "SELECT u FROM Users u WHERE " +
-        "(:name IS NULL OR u.name LIKE %:name%) AND " +
-        "(:role IS NULL OR u.role = :role) " +
-        "ORDER BY u.createdAt DESC"
+            "SELECT u FROM Users u WHERE " +
+                    "(:name IS NULL OR LOWER(CAST(u.name AS text)) LIKE LOWER(CONCAT('%', CAST(:name AS text), '%'))) AND " +
+                    "(:role IS NULL OR LOWER(CAST(u.role AS text)) = LOWER(CAST(:role AS text))) " +
+                    "ORDER BY u.createdAt DESC"
     )
     Page<Users> findUsers(
-        @Param("name") String name,
-        @Param("role") String role,
-        Pageable pageable
+            @Param("name") String name,
+            @Param("role") String role,
+            Pageable pageable
     );
 }
