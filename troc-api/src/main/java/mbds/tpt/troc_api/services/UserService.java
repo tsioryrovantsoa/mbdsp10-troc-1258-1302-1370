@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Service
@@ -28,8 +29,7 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 users.getUsername(),
                 users.getPassword(),
-                new ArrayList<>()
-        );
+                new ArrayList<>());
     }
 
     public Users getByUsername(String username) {
@@ -39,5 +39,15 @@ public class UserService implements UserDetailsService {
 
     public Page<Users> findUsers(String name, String role, Pageable pageable) {
         return userRepository.findUsers(name, role, pageable);
+    }
+
+    public Users registerUser(String username, String name, String password, String email, String phone, String address,
+            String role) {
+        // if (role == null || role.isEmpty()) {
+        // role = "USER"; // Valeur par défaut pour le rôle
+        // }
+        Users users = new Users(username, name, password, email, phone, address, role, LocalDateTime.now(),
+                null, null);
+        return userRepository.save(users);
     }
 }

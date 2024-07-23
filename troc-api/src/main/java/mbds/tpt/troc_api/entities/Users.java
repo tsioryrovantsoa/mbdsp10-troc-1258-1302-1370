@@ -42,9 +42,11 @@ public class Users {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    public Users() {}
+    public Users() {
+    }
 
-    public Users(String username, String name, String password, String email, String phone, String address, String role, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public Users(String username, String name, String password, String email, String phone, String address, String role,
+            LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.username = username;
         this.name = name;
         this.password = password;
