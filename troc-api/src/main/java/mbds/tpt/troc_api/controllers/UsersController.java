@@ -40,11 +40,16 @@ public class UsersController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Users> registerUser(@Valid @RequestBody Users user) {
-        Users newUser = userService.registerUser(user.getUsername(), user.getName(), user.getPassword(),
-                user.getEmail(),
-                user.getPhone(), user.getAddress(), user.getRole());
-        return ResponseEntity.ok(newUser);
+    public ResponseEntity<?> registerUser(@Valid @RequestBody Users user) {
+        try {
+            Users newUser = userService.registerUser(user.getUsername(), user.getName(), user.getPassword(),
+                    user.getEmail(), user.getPhone(), user.getAddress(), user.getRole());
+            return ResponseEntity.ok(newUser);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+        }
     }
 
     @PutMapping("/users/{id}/suspend")

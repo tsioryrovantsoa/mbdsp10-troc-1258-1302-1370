@@ -2,13 +2,15 @@ package mbds.tpt.troc_api.services;
 
 import mbds.tpt.troc_api.entities.Users;
 import mbds.tpt.troc_api.repositories.UserRepository;
+import mbds.tpt.troc_api.utils.UserValidationUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +56,18 @@ public class UserService implements UserDetailsService {
         // Possibilité de changement de cette valeur par défaut en 'false' si l'on met
         // en place un système de vérification d'email.
         boolean isEnabled = true;
-        Users users = new Users(username, name, password, email, phone, address, role, LocalDateTime.now(),
+
+        // Validation de l'email
+        UserValidationUtils.isValidEmail(email);
+
+        // Validation et formatage du téléphone
+        phone = UserValidationUtils.formatPhoneNumber(phone);
+
+        // Hacher le mot de passe avant de l'enregistrer
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+
+        Users users = new Users(username, name, hashedPassword, email, phone, address, role, LocalDateTime.now(),
                 null, null, isEnabled);
         return userRepository.save(users);
     }

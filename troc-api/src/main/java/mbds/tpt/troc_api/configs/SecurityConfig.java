@@ -35,15 +35,16 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                // Vérifier si l'accès est refusé à cause d'un problème de permission ou
-                // d'authentification
-                .exceptionHandling(e -> e
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
-                            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
-                        })
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-                        }));
+        // Vérifier si l'accès est refusé à cause d'un problème de permission ou
+        // d'authentification
+        // .exceptionHandling(e -> e
+        // .accessDeniedHandler((request, response, accessDeniedException) -> {
+        // response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
+        // })
+        // .authenticationEntryPoint((request, response, authException) -> {
+        // response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        // }))
+        ;
 
         return http.build();
     }
