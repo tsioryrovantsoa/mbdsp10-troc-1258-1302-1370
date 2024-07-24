@@ -42,11 +42,14 @@ public class Users {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @Column(name = "is_enabled")
+    private boolean isEnabled;
+
     public Users() {
     }
 
     public Users(String username, String name, String password, String email, String phone, String address, String role,
-            LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+            LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt, boolean isEnabled) {
         this.username = username;
         this.name = name;
         this.password = password;
@@ -57,6 +60,7 @@ public class Users {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+        this.isEnabled = isEnabled;
     }
 
     public Long getUser_id() {
@@ -145,5 +149,13 @@ public class Users {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public boolean getIsEnabled() {
+        return isEnabled;
+    }
+
+    public void setIsEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
 }

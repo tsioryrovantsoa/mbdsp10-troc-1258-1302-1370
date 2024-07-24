@@ -43,11 +43,16 @@ public class UserService implements UserDetailsService {
 
     public Users registerUser(String username, String name, String password, String email, String phone, String address,
             String role) {
-        // if (role == null || role.isEmpty()) {
-        // role = "USER"; // Valeur par défaut pour le rôle
-        // }
+        if (role == null || role.isEmpty()) {
+            role = "USER"; // Valeur par défaut pour le rôle
+        }
+        // Valeur par défaut de isEnabled = true pour avoir un utilisateur actif (non
+        // suspendu) à la création
+        // Possibilité de changement de cette valeur par défaut en 'false' si l'on met
+        // en place un système de vérification d'email.
+        boolean isEnabled = true;
         Users users = new Users(username, name, password, email, phone, address, role, LocalDateTime.now(),
-                null, null);
+                null, null, isEnabled);
         return userRepository.save(users);
     }
 }
