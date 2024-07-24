@@ -2,6 +2,8 @@ package mbds.tpt.troc_api.services;
 
 import mbds.tpt.troc_api.entities.Users;
 import mbds.tpt.troc_api.repositories.UserRepository;
+import mbds.tpt.troc_api.utils.UserValidationUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,9 +45,15 @@ public class UserService implements UserDetailsService {
 
     public Users registerUser(String username, String name, String password, String email, String phone, String address,
             String role) {
-        // if (role == null || role.isEmpty()) {
-        // role = "USER"; // Valeur par défaut pour le rôle
-        // }
+        if (role == null || role.isEmpty()) {
+            role = "USER"; // Valeur par défaut pour le rôle
+        }
+        // Validation de l'email
+        UserValidationUtils.isValidEmail(email);
+
+        // Validation et formatage du téléphone
+        phone = UserValidationUtils.formatPhoneNumber(phone);
+
         Users users = new Users(username, name, password, email, phone, address, role, LocalDateTime.now(),
                 null, null);
         return userRepository.save(users);

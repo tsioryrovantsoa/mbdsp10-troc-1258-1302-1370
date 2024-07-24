@@ -4,6 +4,7 @@ import mbds.tpt.troc_api.entities.Users;
 import mbds.tpt.troc_api.services.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,10 +36,15 @@ public class UsersController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Users> registerUser(@Valid @RequestBody Users user) {
-        Users newUser = userService.registerUser(user.getUsername(), user.getName(), user.getPassword(),
-                user.getEmail(),
-                user.getPhone(), user.getAddress(), user.getRole());
-        return ResponseEntity.ok(newUser);
+    public ResponseEntity<?> registerUser(@Valid @RequestBody Users user) {
+        try {
+            Users newUser = userService.registerUser(user.getUsername(), user.getName(), user.getPassword(),
+                    user.getEmail(), user.getPhone(), user.getAddress(), user.getRole());
+            return ResponseEntity.ok(newUser);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+        }
     }
 }
