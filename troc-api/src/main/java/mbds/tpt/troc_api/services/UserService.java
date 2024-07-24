@@ -7,10 +7,10 @@ import mbds.tpt.troc_api.utils.UserValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +54,11 @@ public class UserService implements UserDetailsService {
         // Validation et formatage du téléphone
         phone = UserValidationUtils.formatPhoneNumber(phone);
 
-        Users users = new Users(username, name, password, email, phone, address, role, LocalDateTime.now(),
+        // Hacher le mot de passe avant de l'enregistrer
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+
+        Users users = new Users(username, name, hashedPassword, email, phone, address, role, LocalDateTime.now(),
                 null, null);
         return userRepository.save(users);
     }
