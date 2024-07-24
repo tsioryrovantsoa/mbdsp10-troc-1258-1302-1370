@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Optional;
+
+import javax.management.InstanceNotFoundException;
 
 @Service
 @Component
@@ -54,5 +57,17 @@ public class UserService implements UserDetailsService {
         Users users = new Users(username, name, password, email, phone, address, role, LocalDateTime.now(),
                 null, null, isEnabled);
         return userRepository.save(users);
+    }
+
+    public Users suspendUser(Long id) throws InstanceNotFoundException {
+        Optional<Users> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            Users user = optionalUser.get();
+            user.setIsEnabled(false);
+            user.setUpdatedAt(LocalDateTime.now());
+            return userRepository.save(user);
+        } else {
+            throw new InstanceNotFoundException("User not found with id: " + id);
+        }
     }
 }
