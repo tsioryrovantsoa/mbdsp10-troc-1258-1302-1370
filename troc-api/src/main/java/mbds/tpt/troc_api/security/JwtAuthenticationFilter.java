@@ -15,6 +15,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -36,12 +37,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 System.out.println("Username extracted from JWT: " + username);
                 UserDetails userDetails = userService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        username, null, new ArrayList<>());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                System.out
+                        .println("User authenticated: " + username + ", Authorities: " + userDetails.getAuthorities());
+            } else {
+                System.out.println("Invalid token or username");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
             }
         } catch (Exception ex) {
             logger.error("Could not set user authentication in security context", ex);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
 
         filterChain.doFilter(request, response);

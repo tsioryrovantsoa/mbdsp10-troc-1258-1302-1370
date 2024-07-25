@@ -7,6 +7,8 @@ import mbds.tpt.troc_api.utils.UserValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import javax.management.InstanceNotFoundException;
@@ -31,10 +35,13 @@ public class UserService implements UserDetailsService {
         Users users = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
-        return new org.springframework.security.core.userdetails.User(
-                users.getUsername(),
-                users.getPassword(),
-                new ArrayList<>());
+        System.out.println("Loading user loadUserByUsername: " + username + ", Role: " + users.getRole());
+
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(users.getUsername())
+                .password(users.getPassword())
+                .roles(users.getRole())
+                .build();
     }
 
     public Users getByUsername(String username) {
@@ -49,7 +56,7 @@ public class UserService implements UserDetailsService {
     public Users registerUser(String username, String name, String password, String email, String phone, String address,
             String role) {
         if (role == null || role.isEmpty()) {
-            role = "USER"; // Valeur par défaut pour le rôle
+            role = "ROLE_USER"; // Valeur par défaut pour le rôle
         }
         // Valeur par défaut de isEnabled = true pour avoir un utilisateur actif (non
         // suspendu) à la création
@@ -82,5 +89,9 @@ public class UserService implements UserDetailsService {
         } else {
             throw new InstanceNotFoundException("User not found with id: " + id);
         }
+    }
+
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(String role) {
+        return Collections.singletonList(new SimpleGrantedAuthority(role));
     }
 }
