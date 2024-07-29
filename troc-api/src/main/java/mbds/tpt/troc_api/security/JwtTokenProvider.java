@@ -48,6 +48,7 @@ public class JwtTokenProvider {
         claims.put("address", users.getAddress());
         claims.put("role", users.getRole());
         claims.put("createdAt", users.getCreatedAt().toString());
+        claims.put("isEnabled", users.isEnabled());
         if (users.getUpdatedAt() != null) {
             claims.put("updatedAt", users.getUpdatedAt().toString());
         }

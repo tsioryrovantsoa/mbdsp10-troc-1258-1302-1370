@@ -12,6 +12,8 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<Users, Long> {
+        @Query("SELECT u FROM Users u WHERE u.user_id = :userId")
+        Optional<Users> findByUserId(@Param("userId") Long userId);
         Optional<Users> findByUsername(String username);
 
         @Query("SELECT u FROM Users u WHERE " +
@@ -23,4 +25,6 @@ public interface UserRepository extends JpaRepository<Users, Long> {
                         @Param("name") String name,
                         @Param("role") String role,
                         Pageable pageable);
+
+        
 }

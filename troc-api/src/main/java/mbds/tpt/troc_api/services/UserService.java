@@ -59,7 +59,20 @@ public class UserService implements UserDetailsService {
         String hashedPassword = passwordEncoder.encode(password);
 
         Users users = new Users(username, name, hashedPassword, email, phone, address, role, LocalDateTime.now(),
-                null, null);
+                null, null, true);
         return userRepository.save(users);
+    }
+
+    public Users reactivateUser(Long userId) {
+        Users user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + userId));
+        
+        if (user.isEnabled()) {
+            throw new IllegalStateException("User is already active");
+        }
+        
+        user.setEnabled(true);
+        user.setUpdatedAt(LocalDateTime.now());
+        return userRepository.save(user);
     }
 }
