@@ -7,9 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +22,7 @@ import jakarta.validation.Valid;
 import javax.management.InstanceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/api/users")
@@ -56,29 +55,48 @@ public class UsersController {
         }
     }
 
-    @PutMapping("/{id}/suspend")
-    public ResponseEntity<?> suspendUser(@PathVariable Long id) {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-        // Authentication authentication =
-        // SecurityContextHolder.getContext().getAuthentication();
-        // System.out.println(
-        // "Authenticated user api: " + authentication.getName() + ", Roles: " +
-        // authentication.getAuthorities());
-
-        // if (!authentication.getAuthorities().contains(new
-        // SimpleGrantedAuthority("ROLE_ADMIN"))) {
-        // System.out.println("User does not have ROLE_ADMIN authority");
-        // }
-
+    @PostMapping("/{userId}/reactivate")
+    public ResponseEntity<?> reactivateUser(@PathVariable Long userId, Authentication authentication) {
         try {
-            Users suspendedUser = userService.suspendUser(id);
-            return ResponseEntity.ok(suspendedUser);
-        } catch (InstanceNotFoundException e) {
+            // Vérification manuelle du rôle
+            if (!authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body("Access denied. Only ADMIN users can reactivate user accounts.");
+            }
+
+            Users reactivatedUser = userService.reactivateUser(userId);
+            return ResponseEntity.ok(reactivatedUser);
+        } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
 
+    // @PutMapping("/{id}/suspend")
+    // public ResponseEntity<?> suspendUser(@PathVariable Long id) {
+    //     System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+    //     // Authentication authentication =
+    //     // SecurityContextHolder.getContext().getAuthentication();
+    //     // System.out.println(
+    //     // "Authenticated user api: " + authentication.getName() + ", Roles: " +
+    //     // authentication.getAuthorities());
+
+    //     // if (!authentication.getAuthorities().contains(new
+    //     // SimpleGrantedAuthority("ROLE_ADMIN"))) {
+    //     // System.out.println("User does not have ROLE_ADMIN authority");
+    //     // }
+
+    //     try {
+    //         Users suspendedUser = userService.suspendUser(id);
+    //         return ResponseEntity.ok(suspendedUser);
+    //     } catch (InstanceNotFoundException e) {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    //     }
+    // }
 }

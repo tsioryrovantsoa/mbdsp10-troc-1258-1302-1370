@@ -18,11 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
-
-import javax.management.InstanceNotFoundException;
+import java.util.List;
 
 @Service
 @Component
@@ -35,13 +31,15 @@ public class UserService implements UserDetailsService {
         Users users = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
-        System.out.println("Loading user loadUserByUsername: " + username + ", Role: " + users.getRole());
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        if (users.getRole() != null && !users.getRole().isEmpty()) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + users.getRole().toUpperCase()));
+        }
 
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(users.getUsername())
-                .password(users.getPassword())
-                .roles(users.getRole())
-                .build();
+        return new org.springframework.security.core.userdetails.User(
+                users.getUsername(),
+                users.getPassword(),
+                authorities);
     }
 
     public Users getByUsername(String username) {
@@ -75,23 +73,20 @@ public class UserService implements UserDetailsService {
         String hashedPassword = passwordEncoder.encode(password);
 
         Users users = new Users(username, name, hashedPassword, email, phone, address, role, LocalDateTime.now(),
-                null, null, isEnabled);
+                null, null, true);
         return userRepository.save(users);
     }
 
-    public Users suspendUser(Long id) throws InstanceNotFoundException {
-        Optional<Users> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            Users user = optionalUser.get();
-            user.setIsEnabled(false);
-            user.setUpdatedAt(LocalDateTime.now());
-            return userRepository.save(user);
-        } else {
-            throw new InstanceNotFoundException("User not found with id: " + id);
+    public Users reactivateUser(Long userId) {
+        Users user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + userId));
+        
+        if (user.isEnabled()) {
+            throw new IllegalStateException("User is already active");
         }
-    }
-
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(String role) {
-        return Collections.singletonList(new SimpleGrantedAuthority(role));
+        
+        user.setEnabled(true);
+        user.setUpdatedAt(LocalDateTime.now());
+        return userRepository.save(user);
     }
 }

@@ -43,7 +43,7 @@ public class Users {
     private LocalDateTime deletedAt;
 
     @Column(name = "is_enabled")
-    private boolean isEnabled;
+    private boolean isEnabled = true;
 
     public Users() {
     }
@@ -151,11 +151,11 @@ public class Users {
         this.deletedAt = deletedAt;
     }
 
-    public boolean getIsEnabled() {
+    public boolean isEnabled() {
         return isEnabled;
     }
 
-    public void setIsEnabled(boolean isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 }
