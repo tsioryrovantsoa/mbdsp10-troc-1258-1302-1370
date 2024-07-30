@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.management.InstanceNotFoundException;
+import java.util.Optional;
 
 @Service
 @Component
@@ -54,7 +56,7 @@ public class UserService implements UserDetailsService {
     public Users registerUser(String username, String name, String password, String email, String phone, String address,
             String role) {
         if (role == null || role.isEmpty()) {
-            role = "ROLE_USER"; // Valeur par défaut pour le rôle
+            role = "USER"; // Valeur par défaut pour le rôle
         }
         // Valeur par défaut de isEnabled = true pour avoir un utilisateur actif (non
         // suspendu) à la création
@@ -73,7 +75,7 @@ public class UserService implements UserDetailsService {
         String hashedPassword = passwordEncoder.encode(password);
 
         Users users = new Users(username, name, hashedPassword, email, phone, address, role, LocalDateTime.now(),
-                null, null, true);
+                null, null, isEnabled);
         return userRepository.save(users);
     }
 
@@ -88,5 +90,17 @@ public class UserService implements UserDetailsService {
         user.setEnabled(true);
         user.setUpdatedAt(LocalDateTime.now());
         return userRepository.save(user);
+    }
+
+    public Users suspendUser(Long id) throws InstanceNotFoundException {
+        Optional<Users> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            Users user = optionalUser.get();
+            user.setEnabled(false);
+            user.setUpdatedAt(LocalDateTime.now());
+            return userRepository.save(user);
+        } else {
+            throw new InstanceNotFoundException("User not found with id: " + id);
+        }
     }
 }

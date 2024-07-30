@@ -53,18 +53,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         userDetails, null, authorities);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                System.out
-                        .println("User authenticated: " + username + ", Authorities: " + userDetails.getAuthorities());
-            } else {
-                System.out.println("Invalid token or username");
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
             }
         } catch (Exception ex) {
             logger.error("Could not set user authentication in security context", ex);
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
         }
 
         filterChain.doFilter(request, response);

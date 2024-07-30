@@ -77,26 +77,20 @@ public class UsersController {
         }
     }
 
-    // @PutMapping("/{id}/suspend")
-    // public ResponseEntity<?> suspendUser(@PathVariable Long id) {
-    //     System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-    //     // Authentication authentication =
-    //     // SecurityContextHolder.getContext().getAuthentication();
-    //     // System.out.println(
-    //     // "Authenticated user api: " + authentication.getName() + ", Roles: " +
-    //     // authentication.getAuthorities());
-
-    //     // if (!authentication.getAuthorities().contains(new
-    //     // SimpleGrantedAuthority("ROLE_ADMIN"))) {
-    //     // System.out.println("User does not have ROLE_ADMIN authority");
-    //     // }
-
-    //     try {
-    //         Users suspendedUser = userService.suspendUser(id);
-    //         return ResponseEntity.ok(suspendedUser);
-    //     } catch (InstanceNotFoundException e) {
-    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    //     }
-    // }
+    @PutMapping("/{id}/suspend")
+    public ResponseEntity<?> suspendUser(@PathVariable Long id, Authentication authentication) {
+        try {
+            // Vérification manuelle du rôle
+            if (!authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body("Access denied. Only ADMIN users can reactivate user accounts.");
+            }
+            Users suspendedUser = userService.suspendUser(id);
+            return ResponseEntity.ok(suspendedUser);
+        } catch (InstanceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }
