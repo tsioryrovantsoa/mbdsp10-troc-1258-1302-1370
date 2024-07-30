@@ -7,6 +7,8 @@ import mbds.tpt.troc_api.utils.UserValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Component
@@ -28,10 +31,15 @@ public class UserService implements UserDetailsService {
         Users users = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        if (users.getRole() != null && !users.getRole().isEmpty()) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + users.getRole().toUpperCase()));
+        }
+
         return new org.springframework.security.core.userdetails.User(
                 users.getUsername(),
                 users.getPassword(),
-                new ArrayList<>());
+                authorities);
     }
 
     public Users getByUsername(String username) {

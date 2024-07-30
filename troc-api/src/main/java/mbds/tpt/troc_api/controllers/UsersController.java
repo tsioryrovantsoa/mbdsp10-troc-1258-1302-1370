@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/api/users")
@@ -52,9 +53,16 @@ public class UsersController {
     }
 
     @PostMapping("/{userId}/reactivate")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> reactivateUser(@PathVariable Long userId) {
+    public ResponseEntity<?> reactivateUser(@PathVariable Long userId, Authentication authentication) {
         try {
+            // Vérification manuelle du rôle
+            if (!authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body("Access denied. Only ADMIN users can reactivate user accounts.");
+            }
+
             Users reactivatedUser = userService.reactivateUser(userId);
             return ResponseEntity.ok(reactivatedUser);
         } catch (UsernameNotFoundException e) {

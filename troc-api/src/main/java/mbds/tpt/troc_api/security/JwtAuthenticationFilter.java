@@ -40,6 +40,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 System.out.println("Username extracted from JWT: " + username);
                 UserDetails userDetails = userService.loadUserByUsername(username);
 
+                System.out.println("User Authorities:");
+                for (GrantedAuthority authority : userDetails.getAuthorities()) {
+                    System.out.println("Authority: " + authority.getAuthority());
+                }
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 for (GrantedAuthority authority : userDetails.getAuthorities()) {
                     authorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
