@@ -39,9 +39,13 @@ public class UserService implements UserDetailsService {
         }
 
         return new org.springframework.security.core.userdetails.User(
-                users.getUsername(),
-                users.getPassword(),
-                authorities);
+            users.getUsername(),
+            users.getPassword(),
+            users.isEnabled(), // Utilisez la valeur de isEnabled ici
+            true, // accountNonExpired
+            true, // credentialsNonExpired
+            true, // accountNonLocked
+            authorities);
     }
 
     public Users getByUsername(String username) {
