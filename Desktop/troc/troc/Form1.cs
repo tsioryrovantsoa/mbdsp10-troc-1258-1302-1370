@@ -16,5 +16,11 @@ namespace troc
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Code à exécuter lorsque le formulaire se charge
+            this.Text = "Mon Application WinForms";
+        }
     }
 }
