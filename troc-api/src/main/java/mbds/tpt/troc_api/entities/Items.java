@@ -11,7 +11,7 @@ public class Items {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
-    private int item_id;
+    private Long item_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -54,11 +54,11 @@ public class Items {
     }
 
     // Getters and Setters
-    public int getItemId() {
+    public Long getItemId() {
         return item_id;
     }
 
-    public void setItemId(int item_id) {
+    public void setItemId(Long item_id) {
         this.item_id = item_id;
     }
 

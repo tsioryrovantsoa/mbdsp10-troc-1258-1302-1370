@@ -9,7 +9,7 @@ public class Images {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
-    private int image_id;
+    private Long image_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
@@ -28,11 +28,11 @@ public class Images {
     }
 
     // Getters and Setters
-    public int getImage_id() {
+    public Long getImage_id() {
         return image_id;
     }
 
-    public void setImage_id(int image_id) {
+    public void setImage_id(Long image_id) {
         this.image_id = image_id;
     }
 
