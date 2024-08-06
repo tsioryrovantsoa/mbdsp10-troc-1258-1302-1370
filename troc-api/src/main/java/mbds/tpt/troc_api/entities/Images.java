@@ -1,5 +1,7 @@
 package mbds.tpt.troc_api.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Images {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
+    @JsonBackReference
     private Items item;
 
     @Column(name = "image_url", nullable = false)
