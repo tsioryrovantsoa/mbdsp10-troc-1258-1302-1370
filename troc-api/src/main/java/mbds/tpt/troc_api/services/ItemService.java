@@ -7,6 +7,8 @@ import mbds.tpt.troc_api.entities.Users;
 import mbds.tpt.troc_api.repositories.ImageRepository;
 import mbds.tpt.troc_api.repositories.ItemRepository;
 import mbds.tpt.troc_api.repositories.UserRepository;
+import mbds.tpt.troc_api.utils.Status;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,7 +47,7 @@ public class ItemService {
         item.setTitle(itemRequest.getTitle());
         item.setDescription(itemRequest.getDescription());
         item.setCategory(itemRequest.getCategory());
-        item.setStatus(itemRequest.getStatus());
+        item.setStatus(Status.DISPONIBLE);
         item.setUser(user);
         item.setCreatedAt(LocalDateTime.now());
         item.setUpdatedAt(LocalDateTime.now());
