@@ -2,6 +2,7 @@ package mbds.tpt.troc_api.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "items")
@@ -33,6 +34,9 @@ public class Items {
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Images> images;
 
     // Constructors
     public Items() {
@@ -112,5 +116,13 @@ public class Items {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Set<Images> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<Images> images) {
+        this.images = images;
     }
 }
