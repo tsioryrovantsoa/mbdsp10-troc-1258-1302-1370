@@ -8,6 +8,9 @@ import mbds.tpt.troc_api.repositories.ImageRepository;
 import mbds.tpt.troc_api.repositories.ItemRepository;
 import mbds.tpt.troc_api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,9 +35,12 @@ public class ItemService {
     private FileStorageService fileStorageService;
 
     public Items createItem(ItemDataModel itemRequest) throws IOException {
-        Users user = userRepository.findById((long) itemRequest.getUserId())
+        // Obtenir l'utilisateur connecté
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        Users user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
         Items item = new Items();
         item.setTitle(itemRequest.getTitle());
         item.setDescription(itemRequest.getDescription());

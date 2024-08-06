@@ -7,7 +7,6 @@ public class ItemDataModel {
     private String description;
     private String category;
     private String status;
-    private int userId;
     private MultipartFile[] images;
 
     // Getters and Setters
@@ -41,14 +40,6 @@ public class ItemDataModel {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public MultipartFile[] getImages() {
