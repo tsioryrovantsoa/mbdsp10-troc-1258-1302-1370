@@ -38,8 +38,8 @@ public class FileStorageService {
         return newFilename;
     }
 
-    public void deleteFile(String fileName) throws IOException {
-        Path filePath = Paths.get(uploadDir).resolve(fileName).normalize();
+    public void deleteFile(String filename) throws IOException {
+        Path filePath = Paths.get(uploadDir, filename);
         Files.deleteIfExists(filePath);
     }
 }

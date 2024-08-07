@@ -26,7 +26,7 @@ public class Images {
     }
 
     public Images(Items item, String imageUrl) {
-        this.item = item;
+        this.setItem(item);
         this.imageUrl = imageUrl;
     }
 
@@ -45,6 +45,9 @@ public class Images {
 
     public void setItem(Items item) {
         this.item = item;
+        if (item != null && !item.getImages().contains(this)) {
+            item.getImages().add(this);
+        }
     }
 
     public String getImageUrl() {

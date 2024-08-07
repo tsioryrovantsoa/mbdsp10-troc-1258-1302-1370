@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+import java.util.Iterator;
 @Service
 public class ItemService {
 
@@ -69,7 +69,7 @@ public class ItemService {
         return itemRepository.save(savedItem);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public Items updateItem(Long itemId, ItemDataModel itemRequest) throws IOException {
         // Obtenir l'utilisateur connecté
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -105,31 +105,35 @@ public class ItemService {
         item.setUpdatedAt(LocalDateTime.now());
 
         // Gérer les nouvelles images si elles sont fournies
-        if (itemRequest.getImages() != null && itemRequest.getImages().length > 0) {
-            // Créer une nouvelle liste pour stocker les images à conserver
-            List<Images> imagesToKeep = new ArrayList<>(item.getImages());
+        Set<Images> currentImages = item.getImages();
+        MultipartFile[] newImages = itemRequest.getImages();
 
-            for (MultipartFile file : itemRequest.getImages()) {
-                if (!file.isEmpty()) {
-                    String imageUrl = fileStorageService.saveFile(file);
-                    Images newImage = new Images(item, imageUrl);
-                    imagesToKeep.add(newImage);
+        // S'il y a de nouvelles images
+        if (newImages != null) {
+            // Supprimer les anciennes images si aucun fichier n'est fourni dans la mise à jour
+            if (newImages.length == 0) {
+                imageRepository.deleteAll(currentImages);
+                currentImages.clear();
+            } else {
+                // Mettre à jour ou ajouter les nouvelles images
+                Iterator<Images> currentImagesIterator = currentImages.iterator();
+                for (MultipartFile file : newImages) {
+                    if (currentImagesIterator.hasNext()) {
+                        Images oldImage = currentImagesIterator.next();
+                        String newImageUrl = fileStorageService.saveFile(file);
+                        oldImage.setImageUrl(newImageUrl);
+                    } else {
+                        String newImageUrl = fileStorageService.saveFile(file);
+                        Images newImage = new Images(item, newImageUrl);
+                        currentImages.add(newImage);
+                    }
                 }
-            }
 
-            // Supprimer les anciennes images qui ne sont plus dans la liste
-            for (Images oldImage : new ArrayList<>(item.getImages())) {
-                if (!imagesToKeep.contains(oldImage)) {
-                    fileStorageService.deleteFile(oldImage.getImageUrl());
-                    item.getImages().remove(oldImage);
+                // Supprimer les images restantes si moins d'images sont fournies
+                while (currentImagesIterator.hasNext()) {
+                    Images oldImage = currentImagesIterator.next();
+                    currentImagesIterator.remove();
                     imageRepository.delete(oldImage);
-                }
-            }
-
-            // Ajouter les nouvelles images
-            for (Images newImage : imagesToKeep) {
-                if (!item.getImages().contains(newImage)) {
-                    item.getImages().add(newImage);
                 }
             }
         }

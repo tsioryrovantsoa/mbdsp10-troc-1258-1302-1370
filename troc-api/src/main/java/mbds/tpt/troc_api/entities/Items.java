@@ -5,6 +5,7 @@ import mbds.tpt.troc_api.utils.Category;
 import mbds.tpt.troc_api.utils.Status;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -138,12 +139,15 @@ public class Items {
     }
 
     public void addImage(Images image) {
-        images.add(image);
+        if (this.images == null) {
+            this.images = new HashSet<>();
+        }
+        this.images.add(image);
         image.setItem(this);
     }
 
     public void removeImage(Images image) {
-        images.remove(image);
+        this.images.remove(image);
         image.setItem(null);
     }
 }
