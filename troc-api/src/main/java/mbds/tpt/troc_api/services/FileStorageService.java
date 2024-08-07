@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
 public class FileStorageService {
@@ -15,15 +16,25 @@ public class FileStorageService {
     private String uploadDir;
 
     public String saveFile(MultipartFile file) throws IOException {
-        Path uploadPath = Paths.get(uploadDir);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
+        // Générer un nom de fichier unique
+        String originalFilename = file.getOriginalFilename();
+        String fileExtension = "";
+        if (originalFilename != null && originalFilename.contains(".")) {
+            fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        }
+        String newFilename = UUID.randomUUID().toString() + fileExtension;
+
+        // Définir le chemin du fichier
+        Path filePath = Paths.get(uploadDir, newFilename);
+
+        // Créer le répertoire de destination s'il n'existe pas
+        if (!Files.exists(filePath.getParent())) {
+            Files.createDirectories(filePath.getParent());
         }
 
-        String fileName = file.getOriginalFilename();
-        Path filePath = uploadPath.resolve(fileName);
+        // Enregistrer le fichier
         Files.copy(file.getInputStream(), filePath);
 
-        return filePath.toString();
+        return newFilename;
     }
 }
