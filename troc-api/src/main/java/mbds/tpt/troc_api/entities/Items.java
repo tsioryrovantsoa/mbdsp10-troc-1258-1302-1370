@@ -1,6 +1,7 @@
 package mbds.tpt.troc_api.entities;
 
 import jakarta.persistence.*;
+import mbds.tpt.troc_api.utils.Category;
 import mbds.tpt.troc_api.utils.Status;
 
 import java.time.LocalDateTime;
@@ -29,7 +30,8 @@ public class Items {
     private String description;
 
     @Column(name = "category", nullable = false)
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -50,7 +52,8 @@ public class Items {
     public Items() {
     }
 
-    public Items(Users user, String title, String description, String category, Status status, LocalDateTime createdAt,
+    public Items(Users user, String title, String description, Category category, Status status,
+            LocalDateTime createdAt,
             LocalDateTime updatedAt) {
         this.user = user;
         this.title = title;
@@ -94,11 +97,11 @@ public class Items {
         this.description = description;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

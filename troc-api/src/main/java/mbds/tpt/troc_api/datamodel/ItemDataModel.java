@@ -2,10 +2,12 @@ package mbds.tpt.troc_api.datamodel;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import mbds.tpt.troc_api.utils.Category;
+
 public class ItemDataModel {
     private String title;
     private String description;
-    private String category;
+    private Category category;
     private String status;
     private MultipartFile[] images;
 
@@ -26,11 +28,11 @@ public class ItemDataModel {
         this.description = description;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
