@@ -136,4 +136,14 @@ public class Items {
     public void setImages(Set<Images> images) {
         this.images = images;
     }
+
+    public void addImage(Images image) {
+        images.add(image);
+        image.setItem(this);
+    }
+
+    public void removeImage(Images image) {
+        images.remove(image);
+        image.setItem(null);
+    }
 }

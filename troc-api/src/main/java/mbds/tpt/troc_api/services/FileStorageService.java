@@ -37,4 +37,9 @@ public class FileStorageService {
 
         return newFilename;
     }
+
+    public void deleteFile(String fileName) throws IOException {
+        Path filePath = Paths.get(uploadDir).resolve(fileName).normalize();
+        Files.deleteIfExists(filePath);
+    }
 }
