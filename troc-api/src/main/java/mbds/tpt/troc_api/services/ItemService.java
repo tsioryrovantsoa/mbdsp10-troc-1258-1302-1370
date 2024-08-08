@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemService {
@@ -55,13 +56,14 @@ public class ItemService {
         Items savedItem = itemRepository.save(item);
 
         Set<Images> images = new HashSet<>();
-        for (MultipartFile file : itemRequest.getImages()) {
-            String imageUrl = fileStorageService.saveFile(file);
-            Images image = new Images(savedItem, imageUrl);
-            images.add(image);
+        if (itemRequest.getNewImages() != null) {
+            for (MultipartFile file : itemRequest.getNewImages()) {
+                String imageUrl = fileStorageService.saveFile(file);
+                Images image = new Images(savedItem, imageUrl);
+                images.add(image);
+            }
+            imageRepository.saveAll(images);
         }
-        imageRepository.saveAll(images);
-
         savedItem.setImages(images);
         return itemRepository.save(savedItem);
     }
