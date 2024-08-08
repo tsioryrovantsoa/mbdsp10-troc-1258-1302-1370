@@ -5,6 +5,7 @@ import mbds.tpt.troc_api.utils.Category;
 import mbds.tpt.troc_api.utils.Status;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -43,10 +44,9 @@ public class Items {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "item_id")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Set<Images> images;
+    private Set<Images> images = new HashSet<>();
 
     // Constructors
     public Items() {
