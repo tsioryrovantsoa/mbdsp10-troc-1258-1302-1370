@@ -22,28 +22,28 @@ public class ItemsController {
         try {
             Items createdItem = itemService.createItem(itemData);
             return ResponseEntity.ok(createdItem);
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(null);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+            return handleException(e);
         }
     }
 
     @PutMapping("/{itemId}")
-    public ResponseEntity<Items> updateItem(
-            @PathVariable Long itemId,
-            @ModelAttribute ItemDataModel itemRequest) throws Exception {
-
-        // Items updatedItem = itemService.updateItem(itemId, itemRequest);
-        // return ResponseEntity.ok(updatedItem);
+    public ResponseEntity<?> updateItem(@PathVariable Long itemId, @ModelAttribute ItemDataModel itemRequest) {
         try {
             Items updatedItem = itemService.updateItem(itemId, itemRequest);
             return ResponseEntity.ok(updatedItem);
-        } catch (IOException e) {
-            // Handle the exception, e.g., return a 500 error response
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (Exception e) {
+            return handleException(e);
+        }
+    }
+
+    private ResponseEntity<?> handleException(Exception e) {
+        if (e instanceof IOException) {
+            return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body("Unsupported media type");
+        } else if (e instanceof IllegalArgumentException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
 }
