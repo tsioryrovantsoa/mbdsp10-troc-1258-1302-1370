@@ -1,5 +1,8 @@
 package mbds.tpt.troc_api.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -24,10 +27,12 @@ public class ExchangeItems {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exchange_id", nullable = false)
+    @JsonIgnore
     private Exchanges exchange;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
+    @JsonIgnore
     private Items item;
 
     @Column(name = "role", nullable = false)

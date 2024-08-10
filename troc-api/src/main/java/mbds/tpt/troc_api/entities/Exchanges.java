@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -22,6 +23,7 @@ import jakarta.persistence.Table;
 import mbds.tpt.troc_api.utils.ExchangeStatus;
 
 @Entity
+
 @Table(name = "exchanges")
 public class Exchanges {
 
@@ -51,6 +53,7 @@ public class Exchanges {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<ExchangeItems> exchangeItems = new HashSet<>();
 
     // Constructeurs

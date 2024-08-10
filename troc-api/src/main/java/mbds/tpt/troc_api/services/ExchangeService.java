@@ -30,14 +30,17 @@ public class ExchangeService {
 
     @Transactional
     public Exchanges proposeExchange(Long requesterItemId, Long receiverItemId) {
+        // Récupération des items des utilisateurs avec gestion des exceptions
         Items requesterItem = itemRepository.findById(requesterItemId)
-                .orElseThrow(() -> new RuntimeException("Requester item not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Requester item not found"));
         Items receiverItem = itemRepository.findById(receiverItemId)
-                .orElseThrow(() -> new RuntimeException("Receiver item not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Receiver item not found"));
 
+        // Récupération des utilisateurs propriétaires des items
         Users requester = requesterItem.getUser();
         Users receiver = receiverItem.getUser();
 
+        // Création de l'échange
         Exchanges exchange = new Exchanges();
         exchange.setRequester(requester);
         exchange.setReceiver(receiver);
@@ -45,16 +48,17 @@ public class ExchangeService {
         exchange.setCreatedAt(LocalDateTime.now());
         exchange.setUpdatedAt(LocalDateTime.now());
 
-        exchangeRepository.save(exchange);
-
+        // Ajout des items à l'échange
         ExchangeItems requesterExchangeItem = new ExchangeItems(exchange, requesterItem, ItemRole.DONNE);
         ExchangeItems receiverExchangeItem = new ExchangeItems(exchange, receiverItem, ItemRole.RECU);
 
         exchange.getExchangeItems().add(requesterExchangeItem);
         exchange.getExchangeItems().add(receiverExchangeItem);
 
+        // Enregistrement de l'échange et des items en une seule transaction
         exchangeRepository.save(exchange);
 
         return exchange;
     }
+
 }

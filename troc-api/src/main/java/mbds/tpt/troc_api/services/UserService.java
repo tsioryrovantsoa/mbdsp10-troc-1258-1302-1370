@@ -23,7 +23,6 @@ import javax.management.InstanceNotFoundException;
 import java.util.Optional;
 
 @Service
-@Component
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
@@ -39,13 +38,13 @@ public class UserService implements UserDetailsService {
         }
 
         return new org.springframework.security.core.userdetails.User(
-            users.getUsername(),
-            users.getPassword(),
-            users.isEnabled(), // Utilisez la valeur de isEnabled ici
-            true, // accountNonExpired
-            true, // credentialsNonExpired
-            true, // accountNonLocked
-            authorities);
+                users.getUsername(),
+                users.getPassword(),
+                users.isEnabled(), // Utilisez la valeur de isEnabled ici
+                true, // accountNonExpired
+                true, // credentialsNonExpired
+                true, // accountNonLocked
+                authorities);
     }
 
     public Users getByUsername(String username) {
@@ -86,11 +85,11 @@ public class UserService implements UserDetailsService {
     public Users reactivateUser(Long userId) {
         Users user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + userId));
-        
+
         if (user.isEnabled()) {
             throw new IllegalStateException("User is already active");
         }
-        
+
         user.setEnabled(true);
         user.setUpdatedAt(LocalDateTime.now());
         return userRepository.save(user);
