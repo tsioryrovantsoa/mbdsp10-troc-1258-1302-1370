@@ -1,6 +1,9 @@
 package mbds.tpt.troc_api.controllers;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mbds.tpt.troc_api.entities.Exchanges;
 import mbds.tpt.troc_api.services.ExchangeService;
+import mbds.tpt.troc_api.utils.ErrorResponse;
 
 @RestController
 @RequestMapping("/api/exchanges")
@@ -18,12 +22,15 @@ public class ExchangesController {
     private ExchangeService exchangeService;
 
     @PostMapping("/propose")
-    public ResponseEntity<Exchanges> proposeExchange(
+    public ResponseEntity<?> proposeExchange(
             @RequestParam Long requesterItemId,
             @RequestParam Long receiverItemId) {
-        Exchanges exchange = exchangeService.proposeExchange(requesterItemId, receiverItemId);
-        return ResponseEntity.ok(exchange);
-    }
+        try {
+            Exchanges exchange = exchangeService.proposeExchange(requesterItemId, receiverItemId);
+            return ResponseEntity.ok(exchange);
+        } catch (Exception e) {
+            return ErrorResponse.handleException(e);
+        }
 
-    // Ajoutez d'autres méthodes pour accepter, refuser ou terminer un échange
+    }
 }

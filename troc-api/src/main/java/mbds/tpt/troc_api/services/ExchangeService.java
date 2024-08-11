@@ -3,6 +3,11 @@ package mbds.tpt.troc_api.services;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -32,13 +37,31 @@ public class ExchangeService {
     public Exchanges proposeExchange(Long requesterItemId, Long receiverItemId) {
         // Récupération des items des utilisateurs avec gestion des exceptions
         Items requesterItem = itemRepository.findById(requesterItemId)
-                .orElseThrow(() -> new IllegalArgumentException("Requester item not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Objet à échanger introuvable"));
         Items receiverItem = itemRepository.findById(receiverItemId)
-                .orElseThrow(() -> new IllegalArgumentException("Receiver item not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Objet demandé introuvable"));
 
         // Récupération des utilisateurs propriétaires des items
         Users requester = requesterItem.getUser();
         Users receiver = receiverItem.getUser();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication.getPrincipal() instanceof UserDetails)) {
+            throw new UsernameNotFoundException("Utilisateur non authentifié");
+        }
+        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+        Users currentUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
+
+        // Vérifier que l'item à échanger appartient à l'utilisateur connecté
+        if (!requesterItem.getUser().equals(currentUser)) {
+            throw new IllegalArgumentException("L'objet à échanger n'appartient pas à l'utilisateur connecté");
+        }
+
+        // Vérifier si l'utilisateur est activé
+        if (!currentUser.isEnabled()) {
+            throw new DisabledException("L'utilisateur est désactivé");
+        }
 
         // Création de l'échange
         Exchanges exchange = new Exchanges();
