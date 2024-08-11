@@ -13,13 +13,14 @@ import mbds.tpt.troc_api.utils.Status;
 @Repository
 public interface ItemRepository extends JpaRepository<Items, Long> {
 
-@Query("SELECT i FROM Items i WHERE " +
-           "(:keyword IS NULL OR LOWER(i.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(i.description) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
+       @Query("SELECT i FROM Items i WHERE " +
+           "(:keyword IS NULL OR " +
+           "LOWER(CAST(i.title AS text)) LIKE LOWER(CONCAT('%', CAST(:keyword as text), '%')) OR " +
+           "LOWER(CAST(i.description AS text)) LIKE LOWER(CONCAT('%', CAST(:keyword as text), '%'))) " +
            "AND (:category IS NULL OR i.category = :category) " +
            "AND (:status IS NULL OR i.status = :status)")
-    Page<Items> findBySearchCriteria(@Param("keyword") String keyword, 
+       Page<Items> findBySearchCriteria(@Param("keyword") String keyword, 
                                      @Param("category") Category category, 
                                      @Param("status") Status status, 
                                      Pageable pageable);
-
 }

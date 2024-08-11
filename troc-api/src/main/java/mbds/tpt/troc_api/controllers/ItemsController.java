@@ -5,10 +5,20 @@ import mbds.tpt.troc_api.entities.Items;
 import mbds.tpt.troc_api.services.ItemService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+
+import org.springframework.data.domain.Pageable;
+import mbds.tpt.troc_api.utils.Category;
+import mbds.tpt.troc_api.utils.Status;
 
 @RestController
 @RequestMapping("/api/items")
@@ -45,5 +55,35 @@ public class ItemsController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<Items>> searchItems(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Category category,
+            @RequestParam(required = false) Status status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "createdAt,desc") String sort) {
+
+        String[] sortParams = sort.split(",");
+        String sortField = sortParams[0];
+        String sortDirection = sortParams.length > 1 ? sortParams[1] : "asc";
+
+        Page<Items> items = itemService.searchItems(keyword, category, status, page, size, sortField, sortDirection);
+        return ResponseEntity.ok(items);
+    }
+
+    private List<Sort.Order> createSortOrders(String[] sort) {
+        List<Sort.Order> orders = new ArrayList<>();
+        for (String sortOrder : sort) {
+            String[] parts = sortOrder.split(",");
+            String property = parts[0].trim();
+            Sort.Direction direction = (parts.length > 1 && parts[1].equalsIgnoreCase("desc")) 
+                ? Sort.Direction.DESC 
+                : Sort.Direction.ASC;
+            orders.add(new Sort.Order(direction, property));
+        }
+        return orders;
     }
 }
