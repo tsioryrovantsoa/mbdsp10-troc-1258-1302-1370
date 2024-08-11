@@ -3,6 +3,7 @@ package mbds.tpt.troc_api.controllers;
 import mbds.tpt.troc_api.datamodel.ItemDataModel;
 import mbds.tpt.troc_api.entities.Items;
 import mbds.tpt.troc_api.services.ItemService;
+import mbds.tpt.troc_api.utils.ErrorResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,7 +44,7 @@ public class ItemsController {
             Items updatedItem = itemService.updateItem(itemId, itemRequest);
             return ResponseEntity.ok(updatedItem);
         } catch (Exception e) {
-            return handleException(e);
+            return ErrorResponse.handleException(e);
         }
     }
 
