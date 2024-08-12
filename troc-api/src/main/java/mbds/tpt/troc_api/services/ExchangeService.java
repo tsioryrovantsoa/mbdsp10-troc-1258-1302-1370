@@ -1,7 +1,12 @@
 package mbds.tpt.troc_api.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
+import mbds.tpt.troc_api.utils.ResourceNotFoundException;
+import mbds.tpt.troc_api.utils.Status;
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.Authentication;
@@ -84,4 +89,45 @@ public class ExchangeService {
         return exchange;
     }
 
+    @Transactional
+    public Exchanges acceptExchange(Long exchangeId) {
+        Exchanges exchange = exchangeRepository.findById(exchangeId)
+            .orElseThrow(() -> new ResourceNotFoundException("Exchange not found"));
+
+        if (!exchange.getStatus().equals(ExchangeStatus.EN_ATTENTE)) {
+            throw new IllegalStateException("Exchange is not in pending status");
+        }
+
+        exchange.setStatus(ExchangeStatus.ACCEPTE);
+        exchange.setUpdatedAt(LocalDateTime.now());
+
+        // Update items status
+        updateItemsStatus(exchange);
+
+        return exchangeRepository.save(exchange);
+    }
+
+    @Transactional
+    public Exchanges rejectExchange(Long exchangeId) {
+        Exchanges exchange = exchangeRepository.findById(exchangeId)
+            .orElseThrow(() -> new ResourceNotFoundException("Exchange not found"));
+
+        if (!exchange.getStatus().equals(ExchangeStatus.EN_ATTENTE)) {
+            throw new IllegalStateException("Exchange is not in pending status");
+        }
+
+        exchange.setStatus(ExchangeStatus.REFUSE);
+        exchange.setUpdatedAt(LocalDateTime.now());
+
+        return exchangeRepository.save(exchange);
+    }
+
+    private void updateItemsStatus(Exchanges exchange) {
+        Set<ExchangeItems> exchangeItems = exchange.getExchangeItems();
+        for (ExchangeItems exchangeItem : exchangeItems) {
+            Items item = exchangeItem.getItem();
+            item.setStatus(Status.INDISPONIBLE);
+            itemRepository.save(item);
+        }
+    }
 }
