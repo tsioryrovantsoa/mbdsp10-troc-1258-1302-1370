@@ -8,7 +8,7 @@ https://docs.google.com/document/d/1G-csdkF76GxP0e39_VwjViXtZTqFFQWC/edit?usp=sh
 
 ## Site web frontOffice
 Node : 18.18.2
-Dossier : troc
+Dossier : troc-front
 
 ## API Java (Spring boot)
 - maven : 3.9.8
