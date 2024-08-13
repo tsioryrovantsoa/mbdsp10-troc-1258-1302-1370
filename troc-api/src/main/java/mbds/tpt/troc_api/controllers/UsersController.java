@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,8 +63,8 @@ public class UsersController {
             if (!authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
                 return ResponseEntity
-                    .status(HttpStatus.FORBIDDEN)
-                    .body("Access denied. Only ADMIN users can reactivate user accounts.");
+                        .status(HttpStatus.FORBIDDEN)
+                        .body("Access denied. Only ADMIN users can reactivate user accounts.");
             }
 
             Users reactivatedUser = userService.reactivateUser(userId);
@@ -84,11 +85,27 @@ public class UsersController {
             if (!authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
                 return ResponseEntity
-                    .status(HttpStatus.FORBIDDEN)
-                    .body("Access denied. Only ADMIN users can reactivate user accounts.");
+                        .status(HttpStatus.FORBIDDEN)
+                        .body("Access denied. Only ADMIN users can reactivate user accounts.");
             }
             Users suspendedUser = userService.suspendUser(id);
             return ResponseEntity.ok(suspendedUser);
+        } catch (InstanceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> logoutUser(@PathVariable Long id, Authentication authentication) {
+        try {
+            if (!authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                return ResponseEntity
+                        .status(HttpStatus.FORBIDDEN)
+                        .body("Access denied. Only ADMIN users can reactivate user accounts.");
+            }
+            userService.deleteUser(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (InstanceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

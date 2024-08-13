@@ -106,4 +106,16 @@ public class UserService implements UserDetailsService {
             throw new InstanceNotFoundException("User not found with id: " + id);
         }
     }
+
+    public Users deleteUser(Long id) throws InstanceNotFoundException {
+        Optional<Users> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            Users user = optionalUser.get();
+            user.setEnabled(false);
+            user.setDeletedAt(LocalDateTime.now());
+            return userRepository.save(user);
+        } else {
+            throw new InstanceNotFoundException("User not found with id: " + id);
+        }
+    }
 }
