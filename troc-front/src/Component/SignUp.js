@@ -9,6 +9,9 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
 import MuiPhoneNumber from "mui-phone-number";
+import { parsePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+import UserService from '../Service/userService';
+import Alert from '@mui/material/Alert';
 
 export default function SignUp() {
 
@@ -27,6 +30,9 @@ export default function SignUp() {
 
     const [errors, setErrors] = useState({});
 
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
     const isValidEmail = (email) => {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
@@ -40,13 +46,20 @@ export default function SignUp() {
         }));
     };
     
-      const onPhoneNumberChanged = (value) => {
-        const cleanedValue = value.replace(/[^\d+]/g, '');
+    const onPhoneNumberChanged = (value) => {
+        let cleanedValue = value.replace(/[^\d+]/g, '');
+        try {
+          const phoneNumber = parsePhoneNumber(cleanedValue);
+          if (phoneNumber) {
+            cleanedValue = phoneNumber.format('E.164');
+          }
+        } catch (error) {
+        }
         setFormData(prevData => ({
           ...prevData,
-          phone: cleanedValue.replace(/\s+/g, '')
+          phone: cleanedValue
         }));
-      };
+    };
     
       const validateForm = () => {
         let tempErrors = {};
@@ -58,18 +71,46 @@ export default function SignUp() {
         if (formData.email && !isValidEmail(formData.email)) {
             tempErrors.email = "Invalid email address";
         }
-        if(formData.confirmPassword != formData.password) {
+        if(formData.confirmPassword !== formData.password) {
             tempErrors.confirmPassword = "Password mismatch. Please verify that both password fields are identical.";
+        }
+        if (formData.phone) {
+            try {
+              const phoneNumber = parsePhoneNumber(formData.phone);
+              if (!phoneNumber || !isValidPhoneNumber(formData.phone)) {
+                tempErrors.phone = "Invalid phone number. Please check and try again.";
+              }
+            } catch (error) {
+              tempErrors.phone = "Invalid phone number format";
+            }
         }
         setErrors(tempErrors);
         return Object.keys(tempErrors).length === 0;
       };
     
-      const handleSubmit = (event) => {
+      const handleSubmit = async (event) => {
         event.preventDefault();
+        setError('');
+        setSuccess('');
+
         if (validateForm()) {
           console.log(formData);
-          // Proceed with form submission
+          try {
+            const data = {
+                name: formData.name,
+                username: formData.username,
+                email: formData.email,
+                phone: formData.phone,
+                address: formData.address,
+                password: formData.password
+            }
+            const response = await UserService.register(data);
+            setSuccess('User registered successfully!');
+            console.log(response.data);
+          } catch (err) {
+            setError(err.response?.data?.message || 'An error occurred during registration');
+            console.error('Registration error:', err);
+          }
         } else {
           console.log("Form has errors");
         }
@@ -91,6 +132,10 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+
+          {error && <Alert severity="error">{error}</Alert>}
+          {success && <Alert severity="success">{success}</Alert>}
+
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
