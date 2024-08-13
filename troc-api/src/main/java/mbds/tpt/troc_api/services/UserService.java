@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,5 +118,43 @@ public class UserService implements UserDetailsService {
         } else {
             throw new InstanceNotFoundException("User not found with id: " + id);
         }
+    }
+
+    public Users updateUserProfile(Long userId, Users userDetails, String role, String authenticatedUsername)
+            throws Exception {
+        Users userToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if ("USER".equals(role) && !authenticatedUsername.equals(userToUpdate.getUsername())) {
+            throw new Exception("Access denied. You can only update your own profile.");
+        }
+
+        if (userDetails.getUsername() != null) {
+            userToUpdate.setUsername(userDetails.getUsername());
+        }
+        if (userDetails.getName() != null) {
+            userToUpdate.setName(userDetails.getName());
+        }
+        if (userDetails.getPassword() != null) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(userDetails.getPassword());
+            userToUpdate.setPassword(hashedPassword);
+        }
+        if (userDetails.getEmail() != null) {
+            userToUpdate.setEmail(userDetails.getEmail());
+        }
+        if (userDetails.getPhone() != null) {
+            userToUpdate.setPhone(userDetails.getPhone());
+        }
+        if (userDetails.getAddress() != null) {
+            userToUpdate.setAddress(userDetails.getAddress());
+        }
+        if ("ADMIN".equals(role) && userDetails.getRole() != null) {
+            userToUpdate.setRole(userDetails.getRole());
+        }
+
+        userToUpdate.setUpdatedAt(LocalDateTime.now());
+
+        return userRepository.save(userToUpdate);
     }
 }
