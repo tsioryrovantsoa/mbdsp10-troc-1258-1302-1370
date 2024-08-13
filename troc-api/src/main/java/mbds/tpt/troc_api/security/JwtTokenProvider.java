@@ -1,7 +1,9 @@
 package mbds.tpt.troc_api.security;
 
 import io.jsonwebtoken.*;
+import mbds.tpt.troc_api.entities.BlacklistedToken;
 import mbds.tpt.troc_api.entities.Users;
+import mbds.tpt.troc_api.repositories.BlacklistedTokenRepository;
 import mbds.tpt.troc_api.services.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -11,9 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import io.jsonwebtoken.security.Keys;
 
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class JwtTokenProvider {
@@ -26,6 +31,9 @@ public class JwtTokenProvider {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BlacklistedTokenRepository blacklistedTokenRepository;
 
     private Key key;
 
@@ -78,6 +86,10 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String authToken) {
         try {
+            Optional<BlacklistedToken> blacklistedToken = blacklistedTokenRepository.findByToken(authToken);
+            if (blacklistedToken.isPresent()) {
+                return false;
+            }
             Jwts.parser().setSigningKey(key).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException ex) {
@@ -92,5 +104,27 @@ public class JwtTokenProvider {
             // Log exception
         }
         return false;
+    }
+
+    public void invalidateToken(String token, LocalDateTime expirationDate) {
+        BlacklistedToken blacklistedToken = new BlacklistedToken(token, expirationDate);
+        blacklistedTokenRepository.save(blacklistedToken);
+    }
+
+    public LocalDateTime getExpirationDateFromToken(String token) {
+        Date expirationDate = getAllClaimsFromToken(token).getExpiration();
+        return convertToLocalDateTime(expirationDate);
+    }
+
+    private Claims getAllClaimsFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(key)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    private LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+        return LocalDateTime.ofInstant(
+                dateToConvert.toInstant(), ZoneId.systemDefault());
     }
 }
