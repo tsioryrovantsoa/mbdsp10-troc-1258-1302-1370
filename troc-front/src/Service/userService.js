@@ -8,6 +8,10 @@ const UserService = {
     register(userData) {
       return axios.post(`${API_USER_URL}/register`, userData);
     },
+
+    login(userData) {
+      return axios.post(`${API_URL}api/auth/login`, userData);
+    },
     
 };
   
