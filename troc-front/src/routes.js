@@ -1,5 +1,6 @@
 import SignIn from "./Component/SignIn";
 import SignUp from "./Component/SignUp";
+import Accueil from "./Component/Accueil";
 
 const routes = [
     {
@@ -11,6 +12,11 @@ const routes = [
         name: "sign in",
         route: "sign-in",
         component: <SignIn/>
+    },
+    {
+        name: "accueil",
+        route: "accueil",
+        component: <Accueil/>
     }
 ];
 

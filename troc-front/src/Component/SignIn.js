@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import { Container, Box, Avatar, Typography, Grid, TextField, Button, Alert, Link, CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import UserService from '../Service/userService';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         username: '',
@@ -46,6 +49,8 @@ export default function SignIn() {
           try {
             const response = await UserService.login(formData);
             console.log(response?.data);
+            localStorage.setItem("token", response?.data?.accessToken);
+            navigate('/accueil');
           } catch (err) {
             setError(err.response?.data?.message || 'Invalid credentials!');
             console.error('Registration error:', err);
@@ -112,7 +117,7 @@ export default function SignIn() {
               sx={{ mt: 3, mb: 2 }}
               disabled={loading}
             >
-              {loading ? <CircularProgress size={24} /> : "Sign Up"}
+              {loading ? <CircularProgress size={24} /> : "Sign In"}
             </Button>
             <Grid container>
               <Grid item>
