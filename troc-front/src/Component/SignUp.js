@@ -12,6 +12,7 @@ import MuiPhoneNumber from "mui-phone-number";
 import { parsePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
 import UserService from '../Service/userService';
 import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function SignUp() {
 
@@ -32,6 +33,7 @@ export default function SignUp() {
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const isValidEmail = (email) => {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -92,6 +94,7 @@ export default function SignUp() {
         event.preventDefault();
         setError('');
         setSuccess('');
+        setLoading(true);
 
         if (validateForm()) {
           console.log(formData);
@@ -110,9 +113,12 @@ export default function SignUp() {
           } catch (err) {
             setError(err.response?.data?.message || 'An error occurred during registration');
             console.error('Registration error:', err);
+          } finally {
+            setLoading(false); 
           }
         } else {
           console.log("Form has errors");
+          setLoading(false);
         }
       };
 
@@ -244,8 +250,9 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
-              Sign Up
+              {loading ? <CircularProgress size={24} /> : "Sign Up"}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
