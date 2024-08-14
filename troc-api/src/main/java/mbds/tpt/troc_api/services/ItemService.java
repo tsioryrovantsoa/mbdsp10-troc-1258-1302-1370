@@ -25,9 +25,7 @@ import jakarta.transaction.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Sort;
@@ -145,13 +143,23 @@ public class ItemService {
         }
     }
 
-    public Page<Items> searchItems(String keyword, Category category, Status status, 
-                                   int page, int size, String sortField, String sortDirection) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
-                    Sort.by(sortField).descending();
+    public Page<Items> searchItems(String keyword, Category category, Status status,
+            int page, int size, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
 
         Pageable pageable = PageRequest.of(page, size, sort);
 
         return itemRepository.findBySearchCriteria(keyword, category, status, pageable);
     }
+
+    @Transactional
+    public void deleteItem(Long itemId) {
+        Items item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("Item not found with id: " + itemId));
+
+        // Supprimer l'item lui-même
+        itemRepository.delete(item);
+    }
+
 }
