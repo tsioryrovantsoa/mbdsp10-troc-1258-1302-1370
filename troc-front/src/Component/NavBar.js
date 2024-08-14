@@ -119,7 +119,7 @@ export default function NavBar() {
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                         <Button
-                        key={page.name}
+                            key={page.name}
                             onClick={handleCloseNavMenu}
                             component={Link}
                             to={`/${page?.url}`}

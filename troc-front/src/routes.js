@@ -1,6 +1,7 @@
 import SignIn from "./Component/SignIn";
 import SignUp from "./Component/SignUp";
-import Accueil from "./Component/Accueil";
+import ItemList from "./Component/Items/item-list";
+import AddItem from "./Component/Items/item-add";
 
 const routes = [
     {
@@ -16,7 +17,12 @@ const routes = [
     {
         name: "accueil",
         route: "accueil",
-        component: <Accueil/>
+        component: <ItemList/>
+    },
+    {
+        name: "add item",
+        route: "add-item",
+        component: <AddItem/>
     }
 ];
 
