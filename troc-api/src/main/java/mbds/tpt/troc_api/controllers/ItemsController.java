@@ -80,11 +80,24 @@ public class ItemsController {
         for (String sortOrder : sort) {
             String[] parts = sortOrder.split(",");
             String property = parts[0].trim();
-            Sort.Direction direction = (parts.length > 1 && parts[1].equalsIgnoreCase("desc")) 
-                ? Sort.Direction.DESC 
-                : Sort.Direction.ASC;
+            Sort.Direction direction = (parts.length > 1 && parts[1].equalsIgnoreCase("desc"))
+                    ? Sort.Direction.DESC
+                    : Sort.Direction.ASC;
             orders.add(new Sort.Order(direction, property));
         }
         return orders;
     }
+
+    @DeleteMapping("/{itemId}")
+    public ResponseEntity<?> deleteItem(@PathVariable Long itemId) {
+        try {
+            itemService.deleteItem(itemId);
+            return ResponseEntity.ok("Item deleted successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return handleException(e);
+        }
+    }
+
 }

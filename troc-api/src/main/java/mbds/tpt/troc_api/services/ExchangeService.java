@@ -92,7 +92,7 @@ public class ExchangeService {
     @Transactional
     public Exchanges acceptExchange(Long exchangeId) {
         Exchanges exchange = exchangeRepository.findById(exchangeId)
-            .orElseThrow(() -> new ResourceNotFoundException("Exchange not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Exchange not found"));
 
         if (!exchange.getStatus().equals(ExchangeStatus.EN_ATTENTE)) {
             throw new IllegalStateException("Exchange is not in pending status");
@@ -110,7 +110,7 @@ public class ExchangeService {
     @Transactional
     public Exchanges rejectExchange(Long exchangeId) {
         Exchanges exchange = exchangeRepository.findById(exchangeId)
-            .orElseThrow(() -> new ResourceNotFoundException("Exchange not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Exchange not found"));
 
         if (!exchange.getStatus().equals(ExchangeStatus.EN_ATTENTE)) {
             throw new IllegalStateException("Exchange is not in pending status");
@@ -129,5 +129,11 @@ public class ExchangeService {
             item.setStatus(Status.INDISPONIBLE);
             itemRepository.save(item);
         }
+    }
+
+    public void deleteExchange(Long exchangeId) throws Exception {
+        Exchanges exchange = exchangeRepository.findById(exchangeId)
+                .orElseThrow(() -> new IllegalArgumentException("Exchange not found with id: " + exchangeId));
+        exchangeRepository.delete(exchange);
     }
 }

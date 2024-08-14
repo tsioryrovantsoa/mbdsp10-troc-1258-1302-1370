@@ -25,12 +25,12 @@ public class ExchangeItems {
     @Column(name = "exchange_item_id")
     private Long exchangeItemId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "exchange_id", nullable = false)
     @JsonIgnore
     private Exchanges exchange;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     @JsonIgnore
     private Items item;
