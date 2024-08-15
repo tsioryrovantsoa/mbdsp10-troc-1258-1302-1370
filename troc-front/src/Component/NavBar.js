@@ -14,6 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { isTokenValid } from '../Service/utils';
 import { Link } from 'react-router-dom';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const pages = [{name:'Items', url:''}, {name:'Exchanges', url:''}];
 const settings = [{name:'Profile', url:''}, {name:'Logout',url: 'sign-in'}];
@@ -131,6 +132,9 @@ export default function NavBar() {
                     </Box>
             
                     <Box sx={{ flexGrow: 0 }}>
+                    <Button variant="contained" color="success" sx={{ marginRight: '10px' }} startIcon={<AddCircleOutlineIcon />} component={Link} to='/add-item'>
+                        Add item
+                    </Button>
                         <Tooltip title="Open settings">
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                             <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
