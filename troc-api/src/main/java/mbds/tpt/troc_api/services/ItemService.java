@@ -166,6 +166,11 @@ public class ItemService {
 
     public Items getItemById(Long id) {
         Optional<Items> item = itemRepository.findById(id);
-        return item.orElseThrow(() -> new RuntimeException("Item not found with id " + id));
+        Items loadedItem = item.orElseThrow(() -> new RuntimeException("Item not found with id " + id));
+
+        // Charger explicitement les relations si nécessaire
+        loadedItem.getImages().size(); // Déclenche le chargement des images
+
+        return loadedItem;
     }
 }

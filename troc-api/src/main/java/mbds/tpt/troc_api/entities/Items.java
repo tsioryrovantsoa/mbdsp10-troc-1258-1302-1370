@@ -22,7 +22,7 @@ public class Items {
     @Column(name = "item_id")
     private Long item_id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
