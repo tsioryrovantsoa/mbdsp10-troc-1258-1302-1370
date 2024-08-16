@@ -3,6 +3,8 @@ package mbds.tpt.troc_api.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -44,6 +46,9 @@ public class Users {
 
     @Column(name = "is_enabled")
     private boolean isEnabled = true;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Items> items = new HashSet<>();
 
     public Users() {
     }

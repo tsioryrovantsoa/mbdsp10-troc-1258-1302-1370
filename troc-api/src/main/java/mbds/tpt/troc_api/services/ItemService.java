@@ -25,7 +25,9 @@ import jakarta.transaction.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Sort;
@@ -162,4 +164,13 @@ public class ItemService {
         itemRepository.delete(item);
     }
 
+    public Items getItemById(Long id) {
+        Optional<Items> item = itemRepository.findById(id);
+        Items loadedItem = item.orElseThrow(() -> new RuntimeException("Item not found with id " + id));
+
+        // Charger explicitement les relations si nécessaire
+        loadedItem.getImages().size(); // Déclenche le chargement des images
+
+        return loadedItem;
+    }
 }

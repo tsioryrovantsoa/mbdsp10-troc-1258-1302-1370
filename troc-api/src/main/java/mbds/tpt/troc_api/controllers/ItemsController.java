@@ -100,4 +100,10 @@ public class ItemsController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Items> getItemById(@PathVariable Long id) {
+        Items item = itemService.getItemById(id);
+        return ResponseEntity.ok(item);
+    }
+
 }
