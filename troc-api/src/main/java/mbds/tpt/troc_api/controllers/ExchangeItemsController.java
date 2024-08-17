@@ -14,6 +14,7 @@ import mbds.tpt.troc_api.services.ExchangeItemsService;
 @RestController
 @RequestMapping("/api/exchange-items")
 public class ExchangeItemsController {
+
     @Autowired
     private ExchangeItemsService exchangeItemsService;
 
