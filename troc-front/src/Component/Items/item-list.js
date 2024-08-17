@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import NavBar from "../NavBar";
-import { Box, Button, Typography, InputBase, Card, CardContent, CardActions, CardMedia, Pagination, CircularProgress } from '@mui/material';
+import { Box, Button, Typography, InputBase, Card, CardContent, CardActions, CardMedia, Pagination, 
+    CircularProgress,  Select, MenuItem, InputLabel, FormControl, Grid } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import ItemService from '../../Service/itemService';
@@ -59,6 +60,7 @@ export default function ItemList() {
     const [size, setSize] = useState(4);
     const [totalPages, setTotalPages] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
+    const [categories, setCategories] = useState([]);
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -130,9 +132,22 @@ export default function ItemList() {
         setPage(value - 1);
     };
 
+    const fetchCategories = async () => {
+        try {
+            const response = await ItemService.getCategories();
+            setCategories(response.data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    }
+
     useEffect(() => {
         fetchItems();
     }, [page, size, keyword, category, status]);
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
 
 
     return (
@@ -151,22 +166,50 @@ export default function ItemList() {
                         Item List
                     </Typography>
 
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                            value={keyword}
-                            onChange={(e) => setKeyword(e.target.value)}
-                            onKeyPress={(e) => {
+                    <br></br>
+
+                    <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Grid item xs={6} sm={4} md={3}>
+                            <Search sx={{ border: '1px solid rgba(0, 0, 0, 0.23)', borderRadius: '4px', boxShadow: 'none', width: '100%' }}>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Search…"
+                                inputProps={{ 'aria-label': 'search' }}
+                                value={keyword}
+                                onChange={(e) => setKeyword(e.target.value)}
+                                onKeyPress={(e) => {
                                 if (e.key === 'Enter') {
                                     fetchItems();
                                 }
-                            }}
-                        />
-                    </Search>
+                                }}
+                            />
+                            </Search>
+                        </Grid>
+
+                        <Grid item xs={6} sm={4} md={3}>
+                            <FormControl required fullWidth variant="outlined" sx={{ minWidth: 120 }}>
+                            <InputLabel id="category-label">Category</InputLabel>
+                            <Select
+                                labelId="category-label"
+                                id="category"
+                                name="category"
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                                label="Category"
+                                sx={{ minHeight: '40px' }}
+                            >
+                                <MenuItem value="">None</MenuItem>
+                                {categories.map((categ) => (
+                                <MenuItem key={categ} value={categ}>{categ}</MenuItem>
+                                ))}
+                            </Select>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+
+
                     
                     {isLoading ? (
                         <CircularProgress />

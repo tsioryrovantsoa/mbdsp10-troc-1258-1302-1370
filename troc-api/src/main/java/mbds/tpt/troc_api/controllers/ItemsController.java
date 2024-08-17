@@ -21,6 +21,8 @@ import java.net.MalformedURLException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.Arrays;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -165,4 +167,10 @@ public class ItemsController {
         }
     }
 
+    @GetMapping("/categories")
+    public List<String> getAllCategories() {
+        return Arrays.stream(Category.values())
+                     .map(Enum::name)
+                     .collect(Collectors.toList());
+    }
 }

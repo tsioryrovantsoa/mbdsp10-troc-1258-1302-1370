@@ -34,6 +34,15 @@ const ItemService = {
             },
         });
     },
+
+    getCategories() {
+        const token = localStorage.getItem('token');
+        return axios.get(`${API_ITEM_URL}/categories`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        });
+    }
 }
 
 export default ItemService;

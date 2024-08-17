@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Container, Box, Avatar, Typography, Grid, TextField, Button, Alert, Link, CircularProgress } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Container, Box, Avatar, Typography, Grid, TextField, Button, Alert, Link, 
+    CircularProgress, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import NavBar from '../NavBar';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -17,6 +18,17 @@ export default function AddItem() {
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const [categories, setCategories] = useState([]);
+
+    const fetchCategories = async () => {
+        try {
+            const response = await ItemService.getCategories();
+            setCategories(response.data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -55,6 +67,10 @@ export default function AddItem() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
 
     return (
         <>
@@ -97,17 +113,22 @@ export default function AddItem() {
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="category"
-                                    label="Category"
-                                    name="category"
-                                    autoComplete="category"
-                                    value={formData.category}
-                                    onChange={handleChange}
-                                />
+                                <FormControl required fullWidth sx={{ mt: 2 }}>
+                                    <InputLabel id="category-label">Category</InputLabel>
+                                    <Select
+                                        labelId="category-label"
+                                        id="category"
+                                        name="category"
+                                        value={formData.category}
+                                        onChange={handleChange}
+                                    >
+                                        {
+                                            categories.map((categ) => (
+                                                <MenuItem value={categ}>{categ}</MenuItem>
+                                            ))
+                                        }
+                                    </Select>
+                                </FormControl>
                             </Grid>
 
                             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
