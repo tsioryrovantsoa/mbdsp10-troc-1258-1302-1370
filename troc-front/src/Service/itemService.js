@@ -24,6 +24,16 @@ const ItemService = {
             },
         });
     },
+
+    getImage(imageId) {
+        const token = localStorage.getItem('token');
+        return axios.get(`${API_ITEM_URL}/images/${imageId}`, {
+            responseType: 'blob',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        });
+    },
 }
 
 export default ItemService;

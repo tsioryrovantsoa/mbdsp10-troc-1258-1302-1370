@@ -17,6 +17,7 @@ export default function ItemList() {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(4);
     const [totalPages, setTotalPages] = useState(0);
+    const [imageUrls, setImageUrls] = useState({});
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -75,6 +76,23 @@ export default function ItemList() {
             const response = await ItemService.listItem(filteredParams);
             setItems(response.data.content);
             setTotalPages(response.data.totalPages);
+
+            const imageUrlPromises = response.data.content.map(async (item) => {
+                if (item.images[0]) {
+                    try {
+                        const imageResponse = await ItemService.getImage(item.images[0].image_id);
+                        return { id: item.id, url: URL.createObjectURL(imageResponse.data) };
+                    } catch (error) {
+                        console.error(`Error fetching image for item ${item.id}:`, error);
+                        return { id: item.id, url: null };
+                    }
+                }
+                return { id: item.id, url: null };
+            });
+    
+            const imageUrls = await Promise.all(imageUrlPromises);
+            setImageUrls(Object.fromEntries(imageUrls.map(({ id, url }) => [id, url])));
+
         } catch (error) {
             console.error('Error fetching items:', error);
         }
@@ -87,6 +105,16 @@ export default function ItemList() {
     useEffect(() => {
         fetchItems();
     }, [page, size, keyword, category, status]);
+
+
+    useEffect(() => {
+        return () => {
+            // Nettoyer les URLs des objets lors du démontage du composant
+            Object.values(imageUrls).forEach(url => {
+                if (url) URL.revokeObjectURL(url);
+            });
+        };
+    }, [imageUrls]);
 
     return (
         <>
@@ -133,7 +161,7 @@ export default function ItemList() {
                             <Card key={item.id} sx={{ width: 300, height: 300, marginLeft: '10px' }}>
                                 <CardMedia
                                     sx={{ height: 140 }}
-                                    image={item.image || "/static/images/cards/contemplative-reptile.jpg"}
+                                    image={imageUrls[item.id] || "/static/images/cards/contemplative-reptile.jpg"}
                                     title={item.title}
                                 />
                                 <CardContent>

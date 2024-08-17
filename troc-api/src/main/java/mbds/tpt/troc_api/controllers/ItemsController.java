@@ -2,10 +2,15 @@ package mbds.tpt.troc_api.controllers;
 
 import mbds.tpt.troc_api.datamodel.ItemDataModel;
 import mbds.tpt.troc_api.entities.Items;
+import mbds.tpt.troc_api.entities.Images;
+import mbds.tpt.troc_api.repositories.ImageRepository;
 import mbds.tpt.troc_api.services.ItemService;
 import mbds.tpt.troc_api.utils.ErrorResponse;
+import mbds.tpt.troc_api.utils.ResourceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -13,9 +18,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.springframework.data.domain.Pageable;
 import mbds.tpt.troc_api.utils.Category;
@@ -27,6 +39,12 @@ public class ItemsController {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private ImageRepository imageRepository;
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     @PostMapping
     public ResponseEntity<?> createItem(@ModelAttribute ItemDataModel itemData) {
@@ -104,6 +122,51 @@ public class ItemsController {
     public ResponseEntity<Items> getItemById(@PathVariable Long id) {
         Items item = itemService.getItemById(id);
         return ResponseEntity.ok(item);
+    }
+
+    @GetMapping("/images/{imageId}")
+    public ResponseEntity<Resource> serveImage(@PathVariable Long imageId) {
+        try {
+            // Récupérer l'image à partir de l'ID
+            Images image = imageRepository.findById(imageId)
+                .orElseThrow(() -> new ResourceNotFoundException("Image not found"));
+
+            String filename = image.getImageUrl();
+            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+                // Déterminer le type de contenu basé sur l'extension du fichier
+                String contentType = determineContentType(filename);
+                
+                return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (MalformedURLException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    private String determineContentType(String filename) {
+        String extension = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+        switch (extension) {
+            case "png":
+                return "image/png";
+            case "jpg":
+            case "jpeg":
+                return "image/jpeg";
+            case "gif":
+                return "image/gif";
+            case "bmp":
+                return "image/bmp";
+            case "webp":
+                return "image/webp";
+            default:
+                return "application/octet-stream";
+        }
     }
 
 }
