@@ -1,18 +1,18 @@
 
 import React, { useState, useEffect } from 'react';
 import NavBar from "../NavBar";
-import { Box, Button, Typography, InputBase, Card, CardContent, CardActions, CardMedia, Pagination } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Link } from 'react-router-dom';
+import { Box, Button, Typography, InputBase, Card, CardContent, CardActions, CardMedia, Pagination, CircularProgress } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import ItemService from '../../Service/itemService';
 
 const ItemImage = ({ imageId }) => {
     const [imageUrl, setImageUrl] = useState(null);
+    const [imageLoading, setImageLoading] = useState(true);
 
     useEffect(() => {
         const fetchImage = async () => {
+            setImageLoading(true);
             try {
                 const response = await ItemService.getImage(imageId);
                 const blob = new Blob([response.data], { type: response.headers['content-type'] });
@@ -20,6 +20,8 @@ const ItemImage = ({ imageId }) => {
                 setImageUrl(url);
             } catch (error) {
                 console.error(`Error fetching image for id ${imageId}:`, error);
+            } finally {
+                setImageLoading(false);
             }
         };
 
@@ -33,6 +35,10 @@ const ItemImage = ({ imageId }) => {
             }
         };
     }, [imageId]);
+
+    if (imageLoading) {
+        return <CircularProgress />;
+    }
 
     return (
         <CardMedia
@@ -52,6 +58,7 @@ export default function ItemList() {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(4);
     const [totalPages, setTotalPages] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -94,6 +101,7 @@ export default function ItemList() {
     }));
 
     const fetchItems = async () => {
+        setIsLoading(true);
         const params = {
             keyword,
             category,
@@ -113,6 +121,8 @@ export default function ItemList() {
 
         } catch (error) {
             console.error('Error fetching items:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -157,43 +167,49 @@ export default function ItemList() {
                             }}
                         />
                     </Search>
+                    
+                    {isLoading ? (
+                        <CircularProgress />
+                    ) : (
+                        <>
+                        <Box
+                            sx={{
+                                marginTop: 8,
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                            }}
+                        >
+                            {items.map((item) => (
+                                <Card key={item.id} sx={{ width: 300, height: 300, marginLeft: '10px' }}>
+                                    <ItemImage imageId={item.images[0]?.image_id} />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                            {item.title}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {item.description}
+                                        </Typography>
+                                    </CardContent>
+                                    <CardActions>
+                                        <Button size="small">Share</Button>
+                                        <Button size="small">Learn More</Button>
+                                    </CardActions>
+                                </Card>
+                            ))}
+                        </Box>
 
-                    <Box
-                        sx={{
-                            marginTop: 8,
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                        }}
-                    >
-                        {items.map((item) => (
-                            <Card key={item.id} sx={{ width: 300, height: 300, marginLeft: '10px' }}>
-                                <ItemImage imageId={item.images[0]?.image_id} />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        {item.title}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {item.description}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small">Share</Button>
-                                    <Button size="small">Learn More</Button>
-                                </CardActions>
-                            </Card>
-                        ))}
-                    </Box>
+                        <br></br>
 
-                    <br></br>
-
-                    <Pagination 
-                        count={totalPages} 
-                        page={page + 1} 
-                        onChange={handlePageChange} 
-                        variant="outlined" 
-                        color="secondary" 
-                    />
+                        <Pagination 
+                            count={totalPages} 
+                            page={page + 1} 
+                            onChange={handlePageChange} 
+                            variant="outlined" 
+                            color="secondary" 
+                        />
+                        </>
+                    )}
 
                 </Box>
             </div>
