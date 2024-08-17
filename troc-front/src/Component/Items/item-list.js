@@ -8,6 +8,41 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import ItemService from '../../Service/itemService';
 
+const ItemImage = ({ imageId }) => {
+    const [imageUrl, setImageUrl] = useState(null);
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const response = await ItemService.getImage(imageId);
+                const blob = new Blob([response.data], { type: response.headers['content-type'] });
+                const url = URL.createObjectURL(blob);
+                setImageUrl(url);
+            } catch (error) {
+                console.error(`Error fetching image for id ${imageId}:`, error);
+            }
+        };
+
+        if (imageId) {
+            fetchImage();
+        }
+
+        return () => {
+            if (imageUrl) {
+                URL.revokeObjectURL(imageUrl);
+            }
+        };
+    }, [imageId]);
+
+    return (
+        <CardMedia
+            sx={{ height: 140 }}
+            image={imageUrl || "/static/images/cards/contemplative-reptile.jpg"}
+            title="Item image"
+        />
+    );
+};
+
 export default function ItemList() {
 
     const [items, setItems] = useState([]);
@@ -17,7 +52,6 @@ export default function ItemList() {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(4);
     const [totalPages, setTotalPages] = useState(0);
-    const [imageUrls, setImageUrls] = useState({});
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -77,22 +111,6 @@ export default function ItemList() {
             setItems(response.data.content);
             setTotalPages(response.data.totalPages);
 
-            const imageUrlPromises = response.data.content.map(async (item) => {
-                if (item.images[0]) {
-                    try {
-                        const imageResponse = await ItemService.getImage(item.images[0].image_id);
-                        return { id: item.id, url: URL.createObjectURL(imageResponse.data) };
-                    } catch (error) {
-                        console.error(`Error fetching image for item ${item.id}:`, error);
-                        return { id: item.id, url: null };
-                    }
-                }
-                return { id: item.id, url: null };
-            });
-    
-            const imageUrls = await Promise.all(imageUrlPromises);
-            setImageUrls(Object.fromEntries(imageUrls.map(({ id, url }) => [id, url])));
-
         } catch (error) {
             console.error('Error fetching items:', error);
         }
@@ -106,15 +124,6 @@ export default function ItemList() {
         fetchItems();
     }, [page, size, keyword, category, status]);
 
-
-    useEffect(() => {
-        return () => {
-            // Nettoyer les URLs des objets lors du démontage du composant
-            Object.values(imageUrls).forEach(url => {
-                if (url) URL.revokeObjectURL(url);
-            });
-        };
-    }, [imageUrls]);
 
     return (
         <>
@@ -159,11 +168,7 @@ export default function ItemList() {
                     >
                         {items.map((item) => (
                             <Card key={item.id} sx={{ width: 300, height: 300, marginLeft: '10px' }}>
-                                <CardMedia
-                                    sx={{ height: 140 }}
-                                    image={imageUrls[item.id] || "/static/images/cards/contemplative-reptile.jpg"}
-                                    title={item.title}
-                                />
+                                <ItemImage imageId={item.images[0]?.image_id} />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
                                         {item.title}
