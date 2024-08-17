@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +21,11 @@ import java.net.MalformedURLException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
-import org.springframework.data.domain.Pageable;
 import mbds.tpt.troc_api.utils.Category;
 import mbds.tpt.troc_api.utils.Status;
 
