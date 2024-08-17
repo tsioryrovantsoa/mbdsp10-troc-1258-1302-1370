@@ -136,4 +136,8 @@ public class ExchangeService {
                 .orElseThrow(() -> new IllegalArgumentException("Exchange not found with id: " + exchangeId));
         exchangeRepository.delete(exchange);
     }
+
+    public List<Exchanges> getExchangesByItemId(Long itemId) {
+        return exchangeRepository.findExchangesByItemId(itemId);
+    }
 }
