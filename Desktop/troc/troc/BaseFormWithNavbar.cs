@@ -29,7 +29,7 @@ namespace troc
 
             Button homeButton = new Button
             {
-                Text = "Accueil",
+                Text = "Items",
                 Location = new Point(10, 10),
                 Size = new Size(100, 30)
             };
@@ -37,21 +37,29 @@ namespace troc
 
             Button profileButton = new Button
             {
-                Text = "Profil",
+                Text = "Exchanges",
                 Location = new Point(120, 10),
                 Size = new Size(100, 30)
             };
             profileButton.Click += (sender, e) => OpenForm(new HomePage());
 
+            Button usersButton = new Button
+            {
+                Text = "Users",
+                Location = new Point(230, 10),
+                Size = new Size(100, 30)
+            };
+            usersButton.Click += (sender, e) => OpenForm(new HomePage());
+
             Button logoutButton = new Button
             {
-                Text = "Déconnexion",
-                Location = new Point(230, 10),
+                Text = "Deconnection",
+                Location = new Point(685, 10),
                 Size = new Size(100, 30)
             };
             logoutButton.Click += (sender, e) => Logout();
 
-            navbarPanel.Controls.AddRange(new Control[] { homeButton, profileButton, logoutButton });
+            navbarPanel.Controls.AddRange(new Control[] { homeButton, profileButton, usersButton, logoutButton });
             this.Controls.Add(navbarPanel);
 
             // Ajuster le contenu principal pour qu'il ne chevauche pas la navbar
