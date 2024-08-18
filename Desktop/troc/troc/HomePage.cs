@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace troc
 {
-    public partial class HomePage : Form
+    public partial class HomePage : BaseFormWithNavbar
     {
         public HomePage()
         {
