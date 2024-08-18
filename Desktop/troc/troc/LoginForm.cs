@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +16,6 @@ namespace troc
     public partial class LoginForm : Form
     {
         private const string API_URL = "http://localhost:8080/api/auth/login";
-        private static string _authToken;
 
         public LoginForm()
         {
@@ -50,12 +50,12 @@ namespace troc
                     }
                     else
                     {
-                        lblMessage.Text = "Échec de l'authentification. Veuillez réessayer.";
+                        lblMessage.Text = "Nom d'utilisateur ou mot de passe incorrect. Veuillez réessayer";
                     }
                 }
                 catch (Exception ex)
                 {
-                    lblMessage.Text = $"Erreur : {ex.Message}";
+                    lblMessage.Text = $"Échec de l'authentification. Veuillez réessayer. Erreur : {ex.Message}";
                 }
                 finally
                 {
@@ -79,8 +79,10 @@ namespace troc
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine($"Response : {responseContent}");
                     var tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(responseContent);
-                    _authToken = tokenResponse.accesToken;
+                    System.Diagnostics.Debug.WriteLine($"Token : {tokenResponse.accessToken}");
+                    TokenManager.SaveToken(tokenResponse.accessToken);
                     return true;
                 }
                 return false;

@@ -16,7 +16,14 @@ namespace troc
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            if (TokenManager.IsTokenValid())
+            {
+                Application.Run(new HomePage());
+            }
+            else
+            {
+                Application.Run(new LoginForm());
+            }
         }
     }
 }

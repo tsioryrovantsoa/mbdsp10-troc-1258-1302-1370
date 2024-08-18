@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\homepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\homepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -15,16 +15,12 @@
       "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\tokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\tokenmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\tokenmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 292,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,27 +42,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "HomePage.cs [Design]",
-              "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs",
-              "RelativeDocumentMoniker": "troc\\HomePage.cs",
-              "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs [Design]",
-              "RelativeToolTip": "troc\\HomePage.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T21:59:43.45Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
               "Title": "TokenResponse.cs",
               "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\TokenResponse.cs",
               "RelativeDocumentMoniker": "troc\\TokenResponse.cs",
               "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\TokenResponse.cs",
               "RelativeToolTip": "troc\\TokenResponse.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAeAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAoAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T21:47:15.416Z",
+              "WhenOpened": "2024-08-18T19:41:48.802Z",
               "EditorCaption": ""
             },
             {
@@ -77,46 +61,48 @@
               "RelativeDocumentMoniker": "troc\\LoginForm.cs",
               "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\LoginForm.cs",
               "RelativeToolTip": "troc\\LoginForm.cs",
-              "ViewState": "AQIAAFIAAAAAAAAAAAAAwFwAAAAPAAAA",
+              "ViewState": "AQIAAEUAAAAAAAAAAAAgwFQAAAA/AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T21:43:30.041Z",
+              "WhenOpened": "2024-08-18T20:05:17.916Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "LoginForm.cs [Design]",
-              "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\LoginForm.cs",
-              "RelativeDocumentMoniker": "troc\\LoginForm.cs",
-              "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\LoginForm.cs [Design]",
-              "RelativeToolTip": "troc\\LoginForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T21:39:42.586Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\Form1.cs",
-              "RelativeDocumentMoniker": "troc\\Form1.cs",
-              "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\Form1.cs [Design]",
-              "RelativeToolTip": "troc\\Form1.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T21:36:05.291Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\Program.cs",
               "RelativeDocumentMoniker": "troc\\Program.cs",
               "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\Program.cs",
               "RelativeToolTip": "troc\\Program.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAcAAAABAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAgAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T21:12:10.951Z",
+              "WhenOpened": "2024-08-18T20:04:17.546Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TokenManager.cs",
+              "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\TokenManager.cs",
+              "RelativeDocumentMoniker": "troc\\TokenManager.cs",
+              "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\TokenManager.cs",
+              "RelativeToolTip": "troc\\TokenManager.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAkwA4AAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-18T20:00:17.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "App.config",
+              "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\App.config",
+              "RelativeDocumentMoniker": "troc\\App.config",
+              "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\App.config",
+              "RelativeToolTip": "troc\\App.config",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2024-08-18T20:40:11.118Z",
               "EditorCaption": ""
             }
           ]

@@ -8,7 +8,7 @@ namespace troc
 {
     internal class TokenResponse
     {
-        public string accesToken { get; set; }
+        public string accessToken { get; set; }
         public string username { get; set; }
 
 
