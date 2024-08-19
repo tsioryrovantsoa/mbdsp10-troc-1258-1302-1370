@@ -99,7 +99,10 @@
     <Compile Include="BaseFormWithNavbar.Designer.cs">
       <DependentUpon>BaseFormWithNavbar.cs</DependentUpon>
     </Compile>
+    <Compile Include="entities\Category.cs" />
+    <Compile Include="entities\Images.cs" />
     <Compile Include="entities\Item.cs" />
+    <Compile Include="entities\Status.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +114,12 @@
     </Compile>
     <Compile Include="HomePage.Designer.cs">
       <DependentUpon>HomePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ItemDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItemDetail.Designer.cs">
+      <DependentUpon>ItemDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>

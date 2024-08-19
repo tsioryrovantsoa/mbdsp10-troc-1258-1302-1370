@@ -79,11 +79,9 @@ namespace troc
                 Size = new Size(300, 200),
                 View = View.Details
             };
-            itemListView.Columns.Add("Title", 200);
-            itemListView.Columns.Add("Description", 500);
-            //itemListView.Columns.Add("Catégorie", 100);
-            //itemListView.Columns.Add("Statut", 100);
-            //itemListView.Columns.Add("Date de création", 150);
+            itemListView.Columns.Add("Title", 100);
+            itemListView.Columns.Add("Description", 200);
+            itemListView.Columns.Add("Category", 100);
             Controls.Add(itemListView);
 
             detailButton = new Button
@@ -105,8 +103,9 @@ namespace troc
         {
             if (itemListView.SelectedItems.Count > 0)
             {
-                // Ici, vous pouvez ouvrir un nouveau formulaire pour afficher les détails de l'item sélectionné
-                MessageBox.Show($"Détails de l'item : {itemListView.SelectedItems[0].Text}");
+                long itemId = (long)itemListView.SelectedItems[0].Tag;
+                var detailForm = new ItemDetail(itemId);
+                detailForm.ShowDialog();
             }
             else
             {
@@ -146,7 +145,8 @@ namespace troc
                     itemListView.Items.Clear();
                     foreach (var item in result.Content)
                     {
-                        var listViewItem = new ListViewItem(new[] { item.title, item.description });
+                        var listViewItem = new ListViewItem(new[] { item.Title, item.Description, item.Category.ToString() });
+                        listViewItem.Tag = item.ItemId;
                         itemListView.Items.Add(listViewItem);
                     }
                 }
