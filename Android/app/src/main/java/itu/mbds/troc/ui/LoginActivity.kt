@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.content.Intent
+import android.widget.TextView
 import itu.mbds.troc.R
 import itu.mbds.troc.network.RetrofitClient
 import itu.mbds.troc.service.AuthService
@@ -31,6 +32,10 @@ class LoginActivity : AppCompatActivity() {
         usernameEditText = findViewById(R.id.usernameEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
         loginButton = findViewById(R.id.loginButton)
+        val registerLink: TextView = findViewById(R.id.registerLink)
+        registerLink.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
 
         loginButton.setOnClickListener {
             val username = usernameEditText.text.toString()
