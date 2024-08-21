@@ -78,3 +78,5 @@ F:\ITU\MBDS\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\Debug\troc.csproj.
 F:\ITU\MBDS\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\Debug\troc.csproj.Up2Date
 F:\ITU\MBDS\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\Debug\troc.exe
 F:\ITU\MBDS\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\Debug\troc.pdb
+F:\ITU\MBDS\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\Debug\troc.HomePage.resources
+F:\ITU\MBDS\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\Debug\troc.UserDashboardForm.resources
