@@ -103,6 +103,7 @@
     <Compile Include="entities\Images.cs" />
     <Compile Include="entities\Item.cs" />
     <Compile Include="entities\Status.cs" />
+    <Compile Include="entities\User.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
