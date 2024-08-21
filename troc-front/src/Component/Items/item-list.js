@@ -6,6 +6,8 @@ import { Box, Button, Typography, InputBase, Card, CardContent, CardActions, Car
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import ItemService from '../../Service/itemService';
+import InfoIcon from '@mui/icons-material/Info';
+import { useNavigate } from 'react-router-dom';
 
 const ItemImage = ({ imageId }) => {
     const [imageUrl, setImageUrl] = useState(null);
@@ -51,6 +53,8 @@ const ItemImage = ({ imageId }) => {
 };
 
 export default function ItemList() {
+
+    const navigate = useNavigate();
 
     const [items, setItems] = useState([]);
     const [keyword, setKeyword] = useState('');
@@ -139,6 +143,10 @@ export default function ItemList() {
         } catch (error) {
             console.error('Error fetching categories:', error);
         }
+    }
+
+    function goToDetail(itemId) {
+        navigate(`/item/${itemId}`);
     }
 
     useEffect(() => {
@@ -235,8 +243,8 @@ export default function ItemList() {
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
-                                        <Button size="small">Share</Button>
-                                        <Button size="small">Learn More</Button>
+                                        <Button size="small" variant="contained" onClick={() => goToDetail(item.itemId)}> <InfoIcon fontSize="small" sx={{marginRight: '5px'}}/>Detail </Button>
+                                        {/* <Button size="small">Learn More</Button> */}
                                     </CardActions>
                                 </Card>
                             ))}

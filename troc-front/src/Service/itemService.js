@@ -42,6 +42,15 @@ const ItemService = {
                 'Authorization': `Bearer ${token}`
             },
         });
+    },
+
+    getDetailItem(itemId) {
+        const token = localStorage.getItem('token');
+        return axios.get(`${API_ITEM_URL}/${itemId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        })
     }
 }
 
