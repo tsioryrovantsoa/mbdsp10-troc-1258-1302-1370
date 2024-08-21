@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\homepage.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\homepage.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\userdashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\userdashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\homepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\homepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\userdashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\userdashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\userdashboardform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\userdashboardform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\baseformwithnavbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -19,20 +23,20 @@
       "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\baseformwithnavbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\homepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\homepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\homepage.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\homepage.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\homepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\homepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\userdashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\userdashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\userdashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\userdashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -58,7 +62,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 292,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,70 +74,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "BaseFormWithNavbar.cs [Design]",
-              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
-              "RelativeDocumentMoniker": "troc\\BaseFormWithNavbar.cs",
-              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs [Design]",
-              "RelativeToolTip": "troc\\BaseFormWithNavbar.cs [Design]",
+              "DocumentIndex": 2,
+              "Title": "UserDashboardForm.Designer.cs",
+              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\UserDashboardForm.Designer.cs",
+              "RelativeDocumentMoniker": "troc\\UserDashboardForm.Designer.cs",
+              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\UserDashboardForm.Designer.cs",
+              "RelativeToolTip": "troc\\UserDashboardForm.Designer.cs",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-21T20:48:38.542Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HomePage.cs [Design]",
-              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs",
-              "RelativeDocumentMoniker": "troc\\HomePage.cs",
-              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs [Design]",
-              "RelativeToolTip": "troc\\HomePage.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-21T19:34:57.758Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "HomePage.cs",
-              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs",
-              "RelativeDocumentMoniker": "troc\\HomePage.cs",
-              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs",
-              "RelativeToolTip": "troc\\HomePage.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAKEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-19T11:29:33.594Z",
+              "WhenOpened": "2024-08-21T21:03:31.31Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "BaseFormWithNavbar.cs",
               "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
               "RelativeDocumentMoniker": "troc\\BaseFormWithNavbar.cs",
               "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
               "RelativeToolTip": "troc\\BaseFormWithNavbar.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAqwDMAAABOAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAqwEYAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-19T12:25:08.364Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "HomePage.Designer.cs",
-              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.Designer.cs",
-              "RelativeDocumentMoniker": "troc\\HomePage.Designer.cs",
-              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.Designer.cs",
-              "RelativeToolTip": "troc\\HomePage.Designer.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAgwB4AAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-21T19:37:05.664Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "UserDashboardForm.cs [Design]",
               "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\UserDashboardForm.cs",
               "RelativeDocumentMoniker": "troc\\UserDashboardForm.cs",
@@ -145,7 +112,74 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserDashboardForm.cs",
+              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\UserDashboardForm.cs",
+              "RelativeDocumentMoniker": "troc\\UserDashboardForm.cs",
+              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\UserDashboardForm.cs",
+              "RelativeToolTip": "troc\\UserDashboardForm.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAA0wBMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T20:46:23.846Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BaseFormWithNavbar.cs [Design]",
+              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
+              "RelativeDocumentMoniker": "troc\\BaseFormWithNavbar.cs",
+              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs [Design]",
+              "RelativeToolTip": "troc\\BaseFormWithNavbar.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T20:48:38.542Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "HomePage.cs [Design]",
+              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs",
+              "RelativeDocumentMoniker": "troc\\HomePage.cs",
+              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs [Design]",
+              "RelativeToolTip": "troc\\HomePage.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T19:34:57.758Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HomePage.Designer.cs",
+              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.Designer.cs",
+              "RelativeDocumentMoniker": "troc\\HomePage.Designer.cs",
+              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.Designer.cs",
+              "RelativeToolTip": "troc\\HomePage.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T19:37:05.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "HomePage.cs",
+              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs",
+              "RelativeDocumentMoniker": "troc\\HomePage.cs",
+              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs",
+              "RelativeToolTip": "troc\\HomePage.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAKEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-19T11:29:33.594Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\Form1.cs",
               "RelativeDocumentMoniker": "troc\\Form1.cs",
@@ -156,12 +190,8 @@
               "EditorCaption": " [Design]"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\Program.cs",
               "RelativeDocumentMoniker": "troc\\Program.cs",
@@ -174,20 +204,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UserDashboardForm.cs",
-              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\UserDashboardForm.cs",
-              "RelativeDocumentMoniker": "troc\\UserDashboardForm.cs",
-              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\UserDashboardForm.cs",
-              "RelativeToolTip": "troc\\UserDashboardForm.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-21T20:46:23.846Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "ItemDetail.cs",
               "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\ItemDetail.cs",
               "RelativeDocumentMoniker": "troc\\ItemDetail.cs",
@@ -200,7 +217,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Images.cs",
               "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\entities\\Images.cs",
               "RelativeDocumentMoniker": "troc\\entities\\Images.cs",
@@ -212,7 +229,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Item.cs",
               "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\entities\\Item.cs",
               "RelativeDocumentMoniker": "troc\\entities\\Item.cs",

@@ -60,6 +60,7 @@
             this.listView1.Size = new System.Drawing.Size(776, 195);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.List;
             // 
             // columnHeader1
             // 

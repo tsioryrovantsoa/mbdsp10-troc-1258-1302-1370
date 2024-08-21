@@ -68,7 +68,7 @@ namespace troc
 
         private void OpenForm(Form form)
         {
-            this.Hide();
+            //this.Hide();
             form.ShowDialog();
             this.Close();
         }
