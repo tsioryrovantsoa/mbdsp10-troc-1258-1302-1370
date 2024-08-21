@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from "../NavBar";
 import { useParams } from 'react-router-dom';
-import { Box, Typography, Card, CardContent, ImageList, ImageListItem, CircularProgress } from '@mui/material';
+import { Box, Typography, Card, CardContent, ImageList, 
+    ImageListItem, CircularProgress, Divider } from '@mui/material';
 import ItemService from '../../Service/itemService';
 
 export default function ItemDetail() {
@@ -46,6 +47,8 @@ export default function ItemDetail() {
         fetchItemDetails();
     }, [id]);
 
+    const statusColor = item?.status === 'DISPONIBLE' ? 'green' : 'red';
+
     return (
         <>
             <NavBar/>
@@ -64,7 +67,7 @@ export default function ItemDetail() {
                                 alignItems: 'center',
                             }}
                         >
-                            <Typography component="h1" variant="h5">
+                            <Typography component="h1" variant="h5" sx={{ fontWeight: 'bold' }}>
                                 Item Detail
                             </Typography>
 
@@ -72,21 +75,44 @@ export default function ItemDetail() {
 
                             <Card sx={{ minWidth: 275 }}>
                                 <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
+                                    <Typography 
+                                        gutterBottom 
+                                        variant="h5" 
+                                        component="div" 
+                                        align="center" 
+                                        sx={{ fontWeight: 'bold' }}
+                                    >
                                         {item.title}
                                     </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {item.description}
+
+                                    <Divider sx={{ marginY: 1 }} />
+
+                                    <Typography variant="body2" sx={{ padding: '8px', marginBottom: '10px' }}>
+                                        <span style={{ fontWeight: 'bold', fontStyle: 'italic' }}>Created by:</span> {item.user.name}
                                     </Typography>
-                                    <Typography variant="body2">
-                                        Category: {item.category}
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        Status: {item.status}
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        Created by: {item.user.name}
-                                    </Typography>
+
+
+                                    <Box 
+                                        sx={{ 
+                                            border: '1px solid gray', 
+                                            borderRadius: '4px', 
+                                            padding: '8px',
+                                            marginBottom: '8px' 
+                                        }}
+                                    >
+                                        <Typography variant="body2" color="text.secondary">
+                                            {item.description}
+                                        </Typography>
+                                    </Box>
+
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                                        <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                            {item.category}
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ fontWeight: 'bold', color: statusColor }}>
+                                            {item.status}
+                                        </Typography>
+                                    </Box>
                                 </CardContent>
                             </Card>
 
