@@ -1,26 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\",
+  "WorkspaceRootPath": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\itemdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\itemdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\userdashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\userdashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\baseformwithnavbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\baseformwithnavbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\homepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\homepage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\entities\\images.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\entities\\images.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\entities\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\entities\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\itu\\mbds\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 292,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -43,66 +31,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "BaseFormWithNavbar.cs",
-              "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
-              "RelativeDocumentMoniker": "troc\\BaseFormWithNavbar.cs",
-              "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
-              "RelativeToolTip": "troc\\BaseFormWithNavbar.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAYwAAAAAAAAAAA",
+              "Title": "User.cs",
+              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\entities\\User.cs",
+              "RelativeDocumentMoniker": "troc\\entities\\User.cs",
+              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\entities\\User.cs",
+              "RelativeToolTip": "troc\\entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-19T12:25:08.364Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Images.cs",
-              "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\entities\\Images.cs",
-              "RelativeDocumentMoniker": "troc\\entities\\Images.cs",
-              "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\entities\\Images.cs",
-              "RelativeToolTip": "troc\\entities\\Images.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-19T12:09:38.635Z",
+              "WhenOpened": "2024-08-21T21:18:55.343Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ItemDetail.cs",
-              "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\ItemDetail.cs",
-              "RelativeDocumentMoniker": "troc\\ItemDetail.cs",
-              "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\ItemDetail.cs",
-              "RelativeToolTip": "troc\\ItemDetail.cs",
-              "ViewState": "AQIAADAAAAAAAAAAAAAYwFUAAAAOAAAA",
+              "Title": "UserDashboardForm.cs",
+              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\UserDashboardForm.cs",
+              "RelativeDocumentMoniker": "troc\\UserDashboardForm.cs",
+              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\UserDashboardForm.cs",
+              "RelativeToolTip": "troc\\UserDashboardForm.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAACwAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-19T11:30:46.125Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "HomePage.cs",
-              "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs",
-              "RelativeDocumentMoniker": "troc\\HomePage.cs",
-              "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\HomePage.cs",
-              "RelativeToolTip": "troc\\HomePage.cs",
-              "ViewState": "AQIAABcAAAAAAAAAAAAAwGgAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-19T11:29:33.594Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Item.cs",
-              "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\entities\\Item.cs",
-              "RelativeDocumentMoniker": "troc\\entities\\Item.cs",
-              "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\entities\\Item.cs",
-              "RelativeToolTip": "troc\\entities\\Item.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAQwB4AAAAgAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-19T08:44:51.923Z",
+              "WhenOpened": "2024-08-21T20:46:23.846Z",
               "EditorCaption": ""
             }
           ]

@@ -49,7 +49,7 @@ namespace troc
                 Location = new Point(230, 10),
                 Size = new Size(100, 30)
             };
-            usersButton.Click += (sender, e) => OpenForm(new HomePage());
+            usersButton.Click += (sender, e) => OpenForm(new UserDashboardForm());
 
             Button logoutButton = new Button
             {
@@ -68,7 +68,7 @@ namespace troc
 
         private void OpenForm(Form form)
         {
-            this.Hide();
+            //this.Hide();
             form.ShowDialog();
             this.Close();
         }
