@@ -10,8 +10,9 @@ const loginPage = () => {
 
   const handleLogin = async () => {
     try {
-      await authService.login(username, password);
-      navigation.navigate('/(tabs)');
+      const response = await authService.login(username, password);
+      if(response)
+        navigation.navigate('/(tabs)');
     } catch (error) {
       console.error('Erreur de connexion:', error);
     }

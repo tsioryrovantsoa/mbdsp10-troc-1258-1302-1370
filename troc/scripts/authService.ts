@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = 'http://192.168.1.103:8080';
+const API_URL = 'http://192.168.1.175:8080';
 
 export const authService = {
   async login(username: string, password: string) {
@@ -18,6 +18,7 @@ export const authService = {
 
     const data = await response.json();
     await AsyncStorage.setItem('token', data.accessToken);
+    return data;
   },
 
   async logout() {
