@@ -139,6 +139,13 @@ public class Items {
     }
 
     public void setImages(Set<Images> images) {
-        this.images = images;
+        // this.images = images;
+        // Clear the existing images set to avoid orphaned references
+        this.images.clear();
+
+        // Add all images from the new set
+        if (images != null) {
+            this.images.addAll(images);
+        }
     }
 }
