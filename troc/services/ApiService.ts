@@ -6,7 +6,7 @@ import axios from "axios";
 //   headers: {'Authorization': `Bearer ${token}`}
 // });
 
-export const baseURL = "http://10.0.1.83:8080/";
+export const baseURL = "http://192.168.1.170:8080/";
 
 export const imageURL = baseURL + "uploads/";
 
