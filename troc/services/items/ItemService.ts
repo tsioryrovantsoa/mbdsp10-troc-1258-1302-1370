@@ -1,5 +1,6 @@
 import ApiService from "../ApiService";
 
+
 const postItem = "http://10.0.1.83:8080/api/items";
 
 const putItem = (id: number): string => {
@@ -23,11 +24,15 @@ const getOneItem = (id: number): string => {
 }
 
 export const getItemsList = async (token:string) => {
-    
-    const response = await ApiService.get(
-      getItem(0, 10),
-      token
-    );
-    console.log(response);
+    var response = null;
+    try {
+        response = await ApiService.get(
+            getItem(0, 10),
+            token
+        );
+    } catch (error) {
+        console.log("error getItemsList >>>>>>>> ", error);
+    }
+
     return response;
   };

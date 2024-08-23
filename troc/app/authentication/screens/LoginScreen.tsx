@@ -19,7 +19,7 @@ const LoginScreen = () => {
         Alert.alert('Login Failed', 'Invalid credentials');
       }
     } catch (error) {
-      console.log("error login >>>>>> " , error);
+      // console.log("error login >>>>>> " , error);
       Alert.alert('Error', 'Something went wrong');
     }
   };

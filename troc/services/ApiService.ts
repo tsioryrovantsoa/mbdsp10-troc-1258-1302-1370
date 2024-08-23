@@ -6,6 +6,10 @@ import axios from "axios";
 //   headers: {'Authorization': `Bearer ${token}`}
 // });
 
+export const baseURL = "http://10.0.1.83:8080/";
+
+export const imageURL = baseURL + "uploads/";
+
 export default class ApiService {
     static contentTypeFormData = "multipart/form-data";
     static contentTypeJson = "application/json";
