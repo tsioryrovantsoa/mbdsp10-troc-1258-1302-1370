@@ -8,7 +8,7 @@ namespace troc.entities
 {
     internal class User
     {
-        public int UserId { get; set; }
+        public int User_Id { get; set; }
         public string Username { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
@@ -16,7 +16,9 @@ namespace troc.entities
         public string Address { get; set; }
         public string Role { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+
+        public DateTime? DeletedAt { get; set; }
         public bool Enabled { get; set; }
     }
 }
