@@ -4,6 +4,7 @@ import ItemList from "./Component/Items/item-list";
 import AddItem from "./Component/Items/item-add";
 import ItemDetail from "./Component/Items/item-detail";
 import MyItem from "./Component/Items/my-item";
+import EditItem from "./Component/Items/item-edit";
 
 const routes = [
     {
@@ -35,6 +36,11 @@ const routes = [
         name: "my item",
         route: "my-item",
         component: <MyItem/>
+    },
+    {
+        name:"edit item",
+        route:"edit-item/:itemId",
+        component:<EditItem />
     }
 ];
 

@@ -152,6 +152,10 @@ export default function MyItem() {
         navigate(`/item/${itemId}`);
     }
 
+    const goToEditPage = (itemId) => {
+        navigate(`/edit-item/${itemId}`); // Rediriger vers la page de modification
+    };
+
     useEffect(() => {
         fetchMyItems();
     }, [page, size, keyword, category]);
@@ -246,7 +250,9 @@ export default function MyItem() {
                                     </CardContent>
                                     <CardActions>
                                         <Button size="small" variant="contained" onClick={() => goToDetail(item.itemId)}> <InfoIcon fontSize="small" sx={{marginRight: '5px'}}/>Detail </Button>
-                                        {/* <Button size="small">Learn More</Button> */}
+                                        <Button size="small" variant="contained" onClick={() => goToEditPage(item.itemId)}>
+                                                Modifier
+                                        </Button>
                                     </CardActions>
                                 </Card>
                             ))}
