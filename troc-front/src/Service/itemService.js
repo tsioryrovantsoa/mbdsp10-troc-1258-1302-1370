@@ -82,7 +82,7 @@ const ItemService = {
                     'Authorization': `Bearer ${token}`
                 },
             });
-        },
+    },
 }
 
 export default ItemService;

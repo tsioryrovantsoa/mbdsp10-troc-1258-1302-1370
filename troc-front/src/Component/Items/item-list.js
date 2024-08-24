@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from "../NavBar";
 import { Box, Button, Typography, InputBase, Card, CardContent, CardActions, CardMedia, Pagination, 
-    CircularProgress,  Select, MenuItem, InputLabel, FormControl, Grid } from '@mui/material';
+    CircularProgress,  Select, MenuItem, InputLabel, FormControl, Grid, Alert } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import ItemService from '../../Service/itemService';
 import InfoIcon from '@mui/icons-material/Info';
 import { useNavigate } from 'react-router-dom';
 import ExchangeModal from './ExchangeModal';
+import ExchangeService from '../../Service/exchangeService';
 
 const ItemImage = ({ imageId }) => {
     const [imageUrl, setImageUrl] = useState(null);
@@ -66,6 +67,7 @@ export default function ItemList() {
     const [totalPages, setTotalPages] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [categories, setCategories] = useState([]);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -163,9 +165,11 @@ export default function ItemList() {
     };
 
     const handleItemSelected = async (requesterItemId) => {
+        console.log(selectedItemId, requesterItemId);
         try {
-            const response = await ItemService.proposeExchange(selectedItemId, requesterItemId);
+            const response = await ExchangeService.proposeExchange(selectedItemId, requesterItemId);
             console.log('Exchange proposed:', response.data);
+            setSuccessMessage('Exchange proposed successfully!');
         } catch (error) {
             console.error('Error proposing exchange:', error);
         }
@@ -240,7 +244,7 @@ export default function ItemList() {
                         </Grid>
                     </Grid>
 
-
+                    {successMessage && <Alert severity="success">{successMessage}</Alert>}
                     
                     {isLoading ? (
                         <CircularProgress />
