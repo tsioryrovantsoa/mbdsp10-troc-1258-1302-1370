@@ -8,20 +8,18 @@ import Button from '@mui/material/Button';
 
 export default function DeleteItemDialog(props) {
 
+    const onSubmit = (event) => {
+        event.preventDefault();
+        props?.handleDelete(props?.item?.itemId);
+    };
+
     return (
         <Dialog
             open={props?.open}
             onClose={props?.handleClose}
             PaperProps={{
             component: 'form',
-            onSubmit: (event) => {
-                event.preventDefault();
-                const formData = new FormData(event.currentTarget);
-                const formJson = Object.fromEntries(formData.entries());
-                const email = formJson.email;
-                console.log(email);
-                props?.handleClose();
-            },
+            onSubmit: onSubmit,
             }}
         >
         <DialogTitle>Delete Item</DialogTitle>

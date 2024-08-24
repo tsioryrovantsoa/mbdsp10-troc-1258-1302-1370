@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from "../NavBar";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate  } from 'react-router-dom';
 import { Box, Typography, Card, CardContent, ImageList, 
     ImageListItem, CircularProgress, Divider, 
     CardActions, IconButton} from '@mui/material';
@@ -11,6 +11,8 @@ import DeleteItemDialog from './delete-item-dialog';
 import UserService from '../../Service/userService';
 
 export default function ItemDetail() {
+
+    const navigate = useNavigate();
 
     let { id } = useParams();
     const [item, setItem] = useState(null);
@@ -64,6 +66,16 @@ export default function ItemDetail() {
     function closeDeleteItemDialog() {
         setItemToDelete(null);
     }
+
+    const handleDeleteItem = async (itemId) => {
+        try {
+            await ItemService.deleteItem(itemId);
+            navigate('/accueil');
+            closeDeleteItemDialog();
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    };
 
     return (
         <>
@@ -165,7 +177,7 @@ export default function ItemDetail() {
                             item={itemToDelete}
                             open={itemToDelete !== null}
                             handleClose={closeDeleteItemDialog}
-                            // handleDelete={handleDeleteItem}
+                            handleDelete={handleDeleteItem}
                         />
                         </>
                     )

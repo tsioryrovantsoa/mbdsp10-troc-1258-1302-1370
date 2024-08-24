@@ -170,6 +170,16 @@ export default function MyItem() {
         setItemToDelete(null);
     }
 
+    const handleDeleteItem = async (itemId) => {
+        try {
+            await ItemService.deleteItem(itemId);
+            fetchMyItems();
+            closeDeleteItemDialog();
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    };
+
     return (
         <>
         <NavBar/>
@@ -274,7 +284,7 @@ export default function MyItem() {
                                     item={itemToDelete}
                                     open={itemToDelete !== null}
                                     handleClose={closeDeleteItemDialog}
-                                    // handleDelete={handleDeleteItem}
+                                    handleDelete={handleDeleteItem}
                                 />
                             </>
                         ))}
