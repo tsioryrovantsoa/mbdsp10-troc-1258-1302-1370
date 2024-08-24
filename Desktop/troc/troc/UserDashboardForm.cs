@@ -25,6 +25,7 @@ namespace troc
         private void InitializeListView()
         {
             listView1.View = View.Details;
+            listView1.FullRowSelect = true;
             listView1.Columns.Add("User ID", 80, HorizontalAlignment.Left);
             listView1.Columns.Add("Username", 120, HorizontalAlignment.Left);
             listView1.Columns.Add("Name", 150, HorizontalAlignment.Left);
@@ -84,6 +85,8 @@ namespace troc
                         listViewItem.SubItems.Add(user.CreatedAt.ToString("g"));
                         listViewItem.SubItems.Add(user.UpdatedAt.HasValue ? user.UpdatedAt.Value.ToString("g") : "N/A");
                         listViewItem.SubItems.Add(user.Enabled ? "Yes" : "No");
+
+                        listViewItem.Tag = user.User_Id;
                         listView1.Items.Add(listViewItem);
                     }
                 }
@@ -102,7 +105,7 @@ namespace troc
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                long userId = (long)listView1.SelectedItems[0].Tag;
+                int userId = (int)listView1.SelectedItems[0].Tag;
                 DialogResult dialogResult = MessageBox.Show($"Êtes-vous sûr de vouloir supprimer l'utilisateur ID {userId} ?", "Confirmation de suppression", MessageBoxButtons.YesNo);
 
                 if (dialogResult == DialogResult.Yes)
@@ -116,7 +119,7 @@ namespace troc
             }
         }
 
-        private async Task DeleteUser(long userId)
+        private async Task DeleteUser(int userId)
         {
             using (var client = new HttpClient())
             {
