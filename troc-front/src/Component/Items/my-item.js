@@ -154,6 +154,10 @@ export default function MyItem() {
         navigate(`/item/${itemId}`);
     }
 
+    const goToEditPage = (itemId) => {
+        navigate(`/edit-item/${itemId}`); // Rediriger vers la page de modification
+    };
+
     useEffect(() => {
         fetchMyItems();
     }, [page, size, keyword, category]);
@@ -271,9 +275,9 @@ export default function MyItem() {
                                             Detail
                                         </Button>
                                         <Box sx={{ display: 'flex', gap: 1 }}>
-                                            <IconButton size="small">
-                                                <EditIcon />
-                                            </IconButton>
+                                        <Button size="small" variant="contained" onClick={() => goToEditPage(item.itemId)}>
+                                                Modifier
+                                        </Button>
                                             <IconButton size="small" onClick={() => openDeleteItemDialog(item)}>
                                                 <DeleteIcon />
                                             </IconButton>
