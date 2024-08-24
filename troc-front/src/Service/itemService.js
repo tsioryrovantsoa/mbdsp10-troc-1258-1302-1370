@@ -63,6 +63,15 @@ const ItemService = {
                 'Authorization': `Bearer ${token}`
             },
         });
+    },
+
+    deleteItem(itemId) {
+        const token = localStorage.getItem('token');
+        return axios.delete(`${API_ITEM_URL}/${itemId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        });
     }
 }
 

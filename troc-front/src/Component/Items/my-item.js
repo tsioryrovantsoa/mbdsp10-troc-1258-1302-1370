@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../NavBar';
 import { Box, Button, Typography, InputBase, Card, CardContent, CardActions, CardMedia, Pagination, 
-    CircularProgress,  Select, MenuItem, InputLabel, FormControl, Grid } from '@mui/material';
+    CircularProgress,  Select, MenuItem, InputLabel, FormControl, Grid, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import ItemService from '../../Service/itemService';
 import InfoIcon from '@mui/icons-material/Info';
 import { useNavigate } from 'react-router-dom';
 import UserService from '../../Service/userService';
-
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteItemDialog from './delete-item-dialog';
 
 const ItemImage = ({ imageId }) => {
 
@@ -68,7 +70,7 @@ export default function MyItem() {
     const [totalPages, setTotalPages] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [categories, setCategories] = useState([]);
-
+    const [itemToDelete, setItemToDelete] = useState(null);
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -164,80 +166,99 @@ export default function MyItem() {
         fetchCategories();
     }, []);
 
+    function openDeleteItemDialog(item) {
+        setItemToDelete(item);
+    }
+    
+    function closeDeleteItemDialog() {
+        setItemToDelete(null);
+    }
+
+    const handleDeleteItem = async (itemId) => {
+        try {
+            await ItemService.deleteItem(itemId);
+            fetchMyItems();
+            closeDeleteItemDialog();
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    };
+
     return (
         <>
         <NavBar/>
         <div style={{marginTop:'1%'}}>
-                <Box
-                    sx={{
-                        marginTop: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Typography component="h1" variant="h5">
-                        My Items
-                    </Typography>
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Typography component="h1" variant="h5">
+                    My Items
+                </Typography>
 
-                    <br></br>
+                <br></br>
 
-                    <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Grid item xs={6} sm={4} md={3}>
-                            <Search sx={{ border: '1px solid rgba(0, 0, 0, 0.23)', borderRadius: '4px', boxShadow: 'none', width: '100%' }}>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                                value={keyword}
-                                onChange={(e) => setKeyword(e.target.value)}
-                                onKeyPress={(e) => {
-                                if (e.key === 'Enter') {
-                                    fetchMyItems();
-                                }
-                                }}
-                            />
-                            </Search>
-                        </Grid>
-
-                        <Grid item xs={6} sm={4} md={3}>
-                            <FormControl required fullWidth variant="outlined" sx={{ minWidth: 120 }}>
-                            <InputLabel id="category-label">Category</InputLabel>
-                            <Select
-                                labelId="category-label"
-                                id="category"
-                                name="category"
-                                value={category}
-                                onChange={(e) => setCategory(e.target.value)}
-                                label="Category"
-                                sx={{ minHeight: '40px' }}
-                            >
-                                <MenuItem value="">None</MenuItem>
-                                {categories.map((categ) => (
-                                <MenuItem key={categ} value={categ}>{categ}</MenuItem>
-                                ))}
-                            </Select>
-                            </FormControl>
-                        </Grid>
+                <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Grid item xs={6} sm={4} md={3}>
+                        <Search sx={{ border: '1px solid rgba(0, 0, 0, 0.23)', borderRadius: '4px', boxShadow: 'none', width: '100%' }}>
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                            placeholder="Search…"
+                            inputProps={{ 'aria-label': 'search' }}
+                            value={keyword}
+                            onChange={(e) => setKeyword(e.target.value)}
+                            onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                fetchMyItems();
+                            }
+                            }}
+                        />
+                        </Search>
                     </Grid>
 
-
-                    
-                    {isLoading ? (
-                        <CircularProgress />
-                    ) : (
-                        <>
-                        <Box
-                            sx={{
-                                marginTop: 8,
-                                display: 'flex',
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                            }}
+                    <Grid item xs={6} sm={4} md={3}>
+                        <FormControl required fullWidth variant="outlined" sx={{ minWidth: 120 }}>
+                        <InputLabel id="category-label">Category</InputLabel>
+                        <Select
+                            labelId="category-label"
+                            id="category"
+                            name="category"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            label="Category"
+                            sx={{ minHeight: '40px' }}
                         >
-                            {myItems.map((item) => (
+                            <MenuItem value="">None</MenuItem>
+                            {categories.map((categ) => (
+                            <MenuItem key={categ} value={categ}>{categ}</MenuItem>
+                            ))}
+                        </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
+
+
+                
+                {isLoading ? (
+                    <CircularProgress />
+                ) : (
+                    <>
+                    <Box
+                        sx={{
+                            marginTop: 8,
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                        }}
+                    >
+                        {myItems.map((item) => (
+                            <>
                                 <Card key={item.id} sx={{ width: 300, height: 300, marginLeft: '10px' }}>
                                     <ItemImage imageId={item.images[0]?.image_id} />
                                     <CardContent>
@@ -248,30 +269,45 @@ export default function MyItem() {
                                             {item.description}
                                         </Typography>
                                     </CardContent>
-                                    <CardActions>
-                                        <Button size="small" variant="contained" onClick={() => goToDetail(item.itemId)}> <InfoIcon fontSize="small" sx={{marginRight: '5px'}}/>Detail </Button>
+                                    <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                        <Button size="small" variant="contained" onClick={() => goToDetail(item.itemId)}>
+                                            <InfoIcon fontSize="small" sx={{marginRight: '5px'}}/>
+                                            Detail
+                                        </Button>
+                                        <Box sx={{ display: 'flex', gap: 1 }}>
                                         <Button size="small" variant="contained" onClick={() => goToEditPage(item.itemId)}>
                                                 Modifier
                                         </Button>
+                                            <IconButton size="small" onClick={() => openDeleteItemDialog(item)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </Box>
                                     </CardActions>
                                 </Card>
-                            ))}
-                        </Box>
+                                <DeleteItemDialog
+                                    item={itemToDelete}
+                                    open={itemToDelete !== null}
+                                    handleClose={closeDeleteItemDialog}
+                                    handleDelete={handleDeleteItem}
+                                />
+                            </>
+                        ))}
+                    </Box>
 
-                        <br></br>
+                    <br></br>
 
-                        <Pagination 
-                            count={totalPages} 
-                            page={page + 1} 
-                            onChange={handlePageChange} 
-                            variant="outlined" 
-                            color="secondary" 
-                        />
-                        </>
-                    )}
+                    <Pagination 
+                        count={totalPages} 
+                        page={page + 1} 
+                        onChange={handlePageChange} 
+                        variant="outlined" 
+                        color="secondary" 
+                    />
+                    </>
+                )}
 
-                </Box>
-            </div>
+            </Box>
+        </div>
         </>
     )
 }

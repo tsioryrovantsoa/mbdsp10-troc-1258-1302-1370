@@ -34,7 +34,7 @@ export default function EditItem() {
     // Récupère les données de l'élément à modifier
     const fetchItemDetails = async () => {
         try {
-            const response = await ItemService.getItemById(itemId);
+            const response = await ItemService.getDetailItem(itemId);
             setFormData({
                 title: response.data.title,
                 description: response.data.description,
