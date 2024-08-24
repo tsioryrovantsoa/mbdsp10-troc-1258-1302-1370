@@ -16,7 +16,7 @@ import { isTokenValid } from '../Service/utils';
 import { Link } from 'react-router-dom';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-const pages = [{name:'Items', url:''}, {name:'Exchanges', url:''}];
+const pages = [{name:'Items', url:''}, {name:'Exchanges', url:''}, {name:'My items', url:'my-item'}];
 const settings = [{name:'Profile', url:''}, {name:'Logout',url: 'sign-in'}];
 
 export default function NavBar() {

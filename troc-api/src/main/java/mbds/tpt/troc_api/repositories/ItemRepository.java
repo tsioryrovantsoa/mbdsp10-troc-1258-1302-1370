@@ -26,7 +26,20 @@ public interface ItemRepository extends JpaRepository<Items, Long> {
                                      @Param("category") Category category, 
                                      @Param("status") Status status, 
                                      Pageable pageable);
+                                     
         
-        @EntityGraph(attributePaths = {"images"})
-        Page<Items> findByUser(Users user, Pageable pageable);
+        @EntityGraph(attributePaths = {"images", "user"})
+        @Query("SELECT i FROM Items i WHERE " +
+            "i.user = :user AND " +
+            "(:keyword IS NULL OR " +
+            "LOWER(CAST(i.title AS text)) LIKE LOWER(CONCAT('%', CAST(:keyword as text), '%')) OR " +
+            "LOWER(CAST(i.description AS text)) LIKE LOWER(CONCAT('%', CAST(:keyword as text), '%'))) " +
+            "AND (:category IS NULL OR i.category = :category) " +
+            "AND (:status IS NULL OR i.status = :status)")
+        Page<Items> findByUserWithCriteria(
+            @Param("user") Users user,
+            @Param("keyword") String keyword, 
+            @Param("category") Category category, 
+            @Param("status") Status status, 
+            Pageable pageable);
 }

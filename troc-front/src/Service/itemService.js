@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../Constante/constante';
+import UserService from './userService';
 
 const API_ITEM_URL = `${API_URL}api/items`;
 
@@ -51,6 +52,17 @@ const ItemService = {
                 'Authorization': `Bearer ${token}`
             },
         })
+    },
+
+    getMyItems(paramsData) {
+        const userConnectedId = UserService.getUserIdFromToken();
+        const token = localStorage.getItem('token');
+        return axios.get(`${API_ITEM_URL}/user/${userConnectedId}`, {
+            params: paramsData,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        });
     }
 }
 

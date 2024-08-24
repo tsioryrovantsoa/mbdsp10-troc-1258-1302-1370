@@ -174,8 +174,14 @@ public class ItemService {
         return loadedItem;
     }
 
-    public Page<Items> getItemsByUser(Users user, int page, int size) {
+    public Page<Items> getItemsByUserWithCriteria(
+            Users user, 
+            String keyword, 
+            Category category, 
+            Status status, 
+            int page, 
+            int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return itemRepository.findByUser(user, pageable);
+        return itemRepository.findByUserWithCriteria(user, keyword, category, status, pageable);
     }
 }

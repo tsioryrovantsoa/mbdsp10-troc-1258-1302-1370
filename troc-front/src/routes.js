@@ -3,6 +3,7 @@ import SignUp from "./Component/SignUp";
 import ItemList from "./Component/Items/item-list";
 import AddItem from "./Component/Items/item-add";
 import ItemDetail from "./Component/Items/item-detail";
+import MyItem from "./Component/Items/my-item";
 
 const routes = [
     {
@@ -29,6 +30,11 @@ const routes = [
         name: "item detail",
         route: "item/:id",
         component: <ItemDetail/>
+    },
+    {
+        name: "my item",
+        route: "my-item",
+        component: <MyItem/>
     }
 ];
 

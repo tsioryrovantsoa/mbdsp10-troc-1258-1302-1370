@@ -180,15 +180,18 @@ public class ItemsController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<Page<Items>> getItemsByUser(
+    public ResponseEntity<Page<Items>> getItemsByUserWithCriteria(
             @PathVariable Long userId,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Category category,
+            @RequestParam(required = false) Status status,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Users user = userService.getUserById(userId);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
-        Page<Items> items = itemService.getItemsByUser(user, page, size);
+        Page<Items> items = itemService.getItemsByUserWithCriteria(user, keyword, category, status, page, size);
         return ResponseEntity.ok(items);
     }
 }
