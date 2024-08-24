@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,13 +13,13 @@ using troc.entities;
 
 namespace troc
 {
-    public partial class UserDashboardForm : Form
+    public partial class UserDashboardForm : BaseFormWithNavbar
     {
         public UserDashboardForm()
         {
             InitializeComponent();
             InitializeListView();
-            LoadFakeData();  // Appeler une méthode pour charger des données fictives
+            LoadUsersFromApi();
         }
 
         private void InitializeListView()
@@ -35,52 +37,55 @@ namespace troc
             listView1.Columns.Add("Enabled", 80, HorizontalAlignment.Left);
         }
 
-        private void LoadFakeData()
+        private async void LoadUsersFromApi()
         {
-            var users = new List<User>
+            using (var client = new HttpClient())
             {
-                new User
-                {
-                    UserId = 1,
-                    Username = "johndoe",
-                    Name = "John Doe",
-                    Email = "johndoe@example.com",
-                    Phone = "123-456-7890",
-                    Address = "123 Main St",
-                    Role = "Admin",
-                    CreatedAt = DateTime.Now.AddMonths(-1),
-                    UpdatedAt = DateTime.Now,
-                    Enabled = true
-                },
-                new User
-                {
-                    UserId = 2,
-                    Username = "janedoe",
-                    Name = "Jane Doe",
-                    Email = "janedoe@example.com",
-                    Phone = "098-765-4321",
-                    Address = "456 Elm St",
-                    Role = "User",
-                    CreatedAt = DateTime.Now.AddMonths(-2),
-                    UpdatedAt = DateTime.Now.AddDays(-10),
-                    Enabled = false
-                }
-                // Ajoutez d'autres utilisateurs fictifs ici si nécessaire
-            };
+                string url = "http://localhost:8080/api/users";
 
-            foreach (var user in users)
-            {
-                var listViewItem = new ListViewItem(user.UserId.ToString());
-                listViewItem.SubItems.Add(user.Username);
-                listViewItem.SubItems.Add(user.Name);
-                listViewItem.SubItems.Add(user.Email);
-                listViewItem.SubItems.Add(user.Phone);
-                listViewItem.SubItems.Add(user.Address);
-                listViewItem.SubItems.Add(user.Role);
-                listViewItem.SubItems.Add(user.CreatedAt.ToString("g"));
-                listViewItem.SubItems.Add(user.UpdatedAt.ToString("g"));
-                listViewItem.SubItems.Add(user.Enabled ? "Yes" : "No");
-                listView1.Items.Add(listViewItem);
+                if (!TokenManager.IsTokenValid())
+                {
+                    MessageBox.Show("Le token n'est pas valide. Veuillez vous reconnecter.");
+                    return;
+                }
+
+                // Récupérer le token
+                string token = TokenManager.GetToken();
+
+                // Ajouter le token dans l'en-tête de la requête
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResponse = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<PagedResponse<User>>(jsonResponse);
+                    
+
+                    listView1.Items.Clear();
+                    foreach (var user in result.Content)
+                    {
+                        var listViewItem = new ListViewItem(user.User_Id.ToString());
+                        listViewItem.SubItems.Add(user.Username);
+                        listViewItem.SubItems.Add(user.Name);
+                        listViewItem.SubItems.Add(user.Email);
+                        listViewItem.SubItems.Add(user.Phone);
+                        listViewItem.SubItems.Add(user.Address);
+                        listViewItem.SubItems.Add(user.Role);
+                        listViewItem.SubItems.Add(user.CreatedAt.ToString("g"));
+                        listViewItem.SubItems.Add(user.UpdatedAt.HasValue ? user.UpdatedAt.Value.ToString("g") : "N/A");
+                        listViewItem.SubItems.Add(user.Enabled ? "Yes" : "No");
+                        listView1.Items.Add(listViewItem);
+                    }
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    MessageBox.Show("Accès non autorisé. Votre session a peut-être expiré. Veuillez vous reconnecter.");
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de la récupération des données.");
+                }
             }
         }
     }
