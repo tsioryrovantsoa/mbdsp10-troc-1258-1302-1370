@@ -17,3 +17,6 @@ Dossier : troc-front
 
 ## Liste des tâches
 [Tâches pour l'application de TROC](https://docs.google.com/spreadsheets/d/1ouMD0ehFyAmWiOiIJOvK-ZnQkMlIXlhH5XCA-xVH-Hs/edit?gid=0#gid=0)
+
+## Lien du livrable 
+https://docs.google.com/document/d/1j0MF2DFrOm3CqJ8Dh9z1TFt_9P5iCnsk/edit
