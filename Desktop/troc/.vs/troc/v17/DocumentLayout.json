@@ -46,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 292,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -55,19 +55,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "BaseFormWithNavbar.cs",
-              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
-              "RelativeDocumentMoniker": "troc\\BaseFormWithNavbar.cs",
-              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
-              "RelativeToolTip": "troc\\BaseFormWithNavbar.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAowEUAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-24T08:58:01.604Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -115,7 +102,7 @@
               "RelativeDocumentMoniker": "troc\\UserDashboardForm.cs",
               "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\UserDashboardForm.cs",
               "RelativeToolTip": "troc\\UserDashboardForm.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAQwG4AAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAIwFkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-21T20:46:23.846Z",
               "EditorCaption": ""
@@ -128,9 +115,22 @@
               "RelativeDocumentMoniker": "troc\\entities\\User.cs",
               "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\entities\\User.cs",
               "RelativeToolTip": "troc\\entities\\User.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAowBMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-21T21:18:55.343Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BaseFormWithNavbar.cs",
+              "DocumentMoniker": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
+              "RelativeDocumentMoniker": "troc\\BaseFormWithNavbar.cs",
+              "ToolTip": "F:\\ITU\\MBDS\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
+              "RelativeToolTip": "troc\\BaseFormWithNavbar.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAowEUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-24T08:58:01.604Z",
               "EditorCaption": ""
             },
             {

@@ -35,6 +35,7 @@ namespace troc
             listView1.Columns.Add("Role", 100, HorizontalAlignment.Left);
             listView1.Columns.Add("Created At", 150, HorizontalAlignment.Left);
             listView1.Columns.Add("Updated At", 150, HorizontalAlignment.Left);
+            listView1.Columns.Add("Deleted At", 150, HorizontalAlignment.Left);
             listView1.Columns.Add("Enabled", 80, HorizontalAlignment.Left);
 
             Button deleteButton = new Button
@@ -84,7 +85,13 @@ namespace troc
                         listViewItem.SubItems.Add(user.Role);
                         listViewItem.SubItems.Add(user.CreatedAt.ToString("g"));
                         listViewItem.SubItems.Add(user.UpdatedAt.HasValue ? user.UpdatedAt.Value.ToString("g") : "N/A");
+                        listViewItem.SubItems.Add(user.DeletedAt?.ToString("g") ?? "N/A");
                         listViewItem.SubItems.Add(user.Enabled ? "Yes" : "No");
+
+                        if (user.DeletedAt.HasValue)
+                        {
+                            listViewItem.ForeColor = Color.Red; // Mettre en rouge les utilisateurs supprimés
+                        }
 
                         listViewItem.Tag = user.User_Id;
                         listView1.Items.Add(listViewItem);
@@ -105,7 +112,15 @@ namespace troc
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                int userId = (int)listView1.SelectedItems[0].Tag;
+                var selectedItem = listView1.SelectedItems[0];
+                int userId = (int)selectedItem.Tag;
+
+                if (selectedItem.ForeColor == Color.Red)
+                {
+                    MessageBox.Show("Cet utilisateur est déjà supprimé et ne peut pas être supprimé à nouveau.");
+                    return;
+                }
+
                 DialogResult dialogResult = MessageBox.Show($"Êtes-vous sûr de vouloir supprimer l'utilisateur ID {userId} ?", "Confirmation de suppression", MessageBoxButtons.YesNo);
 
                 if (dialogResult == DialogResult.Yes)
