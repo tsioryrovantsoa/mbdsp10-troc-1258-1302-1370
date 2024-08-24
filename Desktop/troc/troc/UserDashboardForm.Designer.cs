@@ -31,12 +31,16 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
+            // navbarPanel
+            // 
+            this.navbarPanel.Size = new System.Drawing.Size(800, 50);
+            // 
             // listView1
             // 
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(12, 96);
+            this.listView1.Location = new System.Drawing.Point(12, 106);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(776, 332);
+            this.listView1.Size = new System.Drawing.Size(776, 263);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.List;
@@ -49,6 +53,8 @@
             this.Controls.Add(this.listView1);
             this.Name = "UserDashboardForm";
             this.Text = "UserDashboardForm";
+            this.Controls.SetChildIndex(this.listView1, 0);
+            this.Controls.SetChildIndex(this.navbarPanel, 0);
             this.ResumeLayout(false);
 
         }

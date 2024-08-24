@@ -35,6 +35,15 @@ namespace troc
             listView1.Columns.Add("Created At", 150, HorizontalAlignment.Left);
             listView1.Columns.Add("Updated At", 150, HorizontalAlignment.Left);
             listView1.Columns.Add("Enabled", 80, HorizontalAlignment.Left);
+
+            Button deleteButton = new Button
+            {
+                Text = "Supprimer",
+                Location = new System.Drawing.Point(50, 400),
+                Size = new System.Drawing.Size(100, 23)
+            };
+            deleteButton.Click += DeleteButton_Click;
+            Controls.Add(deleteButton);
         }
 
         private async void LoadUsersFromApi()
@@ -85,6 +94,52 @@ namespace troc
                 else
                 {
                     MessageBox.Show("Erreur lors de la récupération des données.");
+                }
+            }
+        }
+
+        private async void DeleteButton_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                long userId = (long)listView1.SelectedItems[0].Tag;
+                DialogResult dialogResult = MessageBox.Show($"Êtes-vous sûr de vouloir supprimer l'utilisateur ID {userId} ?", "Confirmation de suppression", MessageBoxButtons.YesNo);
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    await DeleteUser(userId);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un utilisateur à supprimer.");
+            }
+        }
+
+        private async Task DeleteUser(long userId)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = $"http://localhost:8080/api/users/{userId}";
+
+                if (!TokenManager.IsTokenValid())
+                {
+                    MessageBox.Show("Le token n'est pas valide. Veuillez vous reconnecter.");
+                    return;
+                }
+
+                string token = TokenManager.GetToken();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+                HttpResponseMessage response = await client.DeleteAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Utilisateur supprimé avec succès.");
+                    LoadUsersFromApi(); // Recharger la liste des utilisateurs après suppression
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de la suppression de l'utilisateur.");
                 }
             }
         }
