@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import NavBar from "../NavBar";
 import { useParams } from 'react-router-dom';
 import { Box, Typography, Card, CardContent, ImageList, 
-    ImageListItem, CircularProgress, Divider } from '@mui/material';
+    ImageListItem, CircularProgress, Divider, 
+    CardActions, IconButton} from '@mui/material';
 import ItemService from '../../Service/itemService';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteItemDialog from './delete-item-dialog';
+import UserService from '../../Service/userService';
 
 export default function ItemDetail() {
 
@@ -12,6 +17,9 @@ export default function ItemDetail() {
     const [loading, setLoading] = useState(true);
     const [imageUrls, setImageUrls] = useState([]);
     const [imageLoading, setImageLoading] = useState(true);
+    const [itemToDelete, setItemToDelete] = useState(null);
+
+    const isMyDetailItem = UserService.getUserIdFromToken() === item?.user?.user_id;
 
     const fetchImageUrls = async (imageIds) => {
         const urls = [];
@@ -49,6 +57,14 @@ export default function ItemDetail() {
 
     const statusColor = item?.status === 'DISPONIBLE' ? 'green' : 'red';
 
+    function openDeleteItemDialog(item) {
+        setItemToDelete(item);
+    }
+    
+    function closeDeleteItemDialog() {
+        setItemToDelete(null);
+    }
+
     return (
         <>
             <NavBar/>
@@ -59,6 +75,7 @@ export default function ItemDetail() {
                     ) : !item ? (
                         <Typography>Item not found</Typography>
                     ) : (
+                        <>
                         <Box
                             sx={{
                                 marginTop: 8,
@@ -114,6 +131,21 @@ export default function ItemDetail() {
                                         </Typography>
                                     </Box>
                                 </CardContent>
+                                {
+                                    isMyDetailItem && (
+                                        <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            <Box sx={{ display: 'flex', gap: 25 }}>
+                                                <IconButton size="small">
+                                                    <EditIcon />
+                                                </IconButton>
+                                                <IconButton size="small" onClick={() => openDeleteItemDialog(item)}>
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </Box>
+                                        </CardActions>
+                                    )
+                                }
+                                
                             </Card>
 
                             <ImageList sx={{ width: 500, height: 450 }} cols={1} rowHeight={200}>
@@ -129,6 +161,13 @@ export default function ItemDetail() {
                             </ImageList>
 
                         </Box>
+                        <DeleteItemDialog
+                            item={itemToDelete}
+                            open={itemToDelete !== null}
+                            handleClose={closeDeleteItemDialog}
+                            // handleDelete={handleDeleteItem}
+                        />
+                        </>
                     )
                 }
                 
