@@ -15,6 +15,8 @@ namespace troc
 {
     public partial class UserDashboardForm : BaseFormWithNavbar
     {
+        private const string ApiUrl = "http://localhost:8080/api/users";
+
         public UserDashboardForm()
         {
             InitializeComponent();
@@ -26,23 +28,20 @@ namespace troc
         {
             listView1.View = View.Details;
             listView1.FullRowSelect = true;
-            listView1.Columns.Add("User ID", 80, HorizontalAlignment.Left);
-            listView1.Columns.Add("Username", 120, HorizontalAlignment.Left);
-            listView1.Columns.Add("Name", 150, HorizontalAlignment.Left);
-            listView1.Columns.Add("Email", 200, HorizontalAlignment.Left);
-            listView1.Columns.Add("Phone", 120, HorizontalAlignment.Left);
-            listView1.Columns.Add("Address", 200, HorizontalAlignment.Left);
-            listView1.Columns.Add("Role", 100, HorizontalAlignment.Left);
-            listView1.Columns.Add("Created At", 150, HorizontalAlignment.Left);
-            listView1.Columns.Add("Updated At", 150, HorizontalAlignment.Left);
-            listView1.Columns.Add("Deleted At", 150, HorizontalAlignment.Left);
-            listView1.Columns.Add("Enabled", 80, HorizontalAlignment.Left);
 
-            Button deleteButton = new Button
+            string[] columns = { "User ID", "Username", "Name", "Email", "Phone", "Address", "Role", "Created At", "Updated At", "Deleted At", "Enabled" };
+            int[] columnWidths = { 80, 120, 150, 200, 120, 200, 100, 150, 150, 150, 80 };
+
+            for (int i = 0; i < columns.Length; i++)
+            {
+                listView1.Columns.Add(columns[i], columnWidths[i], HorizontalAlignment.Left);
+            }
+
+            var deleteButton = new Button
             {
                 Text = "Supprimer",
-                Location = new System.Drawing.Point(50, 400),
-                Size = new System.Drawing.Size(100, 23)
+                Location = new Point(50, 400),
+                Size = new Size(100, 23)
             };
             deleteButton.Click += DeleteButton_Click;
             Controls.Add(deleteButton);
@@ -50,110 +49,99 @@ namespace troc
 
         private async void LoadUsersFromApi()
         {
+            if (!TokenManager.IsTokenValid())
+            {
+                MessageBox.Show("Le token n'est pas valide. Veuillez vous reconnecter.");
+                return;
+            }
+
             using (var client = new HttpClient())
             {
-                string url = "http://localhost:8080/api/users";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", TokenManager.GetToken());
 
-                if (!TokenManager.IsTokenValid())
+                HttpResponseMessage response = await client.GetAsync(ApiUrl);
+                if (!response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show("Le token n'est pas valide. Veuillez vous reconnecter.");
+                    MessageBox.Show(response.StatusCode == System.Net.HttpStatusCode.Unauthorized
+                        ? "Accès non autorisé. Votre session a peut-être expiré. Veuillez vous reconnecter."
+                        : "Erreur lors de la récupération des données.");
                     return;
                 }
 
-                // Récupérer le token
-                string token = TokenManager.GetToken();
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<PagedResponse<User>>(jsonResponse);
 
-                // Ajouter le token dans l'en-tête de la requête
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
-                HttpResponseMessage response = await client.GetAsync(url);
-                if (response.IsSuccessStatusCode)
+                listView1.Items.Clear();
+                foreach (var user in result.Content)
                 {
-                    string jsonResponse = await response.Content.ReadAsStringAsync();
-                    var result = JsonConvert.DeserializeObject<PagedResponse<User>>(jsonResponse);
-                    
-
-                    listView1.Items.Clear();
-                    foreach (var user in result.Content)
-                    {
-                        var listViewItem = new ListViewItem(user.User_Id.ToString());
-                        listViewItem.SubItems.Add(user.Username);
-                        listViewItem.SubItems.Add(user.Name);
-                        listViewItem.SubItems.Add(user.Email);
-                        listViewItem.SubItems.Add(user.Phone);
-                        listViewItem.SubItems.Add(user.Address);
-                        listViewItem.SubItems.Add(user.Role);
-                        listViewItem.SubItems.Add(user.CreatedAt.ToString("g"));
-                        listViewItem.SubItems.Add(user.UpdatedAt.HasValue ? user.UpdatedAt.Value.ToString("g") : "N/A");
-                        listViewItem.SubItems.Add(user.DeletedAt?.ToString("g") ?? "N/A");
-                        listViewItem.SubItems.Add(user.Enabled ? "Yes" : "No");
-
-                        if (user.DeletedAt.HasValue)
-                        {
-                            listViewItem.ForeColor = Color.Red; // Mettre en rouge les utilisateurs supprimés
-                        }
-
-                        listViewItem.Tag = user.User_Id;
-                        listView1.Items.Add(listViewItem);
-                    }
-                }
-                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                {
-                    MessageBox.Show("Accès non autorisé. Votre session a peut-être expiré. Veuillez vous reconnecter.");
-                }
-                else
-                {
-                    MessageBox.Show("Erreur lors de la récupération des données.");
+                    AddUserToListView(user);
                 }
             }
         }
 
+        private void AddUserToListView(User user)
+        {
+            var listViewItem = new ListViewItem(user.User_Id.ToString());
+            listViewItem.SubItems.Add(user.Username);
+            listViewItem.SubItems.Add(user.Name);
+            listViewItem.SubItems.Add(user.Email);
+            listViewItem.SubItems.Add(user.Phone);
+            listViewItem.SubItems.Add(user.Address);
+            listViewItem.SubItems.Add(user.Role);
+            listViewItem.SubItems.Add(user.CreatedAt.ToString("g"));
+            listViewItem.SubItems.Add(user.UpdatedAt?.ToString("g") ?? "N/A");
+            listViewItem.SubItems.Add(user.DeletedAt?.ToString("g") ?? "N/A");
+            listViewItem.SubItems.Add(user.Enabled ? "Yes" : "No");
+
+            if (user.DeletedAt.HasValue)
+            {
+                listViewItem.ForeColor = Color.Red;
+            }
+
+            listViewItem.Tag = user.User_Id;
+            listView1.Items.Add(listViewItem);
+        }
+
         private async void DeleteButton_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count > 0)
-            {
-                var selectedItem = listView1.SelectedItems[0];
-                int userId = (int)selectedItem.Tag;
-
-                if (selectedItem.ForeColor == Color.Red)
-                {
-                    MessageBox.Show("Cet utilisateur est déjà supprimé et ne peut pas être supprimé à nouveau.");
-                    return;
-                }
-
-                DialogResult dialogResult = MessageBox.Show($"Êtes-vous sûr de vouloir supprimer l'utilisateur ID {userId} ?", "Confirmation de suppression", MessageBoxButtons.YesNo);
-
-                if (dialogResult == DialogResult.Yes)
-                {
-                    await DeleteUser(userId);
-                }
-            }
-            else
+            if (listView1.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Veuillez sélectionner un utilisateur à supprimer.");
+                return;
+            }
+
+            var selectedItem = listView1.SelectedItems[0];
+            int userId = (int)selectedItem.Tag;
+
+            if (selectedItem.ForeColor == Color.Red)
+            {
+                MessageBox.Show("Cet utilisateur est déjà supprimé et ne peut pas être supprimé à nouveau.");
+                return;
+            }
+
+            if (MessageBox.Show($"Êtes-vous sûr de vouloir supprimer l'utilisateur ID {userId} ?", "Confirmation de suppression", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                await DeleteUser(userId);
             }
         }
 
         private async Task DeleteUser(int userId)
         {
+            if (!TokenManager.IsTokenValid())
+            {
+                MessageBox.Show("Le token n'est pas valide. Veuillez vous reconnecter.");
+                return;
+            }
+
             using (var client = new HttpClient())
             {
-                string url = $"http://localhost:8080/api/users/{userId}";
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", TokenManager.GetToken());
 
-                if (!TokenManager.IsTokenValid())
-                {
-                    MessageBox.Show("Le token n'est pas valide. Veuillez vous reconnecter.");
-                    return;
-                }
-
-                string token = TokenManager.GetToken();
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
-                HttpResponseMessage response = await client.DeleteAsync(url);
+                HttpResponseMessage response = await client.DeleteAsync($"{ApiUrl}/{userId}");
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Utilisateur supprimé avec succès.");
-                    LoadUsersFromApi(); // Recharger la liste des utilisateurs après suppression
+                    LoadUsersFromApi();
                 }
                 else
                 {
