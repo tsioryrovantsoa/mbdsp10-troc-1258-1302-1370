@@ -244,7 +244,7 @@ export default function ItemList() {
                                     </CardContent>
                                     <CardActions>
                                         <Button size="small" variant="contained" onClick={() => goToDetail(item.itemId)}> <InfoIcon fontSize="small" sx={{marginRight: '5px'}}/>Detail </Button>
-                                        {/* <Button size="small">Learn More</Button> */}
+                                        <Button size="small">Proposer une echange</Button>
                                     </CardActions>
                                 </Card>
                             ))}
