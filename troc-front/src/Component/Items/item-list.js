@@ -8,6 +8,7 @@ import { styled, alpha } from '@mui/material/styles';
 import ItemService from '../../Service/itemService';
 import InfoIcon from '@mui/icons-material/Info';
 import { useNavigate } from 'react-router-dom';
+import ExchangeModal from './ExchangeModal';
 
 const ItemImage = ({ imageId }) => {
     const [imageUrl, setImageUrl] = useState(null);
@@ -149,6 +150,28 @@ export default function ItemList() {
         navigate(`/item/${itemId}`);
     }
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedItemId, setSelectedItemId] = useState(null);
+
+    const handleProposeClick = (itemId) => {
+        setSelectedItemId(itemId);
+        setIsModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleItemSelected = async (requesterItemId) => {
+        try {
+            const response = await ItemService.proposeExchange(selectedItemId, requesterItemId);
+            console.log('Exchange proposed:', response.data);
+        } catch (error) {
+            console.error('Error proposing exchange:', error);
+        }
+    };
+
+
     useEffect(() => {
         fetchItems();
     }, [page, size, keyword, category, status]);
@@ -244,7 +267,9 @@ export default function ItemList() {
                                     </CardContent>
                                     <CardActions>
                                         <Button size="small" variant="contained" onClick={() => goToDetail(item.itemId)}> <InfoIcon fontSize="small" sx={{marginRight: '5px'}}/>Detail </Button>
-                                        <Button size="small">Proposer une echange</Button>
+                                        <Button size="small" variant="contained" onClick={() => handleProposeClick(item.itemId)}>
+                                            Proposer une échange
+                                        </Button>
                                     </CardActions>
                                 </Card>
                             ))}
@@ -263,6 +288,12 @@ export default function ItemList() {
                     )}
 
                 </Box>
+
+                <ExchangeModal
+                    open={isModalOpen}
+                    onClose={handleModalClose}
+                    onSelect={handleItemSelected}
+                />
             </div>
             
         </>
