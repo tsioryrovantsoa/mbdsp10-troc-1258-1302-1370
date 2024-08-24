@@ -1,10 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Box, Avatar, Typography, Grid, TextField, Button, Alert, CircularProgress, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Container, Box, Avatar, Typography, Grid, TextField, Button, Alert, CircularProgress, Select, MenuItem, InputLabel, FormControl, CardMedia } from '@mui/material';
 import NavBar from '../NavBar';
 import EditIcon from '@mui/icons-material/Edit';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ItemService from '../../Service/itemService';
+
+
+
+const ItemImage = ({ imageId }) => {
+
+    const [imageUrl, setImageUrl] = useState(null);
+    const [imageLoading, setImageLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            setImageLoading(true);
+            try {
+                const response = await ItemService.getImage(imageId);
+                const blob = new Blob([response.data], { type: response.headers['content-type'] });
+                const url = URL.createObjectURL(blob);
+                setImageUrl(url);
+            } catch (error) {
+                console.error(`Error fetching image for id ${imageId}:`, error);
+            } finally {
+                setImageLoading(false);
+            }
+        };
+
+        if (imageId) {
+            fetchImage();
+        }
+
+        return () => {
+            if (imageUrl) {
+                URL.revokeObjectURL(imageUrl);
+            }
+        };
+    }, [imageId]);
+
+    if (imageLoading) {
+        return <CircularProgress />;
+    }
+
+    return (
+        <CardMedia
+            sx={{ height: 140 }}
+            image={imageUrl || "/static/images/cards/contemplative-reptile.jpg"}
+            title="Item image"
+        />
+    );
+};
+
 
 export default function EditItem() {
     const { itemId } = useParams();  // Récupère l'itemId depuis les paramètres de l'URL
@@ -13,13 +60,13 @@ export default function EditItem() {
         title: '',
         description: '',
         category: '',
-        status: 'DISPONIBLE',
     });
     const [newImages, setNewImages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [categories, setCategories] = useState([]);
+    const [images, setImages] = useState([]);
 
     // Récupère les catégories
     const fetchCategories = async () => {
@@ -41,6 +88,8 @@ export default function EditItem() {
                 category: response.data.category,
                 status: response.data.status,
             });
+
+            setImages(response.data.images);
         } catch (error) {
             console.error('Error fetching item details:', error);
             setError('Error fetching item details');
@@ -68,16 +117,21 @@ export default function EditItem() {
         e.preventDefault();
         setLoading(true);
 
+        
         const formDataToSend = new FormData();
         formDataToSend.append('title', formData.title);
         formDataToSend.append('description', formData.description);
         formDataToSend.append('category', formData.category);
-        formDataToSend.append('status', formData.status);
 
         newImages.forEach((image) => {
             formDataToSend.append(`newImages`, image);
         });
-
+        
+        formDataToSend.append(`imagesToRemove`, [3]);
+        console.log(formDataToSend.forEach((value) => {
+            console.log(value);
+        }));
+        
         try {
             await ItemService.updateItem(itemId, formDataToSend);
             setSuccess('Item updated successfully');
@@ -160,6 +214,14 @@ export default function EditItem() {
                                     />
                                 </Button>
                             </Grid>
+
+                            {images.length > 0 && (
+                                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 2 }}>
+                                    {images.map((image, index) => (
+                                        <ItemImage imageId={image.image_id} />
+                                    ))}
+                                </Grid>
+                            )}
 
                             {newImages.length > 0 && (
                                 <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 2 }}>

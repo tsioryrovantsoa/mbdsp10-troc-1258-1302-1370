@@ -72,7 +72,17 @@ const ItemService = {
                 'Authorization': `Bearer ${token}`
             },
         });
-    }
+    },
+
+    updateItem(itemId,itemData) {
+        const token = localStorage.getItem('token');
+            return axios.put(`${API_ITEM_URL}/${itemId}`, itemData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+        },
 }
 
 export default ItemService;
