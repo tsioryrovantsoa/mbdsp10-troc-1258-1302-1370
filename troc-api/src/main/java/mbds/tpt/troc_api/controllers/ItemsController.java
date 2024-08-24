@@ -2,9 +2,11 @@ package mbds.tpt.troc_api.controllers;
 
 import mbds.tpt.troc_api.datamodel.ItemDataModel;
 import mbds.tpt.troc_api.entities.Items;
+import mbds.tpt.troc_api.entities.Users;
 import mbds.tpt.troc_api.entities.Images;
 import mbds.tpt.troc_api.repositories.ImageRepository;
 import mbds.tpt.troc_api.services.ItemService;
+import mbds.tpt.troc_api.services.UserService;
 import mbds.tpt.troc_api.utils.ErrorResponse;
 import mbds.tpt.troc_api.utils.ResourceNotFoundException;
 
@@ -37,6 +39,9 @@ public class ItemsController {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ImageRepository imageRepository;
@@ -172,5 +177,18 @@ public class ItemsController {
         return Arrays.stream(Category.values())
                      .map(Enum::name)
                      .collect(Collectors.toList());
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Page<Items>> getItemsByUser(
+            @PathVariable Long userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Users user = userService.getUserById(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Page<Items> items = itemService.getItemsByUser(user, page, size);
+        return ResponseEntity.ok(items);
     }
 }

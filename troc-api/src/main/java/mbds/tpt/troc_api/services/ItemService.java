@@ -173,4 +173,9 @@ public class ItemService {
 
         return loadedItem;
     }
+
+    public Page<Items> getItemsByUser(Users user, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return itemRepository.findByUser(user, pageable);
+    }
 }

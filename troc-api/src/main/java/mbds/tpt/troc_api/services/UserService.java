@@ -157,4 +157,9 @@ public class UserService implements UserDetailsService {
 
         return userRepository.save(userToUpdate);
     }
+
+    public Users getUserById(Long userId) {
+        return userRepository.findByUserId(userId)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + userId));
+    }
 }
