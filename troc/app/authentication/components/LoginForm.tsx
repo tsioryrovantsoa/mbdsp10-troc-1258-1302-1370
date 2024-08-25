@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 
@@ -15,8 +15,12 @@ const LoginForm = ({ onSubmit }: { onSubmit: (username:string, password:string) 
   const handleLogin = () => {
     onSubmit(username, password);
   };
+
+  const { success } = useLocalSearchParams<{LoginForm: any, success:string}>(); // Récupère les paramètres de l'URL
+  
   return (
     <View style={styles.container}>
+       {success && <Text style={styles.successText}>Inscription réussie! Vous pouvez maintenant vous connecter.</Text>}
       <Text style={styles.logo}>Takalo</Text>
       <View style={styles.inputView}>
         <TextInput
@@ -91,7 +95,15 @@ const styles = StyleSheet.create({
   },
   signupBtn:{
     marginTop:10
+  },
+  successText:{
+    color:'green',
+    marginBottom:20
   }
 });
 
 export default LoginForm;
+
+function useParams(): { success: any; } {
+  throw new Error('Function not implemented.');
+}

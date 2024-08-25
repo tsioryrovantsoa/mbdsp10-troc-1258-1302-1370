@@ -39,10 +39,11 @@ const SignupScreen = ({ onSubmit }: { onSubmit: (username: string, name: string,
     // Appel du service d'inscription si tout est valide
     try {
       await registerUser(username, name, password, email, phone, address);
-      // Rediriger ou effectuer une autre action après l'inscription réussie
+      router.push('/authentication/components/LoginForm?success=true');
     } catch (err:Error | any) {
       setError(err.message);
-    }  };
+    }  
+  };
 
   const router = useRouter();
 
