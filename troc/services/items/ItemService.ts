@@ -1,3 +1,4 @@
+import { Image } from "@/app/types";
 import ApiService, { baseURL } from "../ApiService";
 
 const postItem = baseURL + "api/items";
@@ -37,3 +38,25 @@ export const getItemsList = async (token:string) => {
 
     return response;
   };
+
+export const addNewItem = async (title:string, description:string|null, category:string, newImages:Image[]) => {
+    var response = null;
+    var data = {
+        title:title,
+        description:description,
+        category:category,
+        newImages:newImages
+    }
+    try {
+        response = await ApiService.post(
+            postItem,
+            data
+        );
+        console.log("response addItem >>>>>>>> ", response);
+
+    } catch (error) {
+        let errorMessage = 'Une erreur est survenue lors de la création de votre objet.';
+        console.log("error addItem >>>>>>>> ", errorMessage);
+        throw new Error(errorMessage); 
+  };
+}
