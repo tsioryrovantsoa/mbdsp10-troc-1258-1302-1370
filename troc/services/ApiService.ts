@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 // export const instance = axios.create({
 //   baseURL: 'http://10.0.1.83:8080/api/',
@@ -8,7 +8,7 @@ import axios from "axios";
 
 export const baseURL = "http://192.168.1.170:8080/";
 
-export const imageURL = baseURL + "uploads/";
+export const imageURL = baseURL + "public/uploads/";
 
 export default class ApiService {
     static contentTypeFormData = "multipart/form-data";
@@ -57,7 +57,7 @@ export default class ApiService {
         method: "GET",
         url,
         headers: ApiService.getHeaders(token),
-      }).catch((err) => {
+      }).catch((err: { response: { status: number; } | undefined; config: { url: any; }; }) => {
         if (err.response !== undefined && err.response.status === 404) {
           throw new Error(`${err.config.url} not found`);
         }

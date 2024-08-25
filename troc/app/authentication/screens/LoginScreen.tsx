@@ -8,14 +8,13 @@ import { storeToken } from '@/storage';
 const LoginScreen = () => {
   const router = useRouter();
 
-  const handleLogin = async (username:string, password:string) => {
+  const handleLogin = async (username: string, password: string) => {
     try {
       const response = await login(username, password);
       if (response.success) {
         await storeToken(response.data.accessToken);
-        router.push('/items'); // Redirection vers la liste des items
+        router.push('/ItemsListScreen'); // Redirection vers la liste des items
       } else {
-
         Alert.alert('Login Failed', 'Invalid credentials');
       }
     } catch (error) {
@@ -23,10 +22,8 @@ const LoginScreen = () => {
       Alert.alert('Error', 'Something went wrong');
     }
   };
-
   return (
     <View style={{ flex: 1, justifyContent: 'center'}}>
-      <Text>Login</Text>
       <LoginForm onSubmit={handleLogin} />
     </View>
   );

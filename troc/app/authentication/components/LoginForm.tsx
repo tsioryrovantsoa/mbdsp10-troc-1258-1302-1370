@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 
 const LoginForm = ({ onSubmit }: { onSubmit: (username:string, password:string) => void }) => {
   const [username, setUsername] = useState('');
@@ -30,12 +30,12 @@ const LoginForm = ({ onSubmit }: { onSubmit: (username:string, password:string) 
           onChangeText={setPassword}
         />
       </View>
-      <TouchableOpacity style={styles.loginBtn} onPress={handleLogin} >
+      <Pressable style={styles.loginBtn} onPress={handleLogin} >
         <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.signupBtn}>
+      </Pressable>
+      <Pressable style={styles.signupBtn}>
         <Text style={styles.signupText}>Signup</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

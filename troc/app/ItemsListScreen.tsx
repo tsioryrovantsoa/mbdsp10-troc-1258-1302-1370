@@ -1,12 +1,11 @@
 // app/ItemsListScreen.tsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, Image } from 'react-native';
-import { Item } from '../types';
+import { Item } from './types';
 import { getToken } from '@/storage';
 import { getItemsList } from '@/services/items/ItemService';
 import { imageURL } from '@/services/ApiService';
 
-// Simule une fonction pour obtenir les items (remplacez-la par une API réelle)
 const fetchItems = async () => {
 
   // Remplacez par l'appel API réel
@@ -14,7 +13,8 @@ const fetchItems = async () => {
 
 
   const response = (token) ? await getItemsList(token) : null;
-  // console.log(response);
+  console.log("TOKEN >>>>>>>>> ",token);
+  console.log(response);
   const data = await response;
   return data;
 };
@@ -25,8 +25,10 @@ const ItemsListScreen: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("fgswdgdfhg" , imageURL+items[0].images[0].imageUrl);
-    
+    if (items.length > 0 && items[0].images.length > 0) {
+      console.log("Image URL:", imageURL + items[0].images[0].imageUrl);
+    }
+
     const loadItems = async () => {
       try {
         const fetchedItems = await fetchItems();
@@ -60,31 +62,32 @@ const ItemsListScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={items}
-        keyExtractor={(item) => item.item_id?.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.item} key={item.item_id}>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text>{item.description}</Text>
-            <View style={styles.imagesContainer}>
-            <FlatList
-              data={item.images}
-              keyExtractor={(image) => image.image_id?.toString()} 
-              horizontal
-              renderItem={({ item }) => (
-                <View style={styles.image} key={item.image_id}>
-                      <Image
-                        source={{ uri: imageURL+item.imageUrl }}
-                        style={styles.image}
-                      />
-                </View>
-              )}
-            />
+<FlatList
+  data={items}
+  keyExtractor={(item) => item.item_id?.toString()} // Ensure item_id is unique and defined
+  renderItem={({ item }) => (
+    <View style={styles.item} key={item.item_id}> {/* You don't need key here as FlatList handles it */}
+      <Text style={styles.title}>{item.title}</Text>
+      <Text>{item.description}</Text>
+      <View style={styles.imagesContainer}>
+        <FlatList
+          data={item.images}
+          keyExtractor={(image) => image.image_id?.toString()} // Ensure image_id is unique and defined
+          horizontal
+          renderItem={({ item }) => (
+            <View style={styles.image} key={item.image_id}> {/* You don't need key here as FlatList handles it */}
+              <Image
+                source={{ uri: imageURL + item.imageUrl }}
+                style={styles.image}
+              />
             </View>
-          </View>
-        )}
-      />
+          )}
+        />
+      </View>
+    </View>
+  )}
+/>
+
     </View>
   );
 };
