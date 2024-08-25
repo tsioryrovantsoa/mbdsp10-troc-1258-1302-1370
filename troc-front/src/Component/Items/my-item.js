@@ -11,6 +11,7 @@ import UserService from '../../Service/userService';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteItemDialog from './delete-item-dialog';
+import ExchangeService from '../../Service/exchangeService';
 
 const ItemImage = ({ imageId }) => {
 
@@ -71,6 +72,7 @@ export default function MyItem() {
     const [isLoading, setIsLoading] = useState(true);
     const [categories, setCategories] = useState([]);
     const [itemToDelete, setItemToDelete] = useState(null);
+    const [exchangeData, setExchangeData] = useState({});
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -184,6 +186,10 @@ export default function MyItem() {
         }
     };
 
+    function goToExchangeDetail(itemId){
+        navigate(`/exchanges/item/${itemId}`);
+    }
+
     return (
         <>
         <NavBar/>
@@ -282,6 +288,10 @@ export default function MyItem() {
                                                 <DeleteIcon />
                                             </IconButton>
                                         </Box>
+
+                                                <Button size="small" variant="contained" color="primary" onClick={() => goToExchangeDetail(item.itemId)}>
+                                                    Voir échange
+                                                </Button>
                                     </CardActions>
                                 </Card>
                                 <DeleteItemDialog
