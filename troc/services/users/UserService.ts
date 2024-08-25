@@ -20,8 +20,8 @@ export const registerUser = async (username:string, name:string, password:string
         console.log("response registerUser >>>>>>>> ", response);
 
     } catch (error) {
-        console.log("error registerUser >>>>>>>> ", error);
-    }
-
-    return response;
+        let errorMessage = 'Une erreur est survenue lors de l\'inscription. Vérifiez le format de l\'email ou du téléphone.';
+        console.log("error registerUser >>>>>>>> ", errorMessage);
+        throw new Error(errorMessage); 
   };
+}

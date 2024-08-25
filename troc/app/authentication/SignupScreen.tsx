@@ -13,7 +13,7 @@ const SignupScreen = ({ onSubmit }: { onSubmit: (username: string, name: string,
   const [address, setAddress] = useState('');
   const [error, setError] = useState('');
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     // Réinitialiser les messages d'erreur
     setError('');
 
@@ -37,8 +37,12 @@ const SignupScreen = ({ onSubmit }: { onSubmit: (username: string, name: string,
     }
 
     // Appel du service d'inscription si tout est valide
-    registerUser(username, name, password, email, phone, address);
-  };
+    try {
+      await registerUser(username, name, password, email, phone, address);
+      // Rediriger ou effectuer une autre action après l'inscription réussie
+    } catch (err:Error | any) {
+      setError(err.message);
+    }  };
 
   const router = useRouter();
 
