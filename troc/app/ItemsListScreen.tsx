@@ -62,31 +62,31 @@ const ItemsListScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-<FlatList
-  data={items}
-  keyExtractor={(item) => item.item_id?.toString()} // Ensure item_id is unique and defined
-  renderItem={({ item }) => (
-    <View style={styles.item} key={item.item_id}> {/* You don't need key here as FlatList handles it */}
-      <Text style={styles.title}>{item.title}</Text>
-      <Text>{item.description}</Text>
-      <View style={styles.imagesContainer}>
-        <FlatList
-          data={item.images}
-          keyExtractor={(image) => image.image_id?.toString()} // Ensure image_id is unique and defined
-          horizontal
-          renderItem={({ item }) => (
-            <View style={styles.image} key={item.image_id}> {/* You don't need key here as FlatList handles it */}
-              <Image
-                source={{ uri: imageURL + item.imageUrl }}
-                style={styles.image}
+      <FlatList
+        data={items}
+        keyExtractor={(item) => item.itemId?.toString()} // Ensure itemId is unique and defined
+        renderItem={({ item }) => (
+          <View style={styles.item}> {/* You don't need key here as FlatList handles it */}
+            <Text style={styles.title}>{item.title}</Text>
+            <Text>{item.description}</Text>
+            <View style={styles.imagesContainer}>
+              <FlatList
+                data={item.images}
+                keyExtractor={(image) => image.image_id?.toString()} // Ensure image_id is unique and defined
+                horizontal
+                renderItem={({ item }) => (
+                  <View style={styles.image} key={item.image_id}> {/* You don't need key here as FlatList handles it */}
+                    <Image
+                      source={{ uri: imageURL + item.imageUrl }}
+                      style={styles.image}
+                    />
+                  </View>
+                )}
               />
             </View>
-          )}
-        />
-      </View>
-    </View>
-  )}
-/>
+          </View>
+        )}
+      />
 
     </View>
   );

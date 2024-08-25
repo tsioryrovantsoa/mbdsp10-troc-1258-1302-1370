@@ -5,7 +5,7 @@ export interface Image {
   }
   
   export interface Item {
-    item_id: number;
+    itemId: number;
     title: string;
     description: string|null;
     category: string; // Assurez-vous que la catégorie correspond à une valeur de votre enum
