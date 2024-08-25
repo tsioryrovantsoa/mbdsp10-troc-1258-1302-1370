@@ -3,29 +3,54 @@ import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 
-const SignupScreen = ({ onSubmit }: { onSubmit: (username:string, name:string, password:string, email:string, phone:string, address:string) => void }) => {
+const SignupScreen = ({ onSubmit }: { onSubmit: (username: string, name: string, password: string, email: string, phone: string, address: string) => void }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [error, setError] = useState('');
 
   const handleSignup = () => {
-    console.log("handleSignup");
+    // Réinitialiser les messages d'erreur
+    setError('');
+
+    if (password !== confirmPassword) {
+      setError('Les mots de passe ne correspondent pas');
+      return;
+    }
+
+    if (password === '' || confirmPassword === '') {
+      setError('Veuillez remplir les champs de mot de passe');
+      return;
+    }
+
+    // Réinitialiser les messages d'erreur
+    setError('');
+
+    // Vérifier les champs requis
+    if (!username || !name || !password || !confirmPassword || !email || !phone || !address) {
+      setError('Veuillez remplir tous les champs');
+      return;
+    }
+
+    // Appel du service d'inscription si tout est valide
     registerUser(username, name, password, email, phone, address);
   };
 
   const router = useRouter();
 
-  const redirectToLogin = () =>{ 
+  const redirectToLogin = () => {
     router.push('/authentication/components/LoginForm'); // Redirection vers la page d'inscription
   }
 
-  
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>Sign up</Text>
+
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       <View style={styles.inputView}>
         <TextInput
@@ -64,8 +89,8 @@ const SignupScreen = ({ onSubmit }: { onSubmit: (username:string, name:string, p
           placeholder="Confirm password"
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
-          value={password}
-          onChangeText={setPassword}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
         />
       </View>
 
@@ -151,8 +176,12 @@ const styles = StyleSheet.create({
   signupText: {
     color: '#003f5c',
   },
-  signupBtn:{
-    marginTop:10
+  signupBtn: {
+    marginTop: 10,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
   }
 });
 
