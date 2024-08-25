@@ -1,10 +1,11 @@
 // app/ItemsListScreen.tsx
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, Image } from 'react-native';
-import { Item } from './types';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, Image, ScrollView } from 'react-native';
+import { Item } from '../types';
 import { getToken } from '@/storage';
 import { getItemsList } from '@/services/items/ItemService';
 import { imageURL } from '@/services/ApiService';
+import Card from '@/components/Card';
 
 const fetchItems = async () => {
 
@@ -62,33 +63,41 @@ const ItemsListScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      
       <FlatList
-        data={items}
-        keyExtractor={(item) => item.itemId?.toString()} // Ensure itemId is unique and defined
-        renderItem={({ item }) => (
-          <View style={styles.item}> {/* You don't need key here as FlatList handles it */}
-            <Text style={styles.title}>{item.title}</Text>
-            <Text>{item.description}</Text>
-            <View style={styles.imagesContainer}>
-              <FlatList
-                data={item.images}
-                keyExtractor={(image) => image.image_id?.toString()} // Ensure image_id is unique and defined
-                horizontal
-                renderItem={({ item }) => (
-                  <View style={styles.image} key={item.image_id}> {/* You don't need key here as FlatList handles it */}
-                    <Image
-                      source={{ uri: imageURL + item.imageUrl }}
-                      style={styles.image}
-                    />
-                  </View>
-                )}
+       data={items}
+       keyExtractor={(item) => item.itemId}
+       showsVerticalScrollIndicator={false}
+       renderItem={({ item }) => {
+        console.log("item data >>>>>>>>> ", item);
+        if (item.images && item.images.length > 0) {
+          console.log("imageURL + item.images[0].imageUrl >>>>>>>>> ", imageURL + item.images[0].imageUrl);
+          return (
+            <View>
+              <Card
+                heading={item.title}
+                images={item.images.map(image => image.imageUrl)}
+                subheading={item.description}
+                onPress={() =>
+                  alert(`You pressed on ${item.title}`)
+                }
               />
             </View>
-          </View>
-        )}
-      />
-
+          );
+        } else {
+          return (
+            <View>
+              <Text>No image available</Text>
+            </View>
+          );
+        }
+      }}
+      
+      >
+      
+      </FlatList>
     </View>
+
   );
 };
 

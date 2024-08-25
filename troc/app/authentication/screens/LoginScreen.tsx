@@ -13,7 +13,7 @@ const LoginScreen = () => {
       const response = await login(username, password);
       if (response.success) {
         await storeToken(response.data.accessToken);
-        router.push('/ItemsListScreen'); // Redirection vers la liste des items
+        router.push('/items/ItemsListScreen' as never); // Redirection vers la liste des items
       } else {
         Alert.alert('Login Failed', 'Invalid credentials');
       }
@@ -21,8 +21,7 @@ const LoginScreen = () => {
       // console.log("error login >>>>>> " , error);
       Alert.alert('Error', 'Something went wrong');
     }
-  };
-  return (
+  };  return (
     <View style={{ flex: 1, justifyContent: 'center'}}>
       <LoginForm onSubmit={handleLogin} />
     </View>

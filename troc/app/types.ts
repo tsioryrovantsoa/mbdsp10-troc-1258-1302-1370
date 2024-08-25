@@ -5,7 +5,7 @@ export interface Image {
   }
   
   export interface Item {
-    itemId: number;
+    itemId: string;
     title: string;
     description: string|null;
     category: string; // Assurez-vous que la catégorie correspond à une valeur de votre enum
@@ -14,4 +14,19 @@ export interface Image {
     updatedAt: string;
     images: Image[];
   }
+
+  export enum ItemCategory {
+    Electronics = 'Electronics',
+    Clothing = 'Clothing',
+    HomeGoods = 'HomeGoods',
+    // Ajoutez d'autres catégories selon vos besoins
+  }
+  
+  export enum ItemStatus {
+    Available = 'Available',
+    Sold = 'Sold',
+    Pending = 'Pending',
+    // Ajoutez d'autres statuts selon vos besoins
+  }
+  
   
