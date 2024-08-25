@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
@@ -15,7 +13,6 @@ namespace troc
 {
     public partial class HomePage : BaseFormWithNavbar
     {
-
         private TextBox searchBox;
         private ComboBox categoryComboBox;
         private ComboBox statusComboBox;
@@ -48,6 +45,7 @@ namespace troc
             };
             Controls.Add(searchBox);
 
+            // Commenté pour simplification
             /*categoryComboBox = new ComboBox
             {
                 Location = new Point(260, 50),
@@ -76,13 +74,18 @@ namespace troc
             itemListView = new ListView
             {
                 Location = new Point(50, 190),
-                Size = new Size(300, 200),
-                View = View.Details
+                Size = new Size(500, 200),
+                View = View.Details,
+                FullRowSelect = true
             };
             itemListView.Columns.Add("Title", 100);
             itemListView.Columns.Add("Description", 200);
             itemListView.Columns.Add("Category", 100);
+            itemListView.Columns.Add("Actions", 100); // Nouvelle colonne pour les actions
             Controls.Add(itemListView);
+
+            // Ajouter l'événement pour gérer les clics sur les cellules du ListView
+            itemListView.MouseClick += ItemListView_MouseClick;
 
             detailButton = new Button
             {
@@ -119,8 +122,6 @@ namespace troc
             {
                 string baseUrl = "http://localhost:8080/api/items/search";
                 string keyword = searchBox.Text;
-                //string category = categoryComboBox.SelectedItem?.ToString();
-                //string status = statusComboBox.SelectedItem?.ToString();
 
                 string url = $"{baseUrl}?keyword={keyword}&page=0&size=10";
 
@@ -145,8 +146,17 @@ namespace troc
                     itemListView.Items.Clear();
                     foreach (var item in result.Content)
                     {
-                        var listViewItem = new ListViewItem(new[] { item.Title, item.Description, item.Category.ToString() });
-                        listViewItem.Tag = item.ItemId;
+                        var listViewItem = new ListViewItem(new[]
+                        {
+                            item.Title,
+                            item.Description,
+                            item.Category.ToString(),
+                            "Edit | Delete" // Texte cliquable pour les actions
+                        })
+                        {
+                            Tag = item.ItemId
+                        };
+
                         itemListView.Items.Add(listViewItem);
                     }
                 }
@@ -160,6 +170,62 @@ namespace troc
                 }
             }
         }
+
+        private async void ItemListView_MouseClick(object sender, MouseEventArgs e)
+        {
+            ListViewHitTestInfo hitTest = itemListView.HitTest(e.X, e.Y);
+            if (hitTest.Item != null)
+            {
+                int columnIndex = hitTest.Item.SubItems.IndexOf(hitTest.SubItem);
+                if (columnIndex == 3) // Colonne des actions
+                {
+                    var itemId = (long)hitTest.Item.Tag;
+                    var text = hitTest.SubItem.Text;
+
+                    // Vérifiez sur quel texte l'utilisateur a cliqué
+                    if (e.X >= hitTest.SubItem.Bounds.Left && e.X <= hitTest.SubItem.Bounds.Left + 40) // Ajustez les limites pour "Edit"
+                    {
+                        MessageBox.Show($"Modifier l'item avec ID {itemId}");
+                    }
+                    else if (e.X >= hitTest.SubItem.Bounds.Left + 50) // Ajustez les limites pour "Delete"
+                    {
+                        using (var client = new HttpClient())
+                        {
+                            string baseUrl = "http://localhost:8080/api/items";
+                            string keyword = searchBox.Text;
+
+                            string url = $"{baseUrl}/{itemId}"; ;
+
+                            if (!TokenManager.IsTokenValid())
+                            {
+                                MessageBox.Show("Le token n'est pas valide. Veuillez vous reconnecter.");
+                                return;
+                            }
+
+                            // Récupérer le token
+                            string token = TokenManager.GetToken();
+
+                            // Ajouter le token dans l'en-tête de la requête
+                            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+                            HttpResponseMessage response = await client.DeleteAsync(url);
+                            if (response.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show($"Item avec ID {itemId} supprimé");
+                            }
+                            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                            {
+                                MessageBox.Show("Accès non autorisé. Votre session a peut-être expiré. Veuillez vous reconnecter.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erreur lors de la récupération des données.");
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public class PagedResponse<T>
@@ -169,4 +235,3 @@ namespace troc
         public int TotalElements { get; set; }
     }
 }
-
