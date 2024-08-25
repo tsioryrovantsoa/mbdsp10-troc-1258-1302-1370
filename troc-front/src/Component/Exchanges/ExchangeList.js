@@ -66,6 +66,12 @@ const ExchangeList = () => {
                       <Typography variant="h6">
                         Exchange ID: {exchange.exchangeId}
                       </Typography>
+                      <Typography>
+                        Requester: {exchange.requester.name}
+                      </Typography>
+                      <Typography>
+                        Receiver : {exchange.receiver.name}
+                      </Typography>
                       <Typography>Status: {exchange.status}</Typography>
                       <Typography>
                         Created At:{" "}

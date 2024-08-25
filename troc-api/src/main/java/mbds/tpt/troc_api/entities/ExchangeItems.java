@@ -30,9 +30,8 @@ public class ExchangeItems {
     @JsonIgnore
     private Exchanges exchange;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id", nullable = false)
-    @JsonIgnore
     private Items item;
 
     @Column(name = "role", nullable = false)

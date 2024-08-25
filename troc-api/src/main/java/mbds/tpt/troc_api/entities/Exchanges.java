@@ -32,13 +32,11 @@ public class Exchanges {
     @Column(name = "exchange_id")
     private Long exchangeId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "requester_id", nullable = false)
     private Users requester;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "receiver_id", nullable = false)
     private Users receiver;
 
