@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 const LoginForm = ({ onSubmit }: { onSubmit: (username:string, password:string) => void }) => {
   const [username, setUsername] = useState('');
@@ -8,38 +8,83 @@ const LoginForm = ({ onSubmit }: { onSubmit: (username:string, password:string) 
   const handleLogin = () => {
     onSubmit(username, password);
   };
-
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={false}
-        value={password}
-        onChangeText={setPassword}
-      />
-      <Button title="Login" onPress={handleLogin} />
+      <Text style={styles.logo}>Takalo</Text>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.inputText}
+          placeholder="Username"
+          placeholderTextColor="#003f5c"
+          value={username}
+          onChangeText={setUsername}
+        />
+      </View>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.inputText}
+          placeholder="Password"
+          placeholderTextColor="#003f5c"
+          secureTextEntry={true}
+          value={password}
+          onChangeText={setPassword}
+        />
+      </View>
+      <TouchableOpacity style={styles.loginBtn} onPress={handleLogin} >
+        <Text style={styles.loginText}>LOGIN</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.signupBtn}>
+        <Text style={styles.signupText}>Signup</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 12,
+  logo: {
+    fontWeight: 'bold',
+    fontSize: 50,
+    color: '#fb5b5a',
+    marginBottom: 40,
+  },
+  inputView: {
+    width: '80%',
+    backgroundColor: '#f2f2f2',
+    borderRadius: 25,
+    height: 50,
+    marginBottom: 20,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  inputText: {
+    height: 50,
+    color: 'black',
+  },
+  loginBtn: {
+    width: '80%',
+    backgroundColor: '#fb5b5a',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  loginText: {
     color: 'white',
-    paddingHorizontal: 8,
   },
+  signupText: {
+    color: '#003f5c',
+  },
+  signupBtn:{
+    marginTop:10
+  }
 });
 
 export default LoginForm;
