@@ -3,34 +3,61 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'reac
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { addNewItem } from '@/services/items/ItemService';
+import { getToken } from '@/storage';
 
 const AddItemScreen = () => {
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
-  const [newImages, setNewImages] = useState<string | null>(null);
+  const [newImages, setNewImages] = useState<ImagePicker.ImageInfo>();
   const [error, setError] = useState('');
   const router = useRouter();
 
   const handleCreateItem = async () => {
+
+    const formData = new FormData();
+
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('category', category);
+    if (newImages) {
+      console.log("newImages : ", newImages);
+        console.log("newImages URI : ", newImages.uri);
+
+        const filename = newImages.fileName;
+        console.log("filename : ", filename);
+
+        const match = /\.(\w+)$/.exec(filename);
+        const type = match ? `image/${match[1]}` : `image`;
+
+        formData.append('newImages', {
+            uri: newImages.uri,
+            name: filename,
+            type: type,
+      });
+    }
+
     try {
-      await addNewItem(name, description, category, newImages);
+      const token = await getToken();
+ 
+      const response = (token) ? await addNewItem(formData, token) : null;
       router.push('/items/ItemsListScreen?success=true'); // Redirige vers la liste d'items avec un message de succès
-    } catch (err: Error | any) {
+      console.log('Item added successfully:', formData);
+    } catch (err:Error | any) {
       setError(err.message);
     }
   };
-
   const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
+    let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
+    console.log("pick photo => ", result);
 
     if (!result.canceled) {
-      setNewImages(result.assets[0].uri);
+      setNewImages(result.assets[0]);
     }
   };
 
@@ -40,24 +67,24 @@ const AddItemScreen = () => {
       aspect: [4, 3],
       quality: 1,
     });
-
+    console.log("take photo => ", result);
     if (!result.canceled) {
-        setNewImages(result.assets[0].uri);
+        setNewImages(result.assets[0]);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>Créer un item</Text>
+      <Text style={styles.logo}>Nouveau post</Text>
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       <View style={styles.inputView}>
         <TextInput
           style={styles.inputText}
-          placeholder="Nom de l'item"
+          placeholder="Nom de l'objet"
           placeholderTextColor="#003f5c"
-          value={name}
-          onChangeText={setName}
+          value={title}
+          onChangeText={setTitle}
         />
       </View>
 

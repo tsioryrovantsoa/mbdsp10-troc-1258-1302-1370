@@ -24,6 +24,8 @@ const getOneItem = (id: number): string => {
 }
 
 export const getItemsList = async (token:string) => {
+    console.log("TOKEN POST LOGIN = ", token)
+    
     var response = null;
     try {
         response = await ApiService.get(
@@ -39,24 +41,29 @@ export const getItemsList = async (token:string) => {
     return response;
   };
 
-export const addNewItem = async (title:string, description:string|null, category:string, newImages:Image[]) => {
+export const addNewItem = async (formData: any, token:string) => {
+    console.log("TOKEN ADD NEW ITEM = ", token)
     var response = null;
-    var data = {
-        title:title,
-        description:description,
-        category:category,
-        newImages:newImages
-    }
+    console.log("formData >>>>>>>> ", formData);
+    console.log("Images = ", formData.newImages);
+
     try {
         response = await ApiService.post(
             postItem,
-            data
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
+                },
+            } as any
         );
         console.log("response addItem >>>>>>>> ", response);
 
     } catch (error) {
         let errorMessage = 'Une erreur est survenue lors de la création de votre objet.';
-        console.log("error addItem >>>>>>>> ", errorMessage);
-        throw new Error(errorMessage); 
-  };
+        console.log("error addItem >>>>>>>> ", error);
+        throw new Error(errorMessage);
+    }
+    return response;
 }

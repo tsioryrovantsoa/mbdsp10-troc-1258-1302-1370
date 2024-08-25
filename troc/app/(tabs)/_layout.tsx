@@ -35,7 +35,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="additem"
         options={{
-          title: 'Add Item',
+          title: 'Add Item eto',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'add-circle' : 'add-circle-outline'} color={color} />          ),
         }}

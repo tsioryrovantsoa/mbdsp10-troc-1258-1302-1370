@@ -8,14 +8,10 @@ import { imageURL } from '@/services/ApiService';
 import Card from '@/components/Card';
 
 const fetchItems = async () => {
-
-  // Remplacez par l'appel API réel
   const token = await getToken();
-
-
   const response = (token) ? await getItemsList(token) : null;
-  console.log("TOKEN >>>>>>>>> ",token);
-  console.log(response);
+  // console.log("TOKEN >>>>>>>>> ",token);
+  // console.log(response);
   const data = await response;
   return data;
 };
@@ -33,7 +29,7 @@ const ItemsListScreen: React.FC = () => {
     const loadItems = async () => {
       try {
         const fetchedItems = await fetchItems();
-        console.log("fetchedItems >>>>>>>> ", fetchedItems?.data?.content);
+        // console.log("fetchedItems >>>>>>>> ", fetchedItems?.data?.content);
         setItems(fetchedItems?.data?.content);
       } catch (err) {
         setError('Erreur lors du chargement des items.');
@@ -69,9 +65,9 @@ const ItemsListScreen: React.FC = () => {
        keyExtractor={(item) => item.itemId}
        showsVerticalScrollIndicator={false}
        renderItem={({ item }) => {
-        console.log("item data >>>>>>>>> ", item);
+        // console.log("item data >>>>>>>>> ", item);
         if (item.images && item.images.length > 0) {
-          console.log("imageURL + item.images[0].imageUrl >>>>>>>>> ", imageURL + item.images[0].imageUrl);
+          // console.log("imageURL + item.images[0].imageUrl >>>>>>>>> ", imageURL + item.images[0].imageUrl);
           return (
             <View>
               <Card
