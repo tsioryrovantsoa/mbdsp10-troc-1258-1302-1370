@@ -5,6 +5,7 @@ import AddItem from "./Component/Items/item-add";
 import ItemDetail from "./Component/Items/item-detail";
 import MyItem from "./Component/Items/my-item";
 import EditItem from "./Component/Items/item-edit";
+import ExchangeList from "./Component/Exchanges/ExchangeList";
 
 const routes = [
     {
@@ -41,6 +42,11 @@ const routes = [
         name:"edit item",
         route:"edit-item/:itemId",
         component:<EditItem />
+    },
+    {
+        name:"exchanges item",
+        route:"exchanges/item/:itemId",
+        component:<ExchangeList />
     }
 ];
 

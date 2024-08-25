@@ -16,6 +16,14 @@ const ExchangeService = {
       },
     });
   },
+  fetchExchangeData(itemId) {
+    const token = localStorage.getItem("token");
+    return axios.get(`${API_ITEM_URL}/item/${itemId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
 };
 
 export default ExchangeService;
