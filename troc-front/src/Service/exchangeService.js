@@ -24,6 +24,24 @@ const ExchangeService = {
       },
     });
   },
+
+  acceptExchange: async (exchangeId) => {
+    const token = localStorage.getItem("token");
+    return await axios.put(`${API_ITEM_URL}/${exchangeId}/accept`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
+
+  rejectExchange: async (exchangeId) => {
+    const token = localStorage.getItem("token");
+    return await axios.put(`${API_ITEM_URL}/${exchangeId}/reject`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
 };
 
 export default ExchangeService;

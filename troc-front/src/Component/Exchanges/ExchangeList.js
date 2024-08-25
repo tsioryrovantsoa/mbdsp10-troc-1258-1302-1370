@@ -1,37 +1,69 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Typography, Card, CardContent } from "@mui/material";
+import { Box, Typography, Card, CardContent, Button } from "@mui/material";
 import ExchangeService from "../../Service/exchangeService";
 import { useParams } from "react-router-dom";
 import NavBar from "../NavBar";
+import UserService from "../../Service/userService";
 
 const ExchangeList = () => {
   let { itemId } = useParams();
   const [exchangeRequests, setExchangeRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchExchangeRequests = async () => {
-      try {
-        // Await the promise returned by ExchangeService.fetchExchangeData
-        const response = await ExchangeService.fetchExchangeData(itemId);
-        // Ensure response.data is set correctly
-        if (response && response.data) {
-          setExchangeRequests(response.data);
-        } else {
-          setExchangeRequests([]);
-        }
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching exchange requests:", error);
-        setExchangeRequests([]); // Set to an empty array in case of an error
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const userId = UserService.getUserIdFromToken();
+  console.log(UserService.getUserIdFromToken());
 
+  const fetchExchangeRequests = async () => {
+    try {
+      // Await the promise returned by ExchangeService.fetchExchangeData
+      const response = await ExchangeService.fetchExchangeData(itemId);
+      // Ensure response.data is set correctly
+      if (response && response.data) {
+        setExchangeRequests(response.data);
+      } else {
+        setExchangeRequests([]);
+      }
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching exchange requests:", error);
+      setExchangeRequests([]); // Set to an empty array in case of an error
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchExchangeRequests();
   }, [itemId]);
+
+  const handleAccept = async (exchangeId) => {
+    try {
+      await ExchangeService.acceptExchange(exchangeId);
+      // setExchangeRequests((prev) =>
+      //   prev.map((ex) =>
+      //     ex.exchangeId === exchangeId ? { ...ex, status: "ACCEPTED" } : ex
+      //   )
+      // );
+      fetchExchangeRequests();
+    } catch (error) {
+      console.error("Error accepting exchange:", error);
+    }
+  };
+
+  const handleReject = async (exchangeId) => {
+    try {
+      await ExchangeService.rejectExchange(exchangeId);
+      // setExchangeRequests((prev) =>
+      //   prev.map((ex) =>
+      //     ex.exchangeId === exchangeId ? { ...ex, status: "REJECTED" } : ex
+      //   )
+      // );
+      fetchExchangeRequests();
+    } catch (error) {
+      console.error("Error rejecting exchange:", error);
+    }
+  };
 
   return (
     <>
@@ -81,6 +113,26 @@ const ExchangeList = () => {
                         Updated At:{" "}
                         {new Date(exchange.updatedAt).toLocaleString()}
                       </Typography>
+                      {exchange.requester.user_id === userId && (
+                        <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
+                          <Button
+                            variant="contained"
+                            color="success"
+                            onClick={() => handleAccept(exchange.exchangeId)}
+                            disabled={exchange.status !== "EN_ATTENTE"}
+                          >
+                            Accept
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => handleReject(exchange.exchangeId)}
+                            disabled={exchange.status !== "EN_ATTENTE"}
+                          >
+                            Reject
+                          </Button>
+                        </Box>
+                      )}
                     </CardContent>
                   </Card>
                 ))
