@@ -1,4 +1,5 @@
 import { registerUser } from '@/services/users/UserService';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 
@@ -12,9 +13,16 @@ const SignupScreen = ({ onSubmit }: { onSubmit: (username:string, name:string, p
 
   const handleSignup = () => {
     console.log("handleSignup");
-    // onSubmit(username, name, password, email, phone, address);
     registerUser(username, name, password, email, phone, address);
   };
+
+  const router = useRouter();
+
+  const redirectToLogin = () =>{ 
+    router.push('/authentication/components/LoginForm'); // Redirection vers la page d'inscription
+  }
+
+  
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>Sign up</Text>
@@ -94,7 +102,7 @@ const SignupScreen = ({ onSubmit }: { onSubmit: (username:string, name:string, p
       <Pressable style={styles.loginBtn} onPress={handleSignup} >
         <Text style={styles.loginText}>Sign up</Text>
       </Pressable>
-      <Pressable style={styles.signupBtn}>
+      <Pressable style={styles.signupBtn} onPress={redirectToLogin}>
         <Text style={styles.signupText}>Login</Text>
       </Pressable>
     </View>
