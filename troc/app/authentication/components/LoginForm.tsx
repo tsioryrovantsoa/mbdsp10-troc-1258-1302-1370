@@ -1,15 +1,26 @@
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 
 const LoginForm = ({ onSubmit }: { onSubmit: (username:string, password:string) => void }) => {
+  const router = useRouter();
+
+  const redirectToSignup = () =>{ 
+    router.push('authentication/SignupScreen'); // Redirection vers la page d'inscription
+  }
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
     onSubmit(username, password);
   };
+
+  const { success } = useLocalSearchParams<{LoginForm: any, success:string}>(); // Récupère les paramètres de l'URL
+  
   return (
     <View style={styles.container}>
+       {success && <Text style={styles.successText}>Inscription réussie! Vous pouvez maintenant vous connecter.</Text>}
       <Text style={styles.logo}>Takalo</Text>
       <View style={styles.inputView}>
         <TextInput
@@ -33,7 +44,7 @@ const LoginForm = ({ onSubmit }: { onSubmit: (username:string, password:string) 
       <Pressable style={styles.loginBtn} onPress={handleLogin} >
         <Text style={styles.loginText}>LOGIN</Text>
       </Pressable>
-      <Pressable style={styles.signupBtn}>
+      <Pressable style={styles.signupBtn} onPress={redirectToSignup}>
         <Text style={styles.signupText}>Signup</Text>
       </Pressable>
     </View>
@@ -84,7 +95,15 @@ const styles = StyleSheet.create({
   },
   signupBtn:{
     marginTop:10
+  },
+  successText:{
+    color:'green',
+    marginBottom:20
   }
 });
 
 export default LoginForm;
+
+function useParams(): { success: any; } {
+  throw new Error('Function not implemented.');
+}

@@ -1,26 +1,25 @@
-import ApiService from "../ApiService";
+import ApiService, { baseURL } from "../ApiService";
 
-
-const postItem = "http://192.168.1.170:8080/api/items";
+const postItem = baseURL + "api/items";
 
 const putItem = (id: number): string => {
-    return `http://192.168.1.170:8080/api/items/${id}`;
+    return baseURL + `api/items/${id}`;
 }
 
 const deleteItem = (id: number): string => {
-    return `http://192.168.1.170:8080/api/items/${id}`;
+    return baseURL + `api/items/${id}`;
 }
 
 const getItem = (page: number, size:number): string => {
-    return `http://192.168.1.170:8080/api/items/search?page=${page}&size=${size}`;
+    return baseURL + `api/items/search?page=${page}&size=${size}`;
 }
 
 const getSearchItem = (page: number, size:number, keyword:string, category:string, status:string): string => {
-    return `http://192.168.1.170:8080/api/items/search?page=${page}&size=${size}&keyword=${keyword}&category=${category}&status=${status}`;
+    return baseURL + `api/items/search?page=${page}&size=${size}&keyword=${keyword}&category=${category}&status=${status}`;
 }
 
 const getOneItem = (id: number): string => {
-    return `http://192.168.1.170:8080/api/items/${id}`;
+    return baseURL + `api/items/${id}`;
 }
 
 export const getItemsList = async (token:string) => {
