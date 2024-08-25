@@ -1,7 +1,14 @@
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 
 const LoginForm = ({ onSubmit }: { onSubmit: (username:string, password:string) => void }) => {
+  const router = useRouter();
+
+  const redirectToSignup = () =>{ 
+    router.push('authentication/SignupScreen'); // Redirection vers la page d'inscription
+  }
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -33,7 +40,7 @@ const LoginForm = ({ onSubmit }: { onSubmit: (username:string, password:string) 
       <Pressable style={styles.loginBtn} onPress={handleLogin} >
         <Text style={styles.loginText}>LOGIN</Text>
       </Pressable>
-      <Pressable style={styles.signupBtn}>
+      <Pressable style={styles.signupBtn} onPress={redirectToSignup}>
         <Text style={styles.signupText}>Signup</Text>
       </Pressable>
     </View>
