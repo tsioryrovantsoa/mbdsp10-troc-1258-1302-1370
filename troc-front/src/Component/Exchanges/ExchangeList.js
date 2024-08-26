@@ -113,7 +113,7 @@ const ExchangeList = () => {
                         Updated At:{" "}
                         {new Date(exchange.updatedAt).toLocaleString()}
                       </Typography>
-                      {exchange.requester.user_id === userId && (
+                      {exchange.receiver.user_id === userId && (
                         <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
                           <Button
                             variant="contained"

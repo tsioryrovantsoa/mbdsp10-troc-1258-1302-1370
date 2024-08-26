@@ -140,4 +140,8 @@ public class ExchangeService {
     public List<Exchanges> getExchangesByItemId(Long itemId) {
         return exchangeRepository.findExchangesByItemId(itemId);
     }
+
+    public List<Exchanges> getExchangesByRequester(Users requester) {
+        return exchangeRepository.findByRequester(requester);
+    }
 }
