@@ -9,9 +9,6 @@ npm-debug.log*
 # Répertoire de build
 dist/
 
-# Fichiers d'environnement
-.env
-
 # Fichiers système
 .DS_Store
 Thumbs.db
