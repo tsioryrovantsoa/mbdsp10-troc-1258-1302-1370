@@ -40,6 +40,7 @@ public class AuthController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = tokenProvider.generateToken(authentication);
             User user = (User) authentication.getPrincipal();
+            System.out.println(user.toString());
             return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, user));
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

@@ -36,13 +36,13 @@ const ItemsListScreen: React.FC = () => {
 
   useEffect(() => {
     if (items.length > 0 && items[0].images.length > 0) {
-      console.log("Image URL:", imageURL + items[0].images[0].imageUrl);
+      // console.log("Image URL:", imageURL + items[0].images[0].imageUrl);
     }
 
     const loadItems = async () => {
       try {
         const fetchedItems = await fetchItems();
-        console.log("fetchedItems >>>>>>>> ", fetchedItems?.data?.content);
+        // console.log("fetchedItems >>>>>>>> ", fetchedItems?.data?.content);
         setItems(fetchedItems?.data?.content);
       } catch (err) {
         setError("Erreur lors du chargement des items.");
@@ -82,12 +82,12 @@ const ItemsListScreen: React.FC = () => {
         keyExtractor={(item) => item.itemId}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
-          console.log("item data >>>>>>>>> ", item);
+          // console.log("item data >>>>>>>>> ", item);
           if (item.images && item.images.length > 0) {
-            console.log(
-              "imageURL + item.images[0].imageUrl >>>>>>>>> ",
-              imageURL + item.images[0].imageUrl
-            );
+            // console.log(
+            //   "imageURL + item.images[0].imageUrl >>>>>>>>> ",
+            //   imageURL + item.images[0].imageUrl
+            // );
             return (
               <View>
                 <Card

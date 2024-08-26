@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { Item } from "../types";
+import { getMyItems } from "../authentication/services/itemService";
 
 interface ExchangeModalProps {
   visible: boolean;
@@ -22,29 +23,31 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
   onClose,
   onExchange,
 }) => {
-  // Exemple d'items pour l'échange (remplacez par un vrai appel API si nécessaire)
-  const availableItems: Item[] = [
-    {
-      itemId: "1",
-      title: "Item 1",
-      description: "Description 1",
-      category: "Category 1",
-      status: "Available",
-      createdAt: "",
-      updatedAt: "",
-      images: [],
-    },
-    {
-      itemId: "2",
-      title: "Item 2",
-      description: "Description 2",
-      category: "Category 2",
-      status: "Available",
-      createdAt: "",
-      updatedAt: "",
-      images: [],
-    },
-  ];
+  const [myItems, setMyItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // console.log('allo');
+    const fetchMyItems = async () => {
+      try {
+        const response = await getMyItems();
+        setMyItems(response.data.content);
+      } catch (err) {
+        setError("Erreur lors du chargement de vos items.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (visible) {
+      fetchMyItems();
+    }
+  }, [visible]);
+
+  if (!visible) {
+    return null;
+  }
 
   return (
     <Modal visible={visible} transparent animationType="slide">
@@ -54,7 +57,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
             Proposer une échange pour {item.title}
           </Text>
           <FlatList
-            data={availableItems}
+            data={myItems}
             keyExtractor={(item) => item.itemId}
             renderItem={({ item }) => (
               <TouchableOpacity
