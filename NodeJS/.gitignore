@@ -1,0 +1,34 @@
+# Dépendances
+node_modules/
+
+# Fichiers de logs
+logs
+*.log
+npm-debug.log*
+
+# Répertoire de build
+dist/
+
+# Fichiers d'environnement
+.env
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers de couverture de tests
+coverage/
+
+# Fichiers temporaires
+tmp/
+temp/
+
+# Fichiers d'IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Autres
+.cache/
+.npm/
