@@ -3,7 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const notificationRouter = require('./routes/notificationRoute');
-
+require('dotenv').config();
 
 const app = express();
 const port = 3001;
