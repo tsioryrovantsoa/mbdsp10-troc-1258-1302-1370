@@ -154,9 +154,11 @@ export default function ItemList() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState(null);
+    const [userDestinated, setUserDestinated] = useState({});
 
-    const handleProposeClick = (itemId) => {
-        setSelectedItemId(itemId);
+    const handleProposeClick = (item, user) => {
+        setSelectedItemId(item);
+        setUserDestinated(user);
         setIsModalOpen(true);
     };
 
@@ -165,11 +167,17 @@ export default function ItemList() {
     };
 
     const handleItemSelected = async (requesterItemId) => {
-        console.log(selectedItemId, requesterItemId);
+        console.log(selectedItemId.itemId, requesterItemId);
         try {
-            const response = await ExchangeService.proposeExchange(selectedItemId, requesterItemId);
+            const response = await ExchangeService.proposeExchange(selectedItemId.itemId, requesterItemId);
             console.log('Exchange proposed:', response.data);
             setSuccessMessage('Exchange proposed successfully!');
+            try {
+                const notifResponse = await ExchangeService.notificationProposeExchange(userDestinated, selectedItemId);
+                console.log('Notifications :', notifResponse.data);
+            } catch (error) {
+                console.error('Error notifications :', error);
+            }
         } catch (error) {
             console.error('Error proposing exchange:', error);
         }
@@ -271,7 +279,7 @@ export default function ItemList() {
                                     </CardContent>
                                     <CardActions>
                                         <Button size="small" variant="contained" onClick={() => goToDetail(item.itemId)}> <InfoIcon fontSize="small" sx={{marginRight: '5px'}}/>Detail </Button>
-                                        <Button size="small" variant="contained" onClick={() => handleProposeClick(item.itemId)}>
+                                        <Button size="small" variant="contained" onClick={() => handleProposeClick(item, item.user)}>
                                             Proposer une échange
                                         </Button>
                                     </CardActions>

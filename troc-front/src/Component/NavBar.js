@@ -12,11 +12,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import Badge from '@mui/material/Badge';
 import { isTokenValid } from '../Service/utils';
 import { Link } from 'react-router-dom';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
-const pages = [{name:'Items', url:''}, {name:'Exchanges', url:''}, {name:'My items', url:'my-item'}];
+const pages = [{name:'Items', url:'accueil'}, {name:'Exchanges', url:''}, {name:'My items', url:'my-item'}];
 const settings = [{name:'Profile', url:''}, {name:'Logout',url: 'sign-in'}];
 
 export default function NavBar() {
@@ -132,9 +134,14 @@ export default function NavBar() {
                     </Box>
             
                     <Box sx={{ flexGrow: 0 }}>
-                    <Button variant="contained" color="success" sx={{ marginRight: '10px' }} startIcon={<AddCircleOutlineIcon />} component={Link} to='/add-item'>
-                        Add item
-                    </Button>
+                        <Button variant="contained" color="success" sx={{ marginRight: '10px' }} startIcon={<AddCircleOutlineIcon />} component={Link} to='/add-item'>
+                            Add item
+                        </Button>
+                        <Button sx={{ color: 'white' }} >
+                            <Badge badgeContent={4} color="error">
+                                <NotificationsIcon />
+                            </Badge>
+                        </Button>
                         <Tooltip title="Open settings">
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                             <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />

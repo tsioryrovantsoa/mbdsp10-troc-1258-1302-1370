@@ -21,6 +21,22 @@ class NotificationController {
         }
 
     }
+
+    static async getUnreadNotificationsCount(req, res) {
+        try {
+            const userId = req.params.userId;
+
+            const count = await Notification.countDocuments({
+                'user.user_id': userId,
+                isRead: false
+            });
+
+            res.status(200).json({ count });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: "Erreur lors du comptage des notifications", detail: err.message });
+        }
+    }
 }
 
 

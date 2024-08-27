@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "../Constante/constante";
+import { API_URL, EXPRESS_API_URL } from "../Constante/constante";
 
 const API_ITEM_URL = `${API_URL}api/exchanges`;
 
@@ -42,6 +42,20 @@ const ExchangeService = {
       },
     });
   },
+
+  notificationProposeExchange: async (user, item) => {
+    const token = localStorage.getItem("token");
+    return axios.post(`${EXPRESS_API_URL}api/notifications`, {
+      user,
+      content: `Vous avez reçu une nouvelle proposition d'échange pour votre objet ${item.title}`,
+      typeNotification: "ITEMS",
+      entityId: `${item.itemId}`
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 };
 
 export default ExchangeService;
