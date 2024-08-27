@@ -6,9 +6,13 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 import { Item } from "../types";
-import { getMyItems } from "../authentication/services/itemService";
+import {
+  getMyItems,
+  proposeExchange,
+} from "../authentication/services/itemService";
 
 interface ExchangeModalProps {
   visible: boolean;
@@ -45,6 +49,22 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
     }
   }, [visible]);
 
+  const handleItemSelected = async (requesterItemId: string) => {
+    try {
+      const response = await proposeExchange(item.itemId, requesterItemId);
+      console.log("Exchange proposed:", response);
+      onClose();
+      Alert.alert("Succès", "Échange proposé avec succès !");
+    } catch (error) {
+      console.error("Error proposing exchange:", error);
+      onClose();
+      Alert.alert(
+        "Erreur",
+        "Une erreur est survenue lors de la proposition de l'échange."
+      );
+    }
+  };
+
   if (!visible) {
     return null;
   }
@@ -62,7 +82,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
             renderItem={({ item }) => (
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => onExchange(item.itemId)}
+                onPress={() => handleItemSelected(item.itemId)}
               >
                 <Text>{item.title}</Text>
               </TouchableOpacity>
