@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Box, Typography, Card, CardContent, Button } from "@mui/material";
 import ExchangeService from "../../Service/exchangeService";
-import { useParams } from "react-router-dom";
 import NavBar from "../NavBar";
-import UserService from "../../Service/userService";
 
-const ExchangeList = () => {
-  let { itemId } = useParams();
+const MyExchange = () => {
   const [exchangeRequests, setExchangeRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const userId = UserService.getUserIdFromToken();
-  console.log(UserService.getUserIdFromToken());
 
   const fetchExchangeRequests = async () => {
     try {
       // Await the promise returned by ExchangeService.fetchExchangeData
-      const response = await ExchangeService.fetchExchangeData(itemId);
+      const response = await ExchangeService.getMyRequest();
       // Ensure response.data is set correctly
       if (response && response.data) {
         setExchangeRequests(response.data);
@@ -35,35 +28,7 @@ const ExchangeList = () => {
 
   useEffect(() => {
     fetchExchangeRequests();
-  }, [itemId]);
-
-  const handleAccept = async (exchangeId) => {
-    try {
-      await ExchangeService.acceptExchange(exchangeId);
-      // setExchangeRequests((prev) =>
-      //   prev.map((ex) =>
-      //     ex.exchangeId === exchangeId ? { ...ex, status: "ACCEPTED" } : ex
-      //   )
-      // );
-      fetchExchangeRequests();
-    } catch (error) {
-      console.error("Error accepting exchange:", error);
-    }
-  };
-
-  const handleReject = async (exchangeId) => {
-    try {
-      await ExchangeService.rejectExchange(exchangeId);
-      // setExchangeRequests((prev) =>
-      //   prev.map((ex) =>
-      //     ex.exchangeId === exchangeId ? { ...ex, status: "REJECTED" } : ex
-      //   )
-      // );
-      fetchExchangeRequests();
-    } catch (error) {
-      console.error("Error rejecting exchange:", error);
-    }
-  };
+  }, []);
 
   return (
     <>
@@ -78,7 +43,7 @@ const ExchangeList = () => {
           }}
         >
           <Typography component="h1" variant="h5">
-            Exchange Requests
+            My Exchange Request
           </Typography>
           <br />
           {isLoading ? (
@@ -113,26 +78,6 @@ const ExchangeList = () => {
                         Updated At:{" "}
                         {new Date(exchange.updatedAt).toLocaleString()}
                       </Typography>
-                      {exchange.receiver.user_id === userId && (
-                        <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
-                          <Button
-                            variant="contained"
-                            color="success"
-                            onClick={() => handleAccept(exchange.exchangeId)}
-                            disabled={exchange.status !== "EN_ATTENTE"}
-                          >
-                            Accept
-                          </Button>
-                          <Button
-                            variant="contained"
-                            color="error"
-                            onClick={() => handleReject(exchange.exchangeId)}
-                            disabled={exchange.status !== "EN_ATTENTE"}
-                          >
-                            Reject
-                          </Button>
-                        </Box>
-                      )}
                     </CardContent>
                   </Card>
                 ))
@@ -145,4 +90,4 @@ const ExchangeList = () => {
   );
 };
 
-export default ExchangeList;
+export default MyExchange;

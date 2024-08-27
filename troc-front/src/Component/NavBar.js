@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-const pages = [{name:'Items', url:'accueil'}, {name:'Exchanges', url:''}, {name:'My items', url:'my-item'}];
+const pages = [{name:'Items', url:'accueil'}, {name:'My Exchanges', url:'my-exchange'}, {name:'My items', url:'my-item'}];
 const settings = [{name:'Profile', url:''}, {name:'Logout',url: 'sign-in'}];
 
 export default function NavBar() {

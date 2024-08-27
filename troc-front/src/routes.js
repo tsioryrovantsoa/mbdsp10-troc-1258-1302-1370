@@ -6,6 +6,7 @@ import ItemDetail from "./Component/Items/item-detail";
 import MyItem from "./Component/Items/my-item";
 import EditItem from "./Component/Items/item-edit";
 import ExchangeList from "./Component/Exchanges/ExchangeList";
+import MyExchange from "./Component/Exchanges/MyExchange";
 
 const routes = [
     {
@@ -47,7 +48,12 @@ const routes = [
         name:"exchanges item",
         route:"exchanges/item/:itemId",
         component:<ExchangeList />
-    }
+    },
+    {
+        name: "my exchange",
+        route: "my-exchange",
+        component: <MyExchange/>
+    },
 ];
 
 export default routes;

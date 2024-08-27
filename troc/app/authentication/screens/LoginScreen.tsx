@@ -10,7 +10,9 @@ const LoginScreen = () => {
 
   const handleLogin = async (username: string, password: string) => {
     try {
+      console.log(username,password);
       const response = await login(username, password);
+      console.log(response);
       if (response.success) {
         await storeToken(response.data.accessToken);
         router.push('/items/ItemsListScreen' as never); // Redirection vers la liste des items

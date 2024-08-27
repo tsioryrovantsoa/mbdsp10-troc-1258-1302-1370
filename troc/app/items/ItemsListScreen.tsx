@@ -1,20 +1,27 @@
 // app/ItemsListScreen.tsx
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, Image, ScrollView } from 'react-native';
-import { Item } from '../types';
-import { getToken } from '@/storage';
-import { getItemsList } from '@/services/items/ItemService';
-import { imageURL } from '@/services/ApiService';
-import Card from '@/components/Card';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+  Image,
+  ScrollView,
+} from "react-native";
+import { Item } from "../types";
+import { getToken } from "@/storage";
+import { getItemsList } from "@/services/items/ItemService";
+import { imageURL } from "@/services/ApiService";
+import Card from "@/components/Card";
+import ExchangeModal from "./ExchangeModal";
 
 const fetchItems = async () => {
-
   // Remplacez par l'appel API réel
   const token = await getToken();
 
-
-  const response = (token) ? await getItemsList(token) : null;
-  console.log("TOKEN >>>>>>>>> ",token);
+  const response = token ? await getItemsList(token) : null;
+  console.log("TOKEN >>>>>>>>> ", token);
   console.log(response);
   const data = await response;
   return data;
@@ -24,19 +31,21 @@ const ItemsListScreen: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
   useEffect(() => {
     if (items.length > 0 && items[0].images.length > 0) {
-      console.log("Image URL:", imageURL + items[0].images[0].imageUrl);
+      // console.log("Image URL:", imageURL + items[0].images[0].imageUrl);
     }
 
     const loadItems = async () => {
       try {
         const fetchedItems = await fetchItems();
-        console.log("fetchedItems >>>>>>>> ", fetchedItems?.data?.content);
+        // console.log("fetchedItems >>>>>>>> ", fetchedItems?.data?.content);
         setItems(fetchedItems?.data?.content);
       } catch (err) {
-        setError('Erreur lors du chargement des items.');
+        setError("Erreur lors du chargement des items.");
       } finally {
         setLoading(false);
       }
@@ -44,6 +53,11 @@ const ItemsListScreen: React.FC = () => {
 
     loadItems();
   }, []);
+
+  const handleProposeExchange = (item: Item) => {
+    setSelectedItem(item);
+    setModalVisible(true);
+  };
 
   if (loading) {
     return (
@@ -63,61 +77,68 @@ const ItemsListScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      
       <FlatList
-       data={items}
-       keyExtractor={(item) => item.itemId}
-       showsVerticalScrollIndicator={false}
-       renderItem={({ item }) => {
-        console.log("item data >>>>>>>>> ", item);
-        if (item.images && item.images.length > 0) {
-          console.log("imageURL + item.images[0].imageUrl >>>>>>>>> ", imageURL + item.images[0].imageUrl);
-          return (
-            <View>
-              <Card
-                heading={item.title}
-                images={item.images.map(image => image.imageUrl)}
-                subheading={item.description}
-                onPress={() =>
-                  alert(`You pressed on ${item.title}`)
-                }
-              />
-            </View>
-          );
-        } else {
-          return (
-            <View>
-              <Text>No image available</Text>
-            </View>
-          );
-        }
-      }}
-      
-      >
-      
-      </FlatList>
+        data={items}
+        keyExtractor={(item) => item.itemId}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => {
+          // console.log("item data >>>>>>>>> ", item);
+          if (item.images && item.images.length > 0) {
+            // console.log(
+            //   "imageURL + item.images[0].imageUrl >>>>>>>>> ",
+            //   imageURL + item.images[0].imageUrl
+            // );
+            return (
+              <View>
+                <Card
+                  heading={item.title}
+                  images={item.images.map((image) => image.imageUrl)}
+                  subheading={item.description}
+                  onPress={() => handleProposeExchange(item)}
+                />
+                {selectedItem && (
+                  <ExchangeModal
+                    visible={modalVisible}
+                    item={selectedItem}
+                    onClose={() => setModalVisible(false)}
+                    onExchange={(receiverItemId) => {
+                      console.log("Propose exchange with:", receiverItemId);
+                      setModalVisible(false);
+                    }}
+                  />
+                )}
+              </View>
+            );
+          } else {
+            return (
+              <View>
+                <Text>No image available</Text>
+              </View>
+            );
+          }
+        }}
+      ></FlatList>
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 16,
   },
   item: {
     padding: 16,
     marginVertical: 8,
     marginHorizontal: 16,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
     borderRadius: 8,
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   imagesContainer: {
     marginTop: 8,

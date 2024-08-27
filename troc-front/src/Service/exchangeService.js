@@ -43,6 +43,15 @@ const ExchangeService = {
     });
   },
 
+  getMyRequest() {
+    const token = localStorage.getItem("token");
+    return axios.get(`${API_ITEM_URL}/my-requests`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
+
   notificationProposeExchange: async (user, item) => {
     const token = localStorage.getItem("token");
     return axios.post(`${EXPRESS_API_URL}api/notifications`, {
