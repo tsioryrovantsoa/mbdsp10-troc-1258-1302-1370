@@ -37,28 +37,38 @@ const ExchangeList = () => {
     fetchExchangeRequests();
   }, [itemId]);
 
-  const handleAccept = async (exchangeId) => {
+  const handleAccept = async (exchange, userRequest, status, userReceive) => {
     try {
-      await ExchangeService.acceptExchange(exchangeId);
+      await ExchangeService.acceptExchange(exchange.exchangeId);
       // setExchangeRequests((prev) =>
       //   prev.map((ex) =>
       //     ex.exchangeId === exchangeId ? { ...ex, status: "ACCEPTED" } : ex
       //   )
       // );
+      try {
+        await ExchangeService.notificationConfirmationExchange(userRequest, exchange, status);
+      } catch(error) {
+      console.error("Error notifications:", error);
+      }
       fetchExchangeRequests();
     } catch (error) {
       console.error("Error accepting exchange:", error);
     }
   };
 
-  const handleReject = async (exchangeId) => {
+  const handleReject = async (exchange, userRequest, status, userReceive) => {
     try {
-      await ExchangeService.rejectExchange(exchangeId);
+      await ExchangeService.rejectExchange(exchange.exchangeId);
       // setExchangeRequests((prev) =>
       //   prev.map((ex) =>
       //     ex.exchangeId === exchangeId ? { ...ex, status: "REJECTED" } : ex
       //   )
       // );
+      try {
+        await ExchangeService.notificationConfirmationExchange(userRequest, exchange, status, userReceive);
+      } catch(error) {
+      console.error("Error notifications:", error);
+      }
       fetchExchangeRequests();
     } catch (error) {
       console.error("Error rejecting exchange:", error);
@@ -118,7 +128,7 @@ const ExchangeList = () => {
                           <Button
                             variant="contained"
                             color="success"
-                            onClick={() => handleAccept(exchange.exchangeId)}
+                            onClick={() => handleAccept(exchange, exchange.requester, 'accepté', exchange.receiver)}
                             disabled={exchange.status !== "EN_ATTENTE"}
                           >
                             Accept
@@ -126,7 +136,7 @@ const ExchangeList = () => {
                           <Button
                             variant="contained"
                             color="error"
-                            onClick={() => handleReject(exchange.exchangeId)}
+                            onClick={() => handleReject(exchange,exchange.requester, 'refusé', exchange.receiver)}
                             disabled={exchange.status !== "EN_ATTENTE"}
                           >
                             Reject

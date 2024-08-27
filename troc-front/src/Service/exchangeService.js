@@ -64,6 +64,20 @@ const ExchangeService = {
         Authorization: `Bearer ${token}`,
       },
     });
+  },
+
+  notificationConfirmationExchange: async (userRequest, exchange, status, userReceive) => {
+    const token = localStorage.getItem("token");
+    return axios.post(`${EXPRESS_API_URL}api/notifications`, {
+      userRequest,
+      content: `${userReceive.name}  a ${status} votre proposition d'échange.`,
+      typeNotification: "CONFIRMATION_EXCHANGE",
+      entityId: `${exchange.exchangeId}`
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 };
 
