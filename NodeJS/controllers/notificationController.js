@@ -52,7 +52,7 @@ class NotificationController {
 
             const query = { 'user.user_id': userId };
 
-            const result = await NotificationModel.paginate(query, options);
+            const result = await Notification.paginate(query, options);
 
             res.status(200).json({
                 notifications: result.docs,

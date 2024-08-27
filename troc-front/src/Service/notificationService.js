@@ -11,6 +11,16 @@ const NotificationService = {
                 'Authorization': `Bearer ${token}`
             },
         });
+    },
+
+    getNotificationsUser(userId, paramsData) {
+        const token = localStorage.getItem('token');
+        return axios.get(`${API_NOTIFICATIONS_URL}/${userId}`, {
+            params: paramsData,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        });
     }
 }
 
