@@ -94,7 +94,8 @@ const ItemsListScreen: React.FC = () => {
                   heading={item.title}
                   images={item.images.map((image) => image.imageUrl)}
                   subheading={item.description}
-                  onPress={() => handleProposeExchange(item)}
+                  onPress={() => console.log("Voir plus")}
+                  onProposeExchange={() => handleProposeExchange(item)}
                 />
                 {selectedItem && (
                   <ExchangeModal
