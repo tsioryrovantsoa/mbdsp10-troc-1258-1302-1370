@@ -7,6 +7,7 @@ import MyItem from "./Component/Items/my-item";
 import EditItem from "./Component/Items/item-edit";
 import ExchangeList from "./Component/Exchanges/ExchangeList";
 import MyExchange from "./Component/Exchanges/MyExchange";
+import { Notifications } from "./Component/Notifications/my-notification";
 
 const routes = [
     {
@@ -53,6 +54,11 @@ const routes = [
         name: "my exchange",
         route: "my-exchange",
         component: <MyExchange/>
+    },
+    {
+        name: "notifications",
+        route: "notifications",
+        component: <Notifications/>
     },
 ];
 

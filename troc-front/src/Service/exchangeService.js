@@ -57,7 +57,7 @@ const ExchangeService = {
     return axios.post(`${EXPRESS_API_URL}api/notifications`, {
       user,
       content: `Vous avez reçu une nouvelle proposition d'échange pour votre objet ${item.title}`,
-      typeNotification: "ITEMS",
+      typeNotification: "PROPOSE_EXCHANGE",
       entityId: `${item.itemId}`
     }, {
       headers: {

@@ -19,11 +19,14 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationService from '../Service/notificationService';
 import UserService from '../Service/userService';
+import { useNavigate } from 'react-router-dom';
 
 const pages = [{name:'Items', url:'accueil'}, {name:'My Exchanges', url:'my-exchange'}, {name:'My items', url:'my-item'}];
 const settings = [{name:'Profile', url:''}, {name:'Logout',url: 'sign-in'}];
 
 export default function NavBar() {
+
+    const navigate = useNavigate();
 
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -43,6 +46,10 @@ export default function NavBar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const goToNotification = () => {
+        navigate('/notifications');
+    }
 
     const userConnectedId = UserService.getUserIdFromToken();
 
@@ -158,7 +165,7 @@ export default function NavBar() {
                         </Button>
                         <Button sx={{ color: 'white' }} >
                             <Badge badgeContent={nbNotif} color="error">
-                                <NotificationsIcon />
+                                <NotificationsIcon onClick={() => goToNotification()} />
                             </Badge>
                         </Button>
                         <Tooltip title="Open settings">
