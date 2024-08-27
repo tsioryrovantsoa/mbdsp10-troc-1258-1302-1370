@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,6 +17,8 @@ import { isTokenValid } from '../Service/utils';
 import { Link } from 'react-router-dom';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationService from '../Service/notificationService';
+import UserService from '../Service/userService';
 
 const pages = [{name:'Items', url:'accueil'}, {name:'My Exchanges', url:'my-exchange'}, {name:'My items', url:'my-item'}];
 const settings = [{name:'Profile', url:''}, {name:'Logout',url: 'sign-in'}];
@@ -25,6 +27,7 @@ export default function NavBar() {
 
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
+    const [nbNotif, setNbNotif] = useState(0);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -40,6 +43,22 @@ export default function NavBar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const userConnectedId = UserService.getUserIdFromToken();
+
+    const fetchNbNotifications = async (userId) => {
+        try {
+            const response = await NotificationService.nbNotification(userId);
+            setNbNotif(response.data.count);
+        } catch(error) {
+            console.error('Error fetching nb notifs :', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchNbNotifications(userConnectedId);
+        console.log("nbNotif", nbNotif);
+    }, [userConnectedId]);
 
     return (
         <AppBar position="static">
@@ -138,7 +157,7 @@ export default function NavBar() {
                             Add item
                         </Button>
                         <Button sx={{ color: 'white' }} >
-                            <Badge badgeContent={4} color="error">
+                            <Badge badgeContent={nbNotif} color="error">
                                 <NotificationsIcon />
                             </Badge>
                         </Button>

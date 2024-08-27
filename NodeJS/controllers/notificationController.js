@@ -37,6 +37,34 @@ class NotificationController {
             res.status(500).json({ message: "Erreur lors du comptage des notifications", detail: err.message });
         }
     }
+
+    static async getNotificationsWithPagination(req, res) {
+        try {
+            const userId = req.params.userId;
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+
+            const options = {
+                page: page,
+                limit: limit,
+                sort: { creationDate: -1 }
+            };
+
+            const query = { 'user.user_id': userId };
+
+            const result = await NotificationModel.paginate(query, options);
+
+            res.status(200).json({
+                notifications: result.docs,
+                currentPage: result.page,
+                totalPages: result.totalPages,
+                totalNotifications: result.totalDocs
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: "Erreur lors de la récupération des notifications", detail: err.message });
+        }
+    }
 }
 
 
