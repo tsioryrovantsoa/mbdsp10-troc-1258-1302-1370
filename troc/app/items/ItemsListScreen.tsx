@@ -53,6 +53,7 @@ const ItemsListScreen: React.FC = () => {
   }, []);
 
   const handleProposeExchange = (item: Item) => {
+    console.log('ici');
     setSelectedItem(item);
     setModalVisible(true);
   };
@@ -92,7 +93,19 @@ const ItemsListScreen: React.FC = () => {
                 onPress={() =>
                   alert(`You pressed on ${item.title}`)
                 }
+                onProposeExchange={() => handleProposeExchange(item)}
               />
+              {selectedItem && (
+                  <ExchangeModal
+                    visible={modalVisible}
+                    item={selectedItem}
+                    onClose={() => setModalVisible(false)}
+                    onExchange={(receiverItemId) => {
+                      console.log("Propose exchange with:", receiverItemId);
+                      setModalVisible(false);
+                    }}
+                  />
+                )}
             </View>
           );
         } else {
