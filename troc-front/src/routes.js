@@ -8,6 +8,7 @@ import EditItem from "./Component/Items/item-edit";
 import ExchangeList from "./Component/Exchanges/ExchangeList";
 import MyExchange from "./Component/Exchanges/MyExchange";
 import { Notifications } from "./Component/Notifications/my-notification";
+import ExchangeDetail from "./Component/Exchanges/exchange-detail";
 
 const routes = [
     {
@@ -59,6 +60,11 @@ const routes = [
         name: "notifications",
         route: "notifications",
         component: <Notifications/>
+    },
+    {
+        name: "exchange detail",
+        route: "exchange-detail/:exchangeId",
+        component: <ExchangeDetail/>
     },
 ];
 

@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Card, CardContent, Button } from "@mui/material";
+import { Box, Typography, Card, CardContent, Button, CardActions } from "@mui/material";
 import ExchangeService from "../../Service/exchangeService";
 import NavBar from "../NavBar";
+import InfoIcon from '@mui/icons-material/Info';
+import { useNavigate } from 'react-router-dom';
 
 const MyExchange = () => {
+
+  const navigate = useNavigate();
+
   const [exchangeRequests, setExchangeRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,6 +30,10 @@ const MyExchange = () => {
       setIsLoading(false);
     }
   };
+
+  const goToExchangeDetail = (exchangeId) => {
+    navigate(`/exchange-detail/${exchangeId}`);
+  }
 
   useEffect(() => {
     fetchExchangeRequests();
@@ -79,6 +88,9 @@ const MyExchange = () => {
                         {new Date(exchange.updatedAt).toLocaleString()}
                       </Typography>
                     </CardContent>
+                    <CardActions>
+                      <Button size="small" variant="contained" onClick={() => goToExchangeDetail(exchange.exchangeId)}> <InfoIcon fontSize="small" sx={{marginRight: '5px'}}/>Detail </Button>
+                    </CardActions>
                   </Card>
                 ))
               )}
