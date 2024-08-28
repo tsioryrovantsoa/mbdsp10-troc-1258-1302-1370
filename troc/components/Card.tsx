@@ -20,6 +20,7 @@ export default function Card({
   subheading,
   onPress,
   onProposeExchange,
+  onExchange,
   style,
   ...rest
 }: {
@@ -28,6 +29,7 @@ export default function Card({
   subheading: string | null;
   onPress?: () => any;
   onProposeExchange?: () => any;
+  onExchange?: () => any;
   style?: any;
 }) {
   const flatListRef = useRef<FlatList | null>(null);
@@ -81,7 +83,8 @@ export default function Card({
         <Text style={styles.subheading}>${subheading}/night</Text>
       </Pressable>
       <Button title="Voir plus" onPress={onPress} style={styles.button}/>
-      <Button title="Proposer un échange" onPress={onProposeExchange} />
+      <Button title="Proposer un échange" onPress={onProposeExchange} style={styles.button} />
+      <Button title="Les échanges sur cette objet" onPress={onExchange} style={styles.button}/>
     </View>
   );
 }

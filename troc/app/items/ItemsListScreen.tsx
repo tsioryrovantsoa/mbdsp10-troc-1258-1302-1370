@@ -15,6 +15,10 @@ import { getItemsList } from "@/services/items/ItemService";
 import { imageURL } from "@/services/ApiService";
 import Card from "@/components/Card";
 import ExchangeModal from "./ExchangeModal";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
+import { RootStackParamList } from "../routes/RootStackParamList";
+import { useRouter } from 'expo-router';
 
 const fetchItems = async () => {
   const token = await getToken();
@@ -31,6 +35,8 @@ const ItemsListScreen: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ItemsListScreen'>>();
+  const router = useRouter();
 
   useEffect(() => {
     if (items.length > 0 && items[0].images.length > 0) {
@@ -51,6 +57,14 @@ const ItemsListScreen: React.FC = () => {
 
     loadItems();
   }, []);
+
+  const handleNavigateToExchanges = (item: Item) => {
+    router.push({
+      pathname: '/items/les-echanges',
+      params: { itemId: item.itemId, title: item.title },
+    } as never);
+  };  
+  
 
   const handleProposeExchange = (item: Item) => {
     console.log('ici');
@@ -94,6 +108,7 @@ const ItemsListScreen: React.FC = () => {
                   alert(`You pressed on ${item.title}`)
                 }
                 onProposeExchange={() => handleProposeExchange(item)}
+                onExchange={() => handleNavigateToExchanges(item)}
               />
               {selectedItem && (
                   <ExchangeModal
