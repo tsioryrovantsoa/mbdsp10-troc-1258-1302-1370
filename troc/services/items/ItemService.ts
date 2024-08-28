@@ -1,3 +1,4 @@
+import { Image } from "@/app/types";
 import ApiService, { baseURL } from "../ApiService";
 
 const postItem = baseURL + "api/items";
@@ -23,6 +24,8 @@ const getOneItem = (id: number): string => {
 }
 
 export const getItemsList = async (token:string) => {
+    console.log("TOKEN POST LOGIN = ", token)
+    
     var response = null;
     try {
         response = await ApiService.get(
@@ -37,3 +40,29 @@ export const getItemsList = async (token:string) => {
 
     return response;
   };
+
+  export const addNewItem = async (formData:any, token: string) => {
+    console.log("TOKEN ADD NEW ITEM = ", token);
+
+    try {
+        const headers = {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`,
+        };
+        
+        console.log("FormData >>>>>>>> ", formData);
+
+        const response = await ApiService.postFormData(
+            postItem,
+            formData,
+            token
+        );
+        console.log("response addItem >>>>>>>> ", response.headers);
+
+        return response;
+    } catch (error) {
+        let errorMessage = 'Une erreur est survenue lors de la création de votre objet.';
+        console.log("error addItem >>>>>>>> ", error);
+        throw new Error(errorMessage);
+    }
+};

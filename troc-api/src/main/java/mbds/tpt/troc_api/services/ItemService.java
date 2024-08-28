@@ -175,11 +175,11 @@ public class ItemService {
     }
 
     public Page<Items> getItemsByUserWithCriteria(
-            Users user, 
-            String keyword, 
-            Category category, 
-            Status status, 
-            int page, 
+            Users user,
+            String keyword,
+            Category category,
+            Status status,
+            int page,
             int size) {
         Pageable pageable = PageRequest.of(page, size);
         return itemRepository.findByUserWithCriteria(user, keyword, category, status, pageable);

@@ -17,12 +17,10 @@ import Card from "@/components/Card";
 import ExchangeModal from "./ExchangeModal";
 
 const fetchItems = async () => {
-  // Remplacez par l'appel API réel
   const token = await getToken();
-
-  const response = token ? await getItemsList(token) : null;
-  console.log("TOKEN >>>>>>>>> ", token);
-  console.log(response);
+  const response = (token) ? await getItemsList(token) : null;
+  // console.log("TOKEN >>>>>>>>> ",token);
+  // console.log(response);
   const data = await response;
   return data;
 };
@@ -78,47 +76,37 @@ const ItemsListScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={items}
-        keyExtractor={(item) => item.itemId}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => {
-          // console.log("item data >>>>>>>>> ", item);
-          if (item.images && item.images.length > 0) {
-            // console.log(
-            //   "imageURL + item.images[0].imageUrl >>>>>>>>> ",
-            //   imageURL + item.images[0].imageUrl
-            // );
-            return (
-              <View>
-                <Card
-                  heading={item.title}
-                  images={item.images.map((image) => image.imageUrl)}
-                  subheading={item.description}
-                  onPress={() => console.log("Voir plus")}
-                  onProposeExchange={() => handleProposeExchange(item)}
-                />
-                {selectedItem && (
-                  <ExchangeModal
-                    visible={modalVisible}
-                    item={selectedItem}
-                    onClose={() => setModalVisible(false)}
-                    onExchange={(receiverItemId) => {
-                      console.log("Propose exchange with:", receiverItemId);
-                      setModalVisible(false);
-                    }}
-                  />
-                )}
-              </View>
-            );
-          } else {
-            return (
-              <View>
-                <Text>No image available</Text>
-              </View>
-            );
-          }
-        }}
-      ></FlatList>
+       data={items}
+       keyExtractor={(item) => item.itemId}
+       showsVerticalScrollIndicator={false}
+       renderItem={({ item }) => {
+        // console.log("item data >>>>>>>>> ", item);
+        if (item.images && item.images.length > 0) {
+          // console.log("imageURL + item.images[0].imageUrl >>>>>>>>> ", imageURL + item.images[0].imageUrl);
+          return (
+            <View>
+              <Card
+                heading={item.title}
+                images={item.images.map(image => image.imageUrl)}
+                subheading={item.description}
+                onPress={() =>
+                  alert(`You pressed on ${item.title}`)
+                }
+              />
+            </View>
+          );
+        } else {
+          return (
+            <View>
+              <Text>No image available</Text>
+            </View>
+          );
+        }
+      }}
+      
+      >
+      
+      </FlatList>
     </View>
   );
 };
