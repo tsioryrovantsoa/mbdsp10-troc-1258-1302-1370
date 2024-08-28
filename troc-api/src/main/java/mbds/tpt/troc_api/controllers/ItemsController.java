@@ -53,30 +53,8 @@ public class ItemsController {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Category.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                setValue(Category.valueOf(text));
-            }
-        });
-    }
-
     @PostMapping
-    public ResponseEntity<?> createItem(@RequestParam("title") String title,
-            @RequestParam("description") String description,
-            @RequestParam("category") String category,
-            @RequestParam("newImages") MultipartFile[] newImages) {
-        System.out.println("aaaaaaaaaaaa");
-
-        // System.out.println(itemData);
-
-        ItemDataModel itemData = new ItemDataModel();
-        itemData.setTitle(title);
-        itemData.setDescription(description);
-        itemData.setCategory(Category.valueOf(category));
-        itemData.setNewImages(newImages);
+    public ResponseEntity<?> createItem(@ModelAttribute ItemDataModel itemData) {
         try {
             Items createdItem = itemService.createItem(itemData);
             return ResponseEntity.ok(createdItem);
