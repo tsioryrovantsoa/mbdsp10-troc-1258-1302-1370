@@ -17,7 +17,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.beans.PropertyEditorSupport;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
@@ -49,8 +53,30 @@ public class ItemsController {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Category.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                setValue(Category.valueOf(text));
+            }
+        });
+    }
+
     @PostMapping
-    public ResponseEntity<?> createItem(@ModelAttribute ItemDataModel itemData) {
+    public ResponseEntity<?> createItem(@RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam("category") String category,
+            @RequestParam("newImages") MultipartFile[] newImages) {
+        System.out.println("aaaaaaaaaaaa");
+
+        // System.out.println(itemData);
+
+        ItemDataModel itemData = new ItemDataModel();
+        itemData.setTitle(title);
+        itemData.setDescription(description);
+        itemData.setCategory(Category.valueOf(category));
+        itemData.setNewImages(newImages);
         try {
             Items createdItem = itemService.createItem(itemData);
             return ResponseEntity.ok(createdItem);
@@ -132,7 +158,7 @@ public class ItemsController {
         try {
             // Récupérer l'image à partir de l'ID
             Images image = imageRepository.findById(imageId)
-                .orElseThrow(() -> new ResourceNotFoundException("Image not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Image not found"));
 
             String filename = image.getImageUrl();
             Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
@@ -141,10 +167,10 @@ public class ItemsController {
             if (resource.exists() || resource.isReadable()) {
                 // Déterminer le type de contenu basé sur l'extension du fichier
                 String contentType = determineContentType(filename);
-                
+
                 return ResponseEntity.ok()
-                    .contentType(MediaType.parseMediaType(contentType))
-                    .body(resource);
+                        .contentType(MediaType.parseMediaType(contentType))
+                        .body(resource);
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -175,8 +201,8 @@ public class ItemsController {
     @GetMapping("/categories")
     public List<String> getAllCategories() {
         return Arrays.stream(Category.values())
-                     .map(Enum::name)
-                     .collect(Collectors.toList());
+                .map(Enum::name)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/user/{userId}")

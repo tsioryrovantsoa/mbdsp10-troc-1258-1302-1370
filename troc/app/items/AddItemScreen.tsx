@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
@@ -6,6 +6,7 @@ import { addNewItem } from '@/services/items/ItemService';
 import { getToken } from '@/storage';
 
 const AddItemScreen = () => {
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
@@ -14,39 +15,42 @@ const AddItemScreen = () => {
   const router = useRouter();
 
   const handleCreateItem = async () => {
-
     const formData = new FormData();
 
     formData.append('title', title);
     formData.append('description', description);
     formData.append('category', category);
+
     if (newImages) {
-      console.log("newImages : ", newImages);
-        console.log("newImages URI : ", newImages.uri);
+      const filename = newImages.fileName || 'image.jpg';
+      const match = /\.(\w+)$/.exec(filename);
+      const type = match ? `image/${match[1]}` : `image`;
 
-        const filename = newImages.fileName;
-        console.log("filename : ", filename);
-
-        const match = /\.(\w+)$/.exec(filename);
-        const type = match ? `image/${match[1]}` : `image`;
-
-        formData.append('newImages', {
-            uri: newImages.uri,
-            name: filename,
-            type: type,
-      });
+      formData.append('newImages', {
+        uri: newImages.uri,
+        type: type,
+        name: filename
+      } as any);
     }
 
     try {
       const token = await getToken();
- 
-      const response = (token) ? await addNewItem(formData, token) : null;
-      router.push('/items/ItemsListScreen?success=true'); // Redirige vers la liste d'items avec un message de succès
-      console.log('Item added successfully:', formData);
-    } catch (err:Error | any) {
-      setError(err.message);
+
+      if (token) {
+        const response = await addNewItem(formData, token);
+        router.push('/items/ItemsListScreen?success=true'); // Redirige vers la liste d'items avec un message de succès
+        console.log('Item added successfully:', formData);
+      } else {
+        setError('No token available');
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     }
-  };
+  };  
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -117,7 +121,7 @@ const AddItemScreen = () => {
         </TouchableOpacity>
       </View>
 
-      {newImages && <Image source={{ uri: newImages }} style={styles.image} />}
+      {newImages && <Image source={{ uri: newImages.uri }} style={styles.image} />}
 
       <TouchableOpacity style={styles.createBtn} onPress={handleCreateItem}>
         <Text style={styles.createText}>Créer l'item</Text>
@@ -125,7 +129,6 @@ const AddItemScreen = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
