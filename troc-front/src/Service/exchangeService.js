@@ -78,6 +78,15 @@ const ExchangeService = {
         Authorization: `Bearer ${token}`,
       },
     });
+  },
+
+  exchangeDetail: async (exchangeId) => {
+    const token = localStorage.getItem("token");
+    return axios.get(`${API_ITEM_URL}/${exchangeId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 };
 

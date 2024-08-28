@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import mbds.tpt.troc_api.datamodel.ExchangeDetailsDTO;
 import mbds.tpt.troc_api.entities.Exchanges;
 import mbds.tpt.troc_api.entities.Items;
 import mbds.tpt.troc_api.entities.Users;
@@ -73,5 +74,11 @@ public class ExchangesController {
         Users currentUser = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
         return exchangeService.getExchangesByRequester(currentUser);
+    }
+
+    @GetMapping("/{exchangeId}")
+    public ResponseEntity<ExchangeDetailsDTO> getExchangeDetails(@PathVariable Long exchangeId) {
+        ExchangeDetailsDTO exchangeDetails = exchangeService.getExchangeDetails(exchangeId);
+        return ResponseEntity.ok(exchangeDetails);
     }
 }
