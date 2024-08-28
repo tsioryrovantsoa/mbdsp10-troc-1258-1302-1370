@@ -16,10 +16,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import mbds.tpt.troc_api.datamodel.ExchangeDetailsDTO;
 import mbds.tpt.troc_api.entities.ExchangeItems;
 import mbds.tpt.troc_api.entities.Exchanges;
 import mbds.tpt.troc_api.entities.Items;
 import mbds.tpt.troc_api.entities.Users;
+import mbds.tpt.troc_api.repositories.ExchangeItemsRepository;
 import mbds.tpt.troc_api.repositories.ExchangeRepository;
 import mbds.tpt.troc_api.repositories.ItemRepository;
 import mbds.tpt.troc_api.repositories.UserRepository;
@@ -37,6 +39,9 @@ public class ExchangeService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ExchangeItemsRepository exchangeItemsRepository;
 
     @Transactional
     public Exchanges proposeExchange(Long requesterItemId, Long receiverItemId) {
@@ -143,5 +148,14 @@ public class ExchangeService {
 
     public List<Exchanges> getExchangesByRequester(Users requester) {
         return exchangeRepository.findByRequester(requester);
+    }
+
+    public ExchangeDetailsDTO getExchangeDetails(Long exchangeId) {
+        Exchanges exchange = exchangeRepository.findById(exchangeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Exchange not found"));
+
+        List<ExchangeItems> exchangeItems = exchangeItemsRepository.findByExchangeExchangeId(exchangeId);
+
+        return new ExchangeDetailsDTO(exchange, exchangeItems);
     }
 }

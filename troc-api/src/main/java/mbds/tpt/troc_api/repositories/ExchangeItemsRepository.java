@@ -10,4 +10,5 @@ import mbds.tpt.troc_api.entities.ExchangeItems;
 @Repository
 public interface ExchangeItemsRepository extends JpaRepository<ExchangeItems, Long> {
     List<ExchangeItems> findByExchange_ExchangeId(Long exchangeId);
+    List<ExchangeItems> findByExchangeExchangeId(Long exchangeId);
 }
