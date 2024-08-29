@@ -29,4 +29,18 @@ export interface Image {
     // Ajoutez d'autres statuts selon vos besoins
   }
   
+  export interface Exchange {
+    exchangeId: string;
+    requester: {
+      name: string;
+      user_id: string;
+    };
+    receiver: {
+      name: string;
+      user_id: string;
+    };
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+  }
   
