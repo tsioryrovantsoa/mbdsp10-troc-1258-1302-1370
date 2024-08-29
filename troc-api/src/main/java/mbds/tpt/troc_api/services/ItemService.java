@@ -128,6 +128,12 @@ public class ItemService {
 
             // Add new images
             Set<Images> images = new HashSet<>();
+            Set<Images> actualImages = item.getImages();
+            for (Images file : actualImages) {
+                String imageUrl = file.getImageUrl();
+                Images image = new Images(savedItem, imageUrl);
+                images.add(image);
+            }
             if (itemRequest.getNewImages() != null) {
                 for (MultipartFile file : itemRequest.getNewImages()) {
                     String imageUrl = fileStorageService.saveFile(file);
@@ -137,6 +143,7 @@ public class ItemService {
                 imageRepository.saveAll(images);
             }
             savedItem.setImages(images);
+
             return itemRepository.save(savedItem);
         } catch (Exception e) {
             // Handle the exception, e.g., log it
