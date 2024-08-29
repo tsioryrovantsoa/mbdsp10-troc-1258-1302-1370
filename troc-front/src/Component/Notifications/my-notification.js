@@ -4,9 +4,12 @@ import NavBar from "../NavBar";
 import { Box, Typography, Card, Alert, AlertTitle, Pagination } from "@mui/material";
 import UserService from '../../Service/userService';
 import NotificationService from '../../Service/notificationService';
+import { useNavigate } from 'react-router-dom';
 
 export function Notifications() {
 
+    const navigate = useNavigate();
+    
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(5);
     const [totalPages, setTotalPages] = useState(0);
@@ -34,6 +37,19 @@ export function Notifications() {
             console.error('Error fetching notifications:', error);
         } finally {
             setIsLoading(false);
+        }
+    }
+
+    const markNotifAsRead = async (notifId) => {
+        try {
+            const response = await NotificationService.markReadNotification(notifId);
+            if(response.data.typeNotification === 'PROPOSE_EXCHANGE') {
+                navigate(`/item/${response.data.notification.entityId}`);
+            } else {
+                navigate(`/exchange-detail/${response.data.notification.entityId}`);
+            }
+        } catch(error) {
+            console.error('Error fetching notifications:', error);
         }
     }
 
@@ -74,7 +90,7 @@ export function Notifications() {
                                 {
                                     notifications.map((notif) => (
                                         <Card sx={{ marginBottom: 2 }} key={notif._id}>
-                                            <Alert severity="info">
+                                            <Alert severity={notif.isRead ? "success" : "info"} onClick={() => markNotifAsRead(notif._id)}>
                                                 <AlertTitle>{notif.typeNotification}</AlertTitle>
                                                 {notif.content}
                                             </Alert>

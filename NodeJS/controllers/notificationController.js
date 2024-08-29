@@ -65,6 +65,27 @@ class NotificationController {
             res.status(500).json({ message: "Erreur lors de la récupération des notifications", detail: err.message });
         }
     }
+
+    static async markAsRead(req, res) {
+        try {
+            const notificationId = req.params.notificationId;
+    
+            const updatedNotification = await Notification.findByIdAndUpdate(
+                notificationId,
+                { isRead: true },
+                { new: true }
+            );
+    
+            if (!updatedNotification) {
+                return res.status(404).json({ message: "Notification non trouvée" });
+            }
+    
+            res.status(200).json({ message: "Notification marquée comme lue", notification: updatedNotification });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: "Erreur lors de la mise à jour de la notification", detail: err.message });
+        }
+    }
 }
 
 

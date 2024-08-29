@@ -21,6 +21,15 @@ const NotificationService = {
                 'Authorization': `Bearer ${token}`
             },
         });
+    },
+
+    markReadNotification(notifId) {
+        const token = localStorage.getItem('token');
+        return axios.patch(`${API_NOTIFICATIONS_URL}/${notifId}/read`, {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        });
     }
 }
 
