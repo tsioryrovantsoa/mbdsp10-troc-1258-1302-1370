@@ -26,6 +26,44 @@ const ExchangeService = {
       throw error;
     }
   },
+
+  acceptExchange: async (exchangeId: string) => {
+    try {
+      const token = await getToken();
+
+      return await axios.put(
+        `${baseURL}api/exchanges/${exchangeId}/accept`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error accepting exchange:", error);
+      throw error;
+    }
+  },
+
+  rejectExchange: async (exchangeId: string) => {
+    try {
+      const token = await getToken();
+
+      return await axios.put(
+        `${baseURL}api/exchanges/${exchangeId}/reject`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error rejecting exchange:", error);
+      throw error;
+    }
+  },
 };
 
 export default ExchangeService;

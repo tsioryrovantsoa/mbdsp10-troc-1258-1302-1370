@@ -37,23 +37,23 @@ const LesEchangesScreen = () => {
     fetchExchangeRequests();
   }, [itemId]);
 
-  // const handleAccept = async (exchange : any) => {
-  //   try {
-  //     await ExchangeService.acceptExchange(exchange.exchangeId);
-  //     await fetchExchangeRequests();
-  //   } catch (error) {
-  //     console.error('Error accepting exchange:', error);
-  //   }
-  // };
+  const handleAccept = async (exchange: any) => {
+    try {
+      await ExchangeService.acceptExchange(exchange.exchangeId);
+      await fetchExchangeRequests();
+    } catch (error) {
+      console.error("Error accepting exchange:", error);
+    }
+  };
 
-  // const handleReject = async (exchange : any) => {
-  //   try {
-  //     await ExchangeService.rejectExchange(exchange.exchangeId);
-  //     await fetchExchangeRequests();
-  //   } catch (error) {
-  //     console.error('Error rejecting exchange:', error);
-  //   }
-  // };
+  const handleReject = async (exchange: any) => {
+    try {
+      await ExchangeService.rejectExchange(exchange.exchangeId);
+      await fetchExchangeRequests();
+    } catch (error) {
+      console.error("Error rejecting exchange:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -84,8 +84,16 @@ const LesEchangesScreen = () => {
                 {exchange.receiver.user_id === userId &&
                   exchange.status === "EN_ATTENTE" && (
                     <View style={styles.buttonContainer}>
-                      {/* <Button title="Accepter" onPress={() => handleAccept(exchange)} color="green" />
-                    <Button title="Rejeter" onPress={() => handleReject(exchange)} color="red" /> */}
+                      <Button
+                        title="Accepter"
+                        onPress={() => handleAccept(exchange)}
+                        color="green"
+                      />
+                      <Button
+                        title="Rejeter"
+                        onPress={() => handleReject(exchange)}
+                        color="red"
+                      />
                     </View>
                   )}
               </View>
