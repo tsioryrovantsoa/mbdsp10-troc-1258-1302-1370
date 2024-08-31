@@ -122,3 +122,5 @@ C:\Users\Ibonia\Desktop\ITU\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\De
 C:\Users\Ibonia\Desktop\ITU\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\Debug\troc.csproj.Up2Date
 C:\Users\Ibonia\Desktop\ITU\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\Debug\troc.exe
 C:\Users\Ibonia\Desktop\ITU\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\Debug\troc.pdb
+F:\informatiqueMendrika\projectM2\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\Debug\troc.HomePage.resources
+F:\informatiqueMendrika\projectM2\mbdsp10-troc-1258-1302-1370\Desktop\troc\troc\obj\Debug\troc.UserDashboardForm.resources

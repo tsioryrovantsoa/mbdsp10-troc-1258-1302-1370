@@ -51,6 +51,14 @@ namespace troc
             };
             usersButton.Click += (sender, e) => OpenForm(new UserDashboardForm());
 
+            Button statButton = new Button
+            {
+                Text = "Statistic",
+                Location = new Point(340, 10),
+                Size = new Size(100, 30)
+            };
+            statButton.Click += (sender, e) => OpenForm(new Statistic());
+
             Button logoutButton = new Button
             {
                 Text = "Deconnection",
@@ -59,7 +67,7 @@ namespace troc
             };
             logoutButton.Click += (sender, e) => Logout();
 
-            navbarPanel.Controls.AddRange(new Control[] { homeButton, profileButton, usersButton, logoutButton });
+            navbarPanel.Controls.AddRange(new Control[] { homeButton, profileButton, usersButton, statButton, logoutButton });
             this.Controls.Add(navbarPanel);
 
             // Ajuster le contenu principal pour qu'il ne chevauche pas la navbar
