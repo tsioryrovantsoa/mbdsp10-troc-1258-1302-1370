@@ -7,6 +7,7 @@ import axios from 'axios';
 // });
 
 export const baseURL = "http://192.168.1.235:8080/";
+export const baseExpressURL = "http://192.168.1.235:3001/";
 
 export const imageURL = baseURL + "public/uploads/";
 

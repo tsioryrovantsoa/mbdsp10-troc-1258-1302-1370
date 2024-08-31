@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Item } from "../types";
 import {
+  addCategStatPopular,
   getMyItems,
   proposeExchange,
 } from "../authentication/services/itemService";
@@ -53,8 +54,16 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
     try {
       const response = await proposeExchange(item.itemId, requesterItemId);
       console.log("Exchange proposed:", response);
+
       onClose();
       Alert.alert("Succès", "Échange proposé avec succès !");
+
+      try {
+        const statResponse = await addCategStatPopular(item.category);
+        console.log("stat : ", statResponse);
+      } catch(error) {
+        console.log("erreur : ", error);
+      }
     } catch (error) {
       console.error("Error proposing exchange:", error);
       onClose();

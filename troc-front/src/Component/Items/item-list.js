@@ -172,6 +172,13 @@ export default function ItemList() {
             const response = await ExchangeService.proposeExchange(selectedItemId.itemId, requesterItemId);
             console.log('Exchange proposed:', response.data);
             setSuccessMessage('Exchange proposed successfully!');
+
+            try {
+                const StatCategresponse = await ExchangeService.addCategPopular(selectedItemId.category);
+                console.log('Add stat :', StatCategresponse.data);
+            } catch (error) {
+                console.error('Error add stat :', error);
+            }
             try {
                 const notifResponse = await ExchangeService.notificationProposeExchange(userDestinated, selectedItemId);
                 console.log('Notifications :', notifResponse.data);

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseURL } from "@/services/ApiService";
+import { baseExpressURL, baseURL } from "@/services/ApiService";
 import { getToken } from "@/storage"; // Importez getToken si vous gérez les tokens de cette manière
 import { getUserIdFromToken } from "./storageService";
 
@@ -54,6 +54,28 @@ export const proposeExchange = async (
         requesterItemId,
         receiverItemId,
       },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error proposing exchange:", error);
+    throw error;
+  }
+};
+
+export const addCategStatPopular = async (
+  category: string
+) => {
+  try {
+    const token = await getToken();
+    if (!token) {
+      throw new Error("Token non trouvé");
+    }
+
+    const response = await axios.post(`${baseExpressURL}api/statistic/categ`, { category }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
     });
 
     return response.data;

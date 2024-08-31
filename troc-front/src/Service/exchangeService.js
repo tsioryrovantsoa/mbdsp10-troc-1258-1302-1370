@@ -87,6 +87,17 @@ const ExchangeService = {
         Authorization: `Bearer ${token}`,
       },
     });
+  },
+
+  addCategPopular: async (category) => {
+    const token = localStorage.getItem("token");
+    return axios.get(`${EXPRESS_API_URL}/api/statistic/categ`, {
+      category
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 };
 

@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\statistic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\statistic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\baseformwithnavbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\baseformwithnavbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|f:\\informatiquemendrika\\projectm2\\mbdsp10-troc-1258-1302-1370\\desktop\\troc\\troc\\statistic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D3A51A54-D35A-4857-93C0-D7EFE6419584}|troc\\troc.csproj|solutionrelative:troc\\statistic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 292,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,7 +30,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Statistic.cs",
               "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\Statistic.cs",
               "RelativeDocumentMoniker": "troc\\Statistic.cs",
@@ -43,13 +43,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "BaseFormWithNavbar.cs",
               "DocumentMoniker": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
               "RelativeDocumentMoniker": "troc\\BaseFormWithNavbar.cs",
               "ToolTip": "F:\\informatiqueMendrika\\projectM2\\mbdsp10-troc-1258-1302-1370\\Desktop\\troc\\troc\\BaseFormWithNavbar.cs",
               "RelativeToolTip": "troc\\BaseFormWithNavbar.cs",
-              "ViewState": "AQIAAEIAAAAAAAAAAAAYwFIAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T22:34:28.895Z",
               "EditorCaption": ""
