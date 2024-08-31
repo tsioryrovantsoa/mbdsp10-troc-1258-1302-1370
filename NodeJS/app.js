@@ -3,6 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const notificationRouter = require('./routes/notificationRoute');
+const statisticRoute = require('./routes/statisticRoute');
 require('dotenv').config();
 
 const app = express();
@@ -40,6 +41,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/notifications', notificationRouter);
+app.use('/api/statistic', statisticRoute);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
