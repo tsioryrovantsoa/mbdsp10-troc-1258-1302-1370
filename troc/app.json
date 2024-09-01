@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "troc",
-    "slug": "troc",
+    "slug": "tpt",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mbds.troc"
     },
     "android": {
       "adaptiveIcon": {
@@ -38,8 +39,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "f8678c57-4664-48f8-bf83-b2de8f49ccc2"
+        "projectId": "9c4d9915-259c-42eb-8656-c926ebf88924"
       }
-    }
+    },
+    "owner": "mbds"
   }
 }
