@@ -6,8 +6,8 @@ import axios from 'axios';
 //   headers: {'Authorization': `Bearer ${token}`}
 // });
 
-export const baseURL = "http://192.168.1.235:8080/";
-export const baseExpressURL = "http://192.168.1.235:3001/";
+export const baseURL = "https://mbdsp10-troc-1258-1302-1370-spring.onrender.com/";
+export const baseExpressURL = "https://mbdsp10-troc-1258-1302-1370-a68a.onrender.com/";
 
 export const imageURL = baseURL + "public/uploads/";
 

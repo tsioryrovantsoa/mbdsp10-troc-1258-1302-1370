@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = 'http://192.168.1.235:8080';
+const API_URL = 'https://mbdsp10-troc-1258-1302-1370-spring.onrender.com';
 
 export const authService = {
   async login(username: string, password: string) {

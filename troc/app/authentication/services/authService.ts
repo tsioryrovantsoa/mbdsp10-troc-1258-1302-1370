@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const login = async (username: string, password: string) => {
   try {
-    const response = await axios.post('http://192.168.1.235:8080/api/auth/login', {
+    const response = await axios.post('https://mbdsp10-troc-1258-1302-1370-spring.onrender.com/api/auth/login', {
       username,
       password,
     });
