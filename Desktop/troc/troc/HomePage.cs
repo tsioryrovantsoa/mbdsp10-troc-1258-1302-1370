@@ -120,7 +120,7 @@ namespace troc
         {
             using (var client = new HttpClient())
             {
-                string baseUrl = "http://localhost:8080/api/items/search";
+                string baseUrl = "https://mbdsp10-troc-1258-1302-1370-spring.onrender.com/api/items/search";
                 string keyword = searchBox.Text;
 
                 string url = $"{baseUrl}?keyword={keyword}&page=0&size=10";
@@ -191,7 +191,7 @@ namespace troc
                     {
                         using (var client = new HttpClient())
                         {
-                            string baseUrl = "http://localhost:8080/api/items";
+                            string baseUrl = "https://mbdsp10-troc-1258-1302-1370-spring.onrender.com/api/items";
                             string keyword = searchBox.Text;
 
                             string url = $"{baseUrl}/{itemId}"; ;

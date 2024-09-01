@@ -15,7 +15,7 @@ namespace troc
 {
     public partial class UserDashboardForm : BaseFormWithNavbar
     {
-        private const string ApiUrl = "http://localhost:8080/api/users";
+        private const string ApiUrl = "https://mbdsp10-troc-1258-1302-1370-spring.onrender.com/api/users";
 
         public UserDashboardForm()
         {

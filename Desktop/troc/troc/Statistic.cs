@@ -105,7 +105,7 @@ namespace troc
         {
             try
             {
-                string apiUrl = "http://localhost:3001/api/statistic/categ?limit=5";
+                string apiUrl = "https://mbdsp10-troc-1258-1302-1370-a68a.onrender.com/api/statistic/categ?limit=5";
                 var stats = await GetDataFromApi<CategoryStat>(apiUrl);
                 UpdateChart(chartCategories, stats, s => s._id, s => s.count, "Catégories", "Nombre");
             }

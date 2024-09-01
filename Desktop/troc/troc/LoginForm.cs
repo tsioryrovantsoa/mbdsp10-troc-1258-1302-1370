@@ -15,7 +15,7 @@ namespace troc
 {
     public partial class LoginForm : Form
     {
-        private const string API_URL = "http://localhost:8080/api/auth/login";
+        private const string API_URL = "https://mbdsp10-troc-1258-1302-1370-spring.onrender.com/api/auth/login";
 
         public LoginForm()
         {

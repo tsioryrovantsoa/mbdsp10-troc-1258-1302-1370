@@ -17,7 +17,7 @@ namespace troc
     public partial class ItemDetail : BaseFormWithNavbar
     {
         private long itemId;
-        private string baseUrl = "http://localhost:8080/api/items";
+        private string baseUrl = "https://mbdsp10-troc-1258-1302-1370-spring.onrender.com/api/items";
         //private HttpClient client;
 
         // Contrôles du formulaire
